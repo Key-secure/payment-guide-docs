@@ -1,0 +1,161 @@
+{
+  "name": "Keysecure-payment",
+  "logo": {
+  "dark": "/logo/KeySecure Logo - Original 1.svg",
+  "light": "/logo/KeySecure Logo - Original 1.svg"
+  },
+  "favicon": "/logo/Frame 4.svg",
+  "colors": {
+  "primary": "#2662FF",
+  "light": "#2662FF",
+  "dark": "#2662FF",
+  "anchors": {
+  "from": "#DAF4F1",
+  "to": "#DAF4F1"
+  }
+  },
+  "topbarLinks": [
+  {
+  "name": "英文",
+  "url": "https://www.keysecure.io/"
+  }
+  ],
+  "modeToggle": {
+  "default": "light",
+  "isHidden": true
+  },
+  "topbarCtaButton": {
+  "name": "官网",
+  "url": "https://keysecure.io/zh-CN"
+},
+"tabs": [
+
+{
+"name": "快速对接",
+"url": "quick-start"
+},
+{
+"name": "产品指南",
+"url": "feature-guide"
+},
+{
+"name": "常见问题",
+"url": "FAQ"
+}
+],
+  "primaryTab": {
+  "name": "支付解决方案"
+  },
+  "navigation": [
+  {
+  "group": "概览",
+  "pages": [
+  "Introduce/overview/introduction",
+  "Introduce/overview/fitst-phase",
+  "Introduce/overview/termlist"
+  ]
+  },
+  {
+  "group": "预付卡模式",
+  "pages": [
+  "introduction/custody-solution/mpc-wallet",
+  "introduction/custody-solution/joint-custody",
+  "introduction/custody-solution/wapi"
+  ]
+  },
+  {
+
+  "group": "前期准备",
+  "pages": [
+  "quick-start/overview/quickstart"
+  ]
+  },
+  {
+  "group": "卡业务配置",
+  "pages": [
+  "quick-start/mpc-wallet/download-app",
+  "quick-start/mpc-wallet/create-account",
+  "quick-start/mpc-wallet/create-wallet",
+  {
+  "group": "在线运营管理",
+  "pages": [
+  "quick-start/mpc-wallet/private-manage/private-backup",
+  "quick-start/mpc-wallet/private-manage/private-recover"
+  ]
+  },
+  {
+  "group": "系统管理",
+  "pages": [
+  "api-references/intro/custody-apis"
+  ]
+  },
+  {
+  "group": "会员管理",
+  "pages": [
+  "api-references/mpc-apis/guide/overview",
+  "api-references/mpc-apis/guide/create-account",
+  "api-references/mpc-apis/guide/function-set",
+  "api-references/mpc-apis/guide/test-flow"
+  ]
+  },
+  {
+  "group": "卡业务",
+  "pages": [
+  "api-references/mpc-apis/apis/wallet/open-coin",
+  "api-references/mpc-apis/apis/wallet/coin-list",
+  "api-references/mpc-apis/apis/wallet/chain-height",
+  "api-references/mpc-apis/apis/wallet/minner-fee"
+  ]
+  },
+  {
+  "group": "运营管理",
+  "pages": [
+  "api-references/mpc-apis/apis/sub-wallet/subwallet-create",
+  "api-references/mpc-apis/apis/sub-wallet/subwallet-create-address",
+  "api-references/mpc-apis/apis/sub-wallet/subwallet-get-address",
+  "api-references/mpc-apis/apis/sub-wallet/subwallet-assets",
+  "api-references/mpc-apis/apis/sub-wallet/subwallet-show-status",
+  "api-references/mpc-apis/apis/sub-wallet/subwallet-address-info"
+  ]
+  },
+  {
+  "group": "内容管理",
+  "pages": [
+  "api-references/mpc-apis/apis/withdraw/withdraw",
+  "api-references/mpc-apis/apis/withdraw/withdraw-list",
+  "api-references/mpc-apis/apis/withdraw/withdraw-sync-list",
+  "api-references/mpc-apis/apis/withdraw/withdraw-accelerate"
+  ]
+  },
+  {
+  "group": "财务管理",
+  "pages": [
+  "api-references/mpc-apis/apis/deposit/deposit-list",
+  "api-references/mpc-apis/apis/deposit/deposit-sync-list"
+  ]
+  },
+  {
+  "group": "常见问题清单",
+  "pages": [
+  "help-center/introduction/manage-custody"
+  
+  ]
+  }
+  ]
+  }
+  ],
+  "api": {
+  "baseUrl": "https://openapi.Keysecure.io/",
+  "playground": {
+  "mode": "simple"
+  }
+  },
+  "feedback": {
+  "suggestEdit": true,
+  "raiseIssue": true,
+  "thumbsRating": true
+  }
+  }
+  
+  
+  
