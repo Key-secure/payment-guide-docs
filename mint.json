@@ -58,29 +58,39 @@
   {
   "group": "预付卡模式",
   "pages": [
-  "introduction/custody-solution/mpc-wallet",
-  "introduction/custody-solution/joint-custody",
-  "introduction/custody-solution/wapi"
+  "Introduce/budget-card/budgt-card-introduction",
+  "Introduce/budget-card/open-card",
+  "Introduce/budget-card/authorization",
+  "Introduce/budget-card/transaction"
   ]
   },
   {
 
   "group": "前期准备",
   "pages": [
-  "quick-start/overview/quickstart"
+  "quick-start/preparation/custody-wallet",
+  "quick-start/preparation/back-end-permission"
   ]
   },
   {
   "group": "卡业务配置",
   "pages": [
-  "quick-start/mpc-wallet/download-app",
-  "quick-start/mpc-wallet/create-account",
-  "quick-start/mpc-wallet/create-wallet",
-  {
+  "quick-start/card-management/open-coin",
+  "quick-start/card-management/budget-fund",
+  "quick-start/card-management/reserve-ratio",
+  "quick-start/card-management/app-card",
+  "quick-start/card-management/other-settings"
+]
+},
+{
+
   "group": "在线运营管理",
   "pages": [
-  "quick-start/mpc-wallet/private-manage/private-backup",
-  "quick-start/mpc-wallet/private-manage/private-recover"
+  "quick-start/operation/manage-user",
+  "quick-start/operation/approve-withdrawl",
+  "quick-start/operation/open-card-manage.mdx",
+  "quick-start/operation/finance",
+  "quick-start/operation/revenue"
   ]
   },
   {
@@ -138,24 +148,22 @@
   "group": "常见问题清单",
   "pages": [
   "help-center/introduction/manage-custody"
-  
-  ]
-  }
-  ]
-  }
-  ],
-  "api": {
-  "baseUrl": "https://openapi.Keysecure.io/",
-  "playground": {
-  "mode": "simple"
-  }
-  },
-  "feedback": {
-  "suggestEdit": true,
-  "raiseIssue": true,
-  "thumbsRating": true
-  }
-  }
-  
-  
-  
+]
+}
+]
+}
+],
+"api": {
+"baseUrl": "https://openapi.Keysecure.io/",
+"playground": {
+"mode": "simple"
+}
+},
+"feedback": {
+"suggestEdit": true,
+"raiseIssue": true,
+"thumbsRating": true
+}
+}
+
+
