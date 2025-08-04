@@ -4,7 +4,8 @@ description: '阅读该篇文章，了解Keysecure的预算卡片的消费类型
 '
 ---
 
-### 交易类型总览
+## I. 交易类型总览
+
 虚拟卡消费全周期包含以下五类卡交易类型：
 
 Auth Request（消费授权）
@@ -18,7 +19,7 @@ Refund（退款）
 Declined Refund（拒付退款）
 
 
-## 一、Auth Request（消费授权）
+## II. Auth Request（消费授权）
 流程描述：
 
 C端用户消费，商户发起一笔授权请求，系统将判断是否允许该笔交易通过。
@@ -29,17 +30,18 @@ C端用户消费，商户发起一笔授权请求，系统将判断是否允许�
 
 
 
-## 二、Settlement（清算）
-A. 正常结算流程（金额不变）
+## III. Settlement（清算）
+
+**A. 正常结算流程（金额不变）**
 随后系统将授权交易结算，状态由 pending 变为 completed。
 
 
-B. 清算金额变化（increase/decrease）
+**B. 清算金额变化（increase/decrease）**
 若实际结算金额高于或低于授权金额，系统会生成新的交易记录：
 
 新交易带 preTransactionId 字段，用于关联原授权订单。
 
-## 三、Reversal（撤销交易）
+## III. Reversal（撤销交易）
 场景说明：
 
 若授权后未完成结算（例如用户取消、授权超时等），可发起 Reversal 流程取消这笔交易。
@@ -48,7 +50,7 @@ B. 清算金额变化（increase/decrease）
 
 此时商户会收到退款，退款将扣除部分手续费。
 
-## 四、Refund（退款）
+## IV. Refund（退款）
 适用场景：
 
 当订单已完成授权与结算后，用户取消购买或商户主动退款。
@@ -59,7 +61,7 @@ B. 清算金额变化（increase/decrease）
 Refund 事件在整体资金流已结算后发生。
 </Note>
 
-## 五、Declined Refund（拒付退款）
+## V. Declined Refund（拒付退款）
 发生条件：
 
 系统同意交易授权，但发卡银行拒绝这比授权未完成该授权。
