@@ -1,156 +1,162 @@
 {
   "name": "Payment-guide",
+
   "logo": {
-  "dark": "/logo/KeySecure Logo - Original 1.svg",
-  "light": "/logo/KeySecure Logo - Original 1.svg"
+    "dark": "/logo/KeySecure Logo - Original 1.svg",
+    "light": "/logo/KeySecure Logo - Original 1.svg"
   },
+
   "favicon": "/logo/Frame 4.svg",
+
   "colors": {
-  "primary": "#2662FF",
-  "light": "#2662FF",
-  "dark": "#2662FF",
-  "anchors": {
-  "from": "#DAF4F1",
-  "to": "#DAF4F1"
-  }
+    "primary": "#2662FF",
+    "light": "#2662FF",
+    "dark": "#2662FF",
+    "anchors": {
+      "from": "#DAF4F1",
+      "to": "#DAF4F1"
+    }
   },
+
   "topbarLinks": [
-  {
-  "name": "英文",
-  "url": "https://docs-en.keysecure.io/"
-  }
+    {
+      "name": "英文",
+      "url": "https://docs-en.keysecure.io/"
+    }
   ],
+
   "modeToggle": {
-  "default": "light",
-  "isHidden": true
+    "default": "light",
+    "isHidden": true
   },
+
   "topbarCtaButton": {
-  "name": "官网",
-  "url": "https://keysecure.io/zh-CN"
-},
-"tabs": [
-{
-"name": "快速对接",
-"url": "quick-start"
-},
-{
-"name": "产品指南",
-"url": "api-references"
+    "name": "官网",
+    "url": "https://keysecure.io/zh-CN"
+  },
 
-}
-],
-  "primaryTab": {
-  "name": "支付解决方案"
-  },
-  "navigation": [
-  {
-  "group": "概览",
-  "pages": [
-  "Introduce/overview/introduction",
-  "Introduce/overview/termlist",
-  "Introduce/overview/fitst-phase"
-  ]
-  },
-  {
-  "group": "预算卡模式",
-  "pages": [
-    "Introduce/budget-card/budgt-card-introduction",
-    "Introduce/budget-card/open-card",
-    "Introduce/budget-card/authorization",
-    "Introduce/budget-card/transaction"
-  ]
-  },
-  {
-
-  "group": "前期准备",
-  "pages": [
-  "quick-start/preparation/custody-wallet",
-  "quick-start/preparation/back-end-permission"
-  {
-  "group": "卡业务配置",
-  "pages": [
-  "quick-start/card-management/open-coin",
-  "quick-start/card-management/budget-fund",
-  "quick-start/card-management/reserve-ratio",
-  "quick-start/card-management/app-card",
-  "quick-start/card-management/other-settings"
-  ]
-  },
-  {
-  "group": "在线运营管理",
-  "pages": [
-    "quick-start/operation/manage-user",
-    "quick-start/operation/open-card-manage",
-    "quick-start/operation/approve-withdrawl",
-    "quick-start/operation/finance",
-    "quick-start/operation/revenue"
-  ]
-  },
-  {
-  "group": "系统管理",
-  "pages": [
-  "feature-guide/system/admin-manage",
-  "feature-guide/system/role-manage"
-  ]
-  },
-  {
-  "group": "会员管理",
-   "pages": [
-  "feature-guide/user/user-list",
-  "feature-guide/user/kyc"
- ]
- },
- {
-  "group": "卡业务",
-   "pages": [
-  "feature-guide/card/card-bin",
-  "feature-guide/card/total-asset",
-  "feature-guide/card/open-card",
-  "feature-guide/card/card-package"
-  ]
-  },
-  {
-    "group": "运营管理",
-    "pages": [
-   "feature-guide/operation/coin-manage",
-   "feature-guide/operation/benefit"
-   ]
-   },
-   {
-    "group": "内容管理",
-    "pages": [
-   "feature-guide/context/notification",
-   "feature-guide/context/carousel",
-   "feature-guide/context/other-settings"
-   ]
-   },
-   {
-    "group": "财务管理",
-    "pages": [
-   "feature-guide/finance/deposit",
-   "feature-guide/finance/withdraw",
-   "feature-guide/finance/transaction",
-   "feature-guide/finance/revenue",
-   "feature-guide/finance/cost-manage"
-
-  
-  ]
-  }
-  ]
-  }
+  "tabs": [
+    { "name": "支付解决方案", "url": "overview" },
+    { "name": "快速对接", "url": "quick-start" },
+    { "name": "产品指南", "url": "feature-guide" },
+    { "name": "常见问题", "url": "FAQ" }
   ],
-  "api": {
-  "baseUrl": "https://openapi.Keysecure.io/",
-  "playground": {
-  "mode": "simple"
-  }
+
+  "primaryTab": {
+    "name": "支付解决方案"
   },
+
+  "navigation": [
+    {
+      "group": "概览",
+      "pages": [
+        "Introduce/overview/introduction",
+        "Introduce/overview/termlist",
+        "Introduce/overview/fitst-phase"
+      ]
+    },
+    {
+      "group": "预算卡模式",
+      "pages": [
+        "Introduce/budget-card/budgt-card-introduction",
+        "Introduce/budget-card/open-card",
+        "Introduce/budget-card/authorization",
+        "Introduce/budget-card/transaction"
+      ]
+    },
+    {
+      "group": "前期准备",
+      "pages": [
+        "quick-start/preparation/custody-wallet",
+        "quick-start/preparation/back-end-permission"
+      ]
+    },
+    {
+      "group": "卡业务配置",
+      "pages": [
+        "quick-start/card-management/open-coin",
+        "quick-start/card-management/budget-fund",
+        "quick-start/card-management/reserve-ratio",
+        "quick-start/card-management/app-card",
+        "quick-start/card-management/other-settings"
+      ]
+    },
+    {
+      "group": "在线运营管理",
+      "pages": [
+        "quick-start/operation/manage-user",
+        "quick-start/operation/open-card-manage",
+        "quick-start/operation/approve-withdrawl",
+        "quick-start/operation/finance",
+        "quick-start/operation/revenue"
+      ]
+    },
+    {
+      "group": "系统管理",
+      "pages": [
+        "feature-guide/system/admin-manage",
+        "feature-guide/system/role-manage"
+      ]
+    },
+    {
+      "group": "会员管理",
+      "pages": [
+        "feature-guide/user/user-list",
+        "feature-guide/user/kyc"
+      ]
+    },
+    {
+      "group": "卡业务",
+      "pages": [
+        "feature-guide/card/card-bin",
+        "feature-guide/card/total-asset",
+        "feature-guide/card/open-card",
+        "feature-guide/card/card-package"
+      ]
+    },
+    {
+      "group": "运营管理",
+      "pages": [
+        "feature-guide/operation/coin-manage",
+        "feature-guide/operation/benefit"
+      ]
+    },
+    {
+      "group": "内容管理",
+      "pages": [
+        "feature-guide/context/notification",
+        "feature-guide/context/carousel",
+        "feature-guide/context/other-settings"
+      ]
+    },
+    {
+      "group": "财务管理",
+      "pages": [
+        "feature-guide/finance/deposit",
+        "feature-guide/finance/withdraw",
+        "feature-guide/finance/transaction",
+        "feature-guide/finance/revenue",
+        "feature-guide/finance/cost-manage"
+      ]
+    },
+    {
+      "group": "常见问题",
+      "pages": [
+        "FAQ/question-list"
+      ]
+    }
+  ],
+
+  "api": {
+    "baseUrl": "https://openapi.Keysecure.io/",
+    "playground": {
+      "mode": "simple"
+    }
+  },
+
   "feedback": {
-  "suggestEdit": true,
-  "raiseIssue": true,
-  "thumbsRating": true
+    "suggestEdit": true,
+    "raiseIssue": true,
+    "thumbsRating": true
   }
-  }
-  
-  
-  
+}
