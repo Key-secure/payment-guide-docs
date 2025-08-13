@@ -1,0 +1,71 @@
+---
+title: Open Card
+---
+
+## Backend Card Issuance Process
+
+This process applies to all merchants issuing virtual cards via the KeySecure platform. Before launching cards to end-users, ensure all prerequisites are met and that you understand the issuance workflow to guarantee smooth operation.
+
+Merchants must complete the following foundational steps before activating virtual card services:
+
+### Obtain Card BIN
+
+Activating a card BIN is a prerequisite for card issuance and usually requires completing the KYB (Know Your Business) compliance process.
+
+- Contact the KeySecure team to submit your business information and initiate the KYB review.  
+- The BIN activation timeline depends on the issuing bank and compliance review. Plan ahead to avoid delays.
+
+### Configure KYC User Verification
+
+All end-users must complete KYC (Know Your Customer) verification before requesting a card.
+
+- Merchants can integrate KeySecure’s built-in KYC service or connect their own third-party provider (currently only Sumsub supported).  
+- For self-managed Sumsub accounts, ensure integration is complete and successfully tested.
+
+### Pre-Fund the Budget Account
+
+Each card issuance consumes funds from the merchant’s budget account, covering issuance and operational fees.
+
+- Regularly monitor the budget account balance to prevent issuance failures or delays.
+
+### Configure App Card Packages
+
+Merchants must create at least one card package in the backend, defining card type, fees, and other details.
+
+- Configured packages will be visible in the end-user App for selection.
+
+
+
+## End-User Card Application Process
+
+When a user applies for a card via the App, the system triggers the following workflow:
+
+<Steps>
+<Step title="Step 1: User Submits Application and Makes Payment">
+   The user selects a card package and pays the issuance fee. The system deducts the amount from the user’s account according to the configured payment priority.
+</Step>
+<Step title="Step 2: Merchant Reviews Application">
+    The merchant logs into KeySecure backend, navigates to the **Card Application Records**, and reviews the user’s request.
+</Step>
+<Step title="Step 3: Application Outcome">
+   - **If rejected:** The system refunds the issuance fee to the user account; the record status updates to **Failed**.  
+   - **If approved:** The system initiates automatic card issuance with the card network; the record status updates to **Issuing**.
+</Step>
+<Step title="Step 4: System Processes Issuance">
+  Normally, issuance completes within a few minutes, and card information is synced to the user account.  
+  If the process is delayed or encounters errors, the record remains in **Issuing** status.
+</Step>
+</Steps>
+
+
+## Card Issuance Troubleshooting Guide
+
+If a card record remains in **Issuing** status for an extended period, check the following common causes:
+
+| Issue | Description |
+|-------|------------|
+| Insufficient Budget Account Balance | The merchant budget account balance is below the cost of a single card. Replenish funds to proceed. |
+| User KYC Does Not Meet Bank Requirements | Initial KYC passed, but the user’s information does not satisfy deep verification standards. Request additional documents or re-verification. |
+| Merchant Account Triggered Risk Controls | Abnormal merchant activity, frequent failed transactions, or other flagged behaviors may temporarily suspend issuance. |
+
+If the issue persists after troubleshooting, contact KeySecure support or operations team for assistance.

@@ -1,0 +1,55 @@
+---
+title: Cost Management
+---
+
+## Overview
+
+The “Merchant Cost Management” page focuses on all types of business costs incurred during a merchant’s platform operations. It includes daily cumulative data and historical details, with quick links to related transaction records, helping managers gain a comprehensive view of cost consumption, track fund outflows, assess overall profitability, and optimize business strategies.
+
+This module provides merchants with detailed analysis and visual tracking of their operational cost structure, enabling informed decision-making to improve profitability and efficiency.
+
+## Data Description
+
+**1. Cost Overview Metrics**
+
+| Field | Description |
+|-------|-------------|
+| Total Cumulative Cost | The total cost incurred by the merchant since service activation (USD) |
+
+**2. Cost Categories**
+
+| Cost Type | Description |
+|-----------|-------------|
+| Card Issuance Cost | The cost incurred for each member card issuance, deducted based on the actual cost of the linked card BIN |
+| Budget Account Reduction Fee | Fees (on-chain transaction fees or service fees) charged when a merchant reduces the budget account balance (e.g., withdrawals or asset transfers) |
+| Card BIN Rate Expense | Transaction fees paid to the card network/issuer for each card transaction |
+| Small Transaction Fee | Fixed fees borne by the merchant for transactions below the set card BIN threshold |
+| Member Reward Distribution Cost | Incentive payouts for merchant promotional activities |
+
+## Use Cases & Recommendations
+
+**Cost Structure Optimization**
+
+Analyze which business types have the greatest cost impact (e.g., card issuance, spending, on-chain transactions) to refine pricing packages or adjust card BIN selection strategies.
+
+If small transaction fee expenses are high, consider reviewing the small transaction threshold and exemption policy to reduce the share of low-value transactions.
+
+**Profitability Analysis**
+
+Compare cost data with revenue data from the **Merchant Revenue Management** module to calculate unit profit, gross margin, and other key metrics.
+
+Combine with spending data to identify high-cost, low-return users or packages, and adjust segmentation strategies accordingly.
+
+**Risk Control & Cost Alerts**
+
+Regularly review cost details for budget reconciliation, financial audits, and compliance reporting.
+
+Monitor fluctuations in on-chain fees and other external costs to determine whether to increase gas station balances or enable fund auto sweep mechanisms.
+
+<Note>
+All costs are converted to USD for unified reporting and aggregation;
+
+Cost deductions may experience on-chain confirmation delays or asynchronous processing — check data refresh times accordingly;
+
+It is recommended to use alongside “Card Issuance Records,” “Spending Records,” and “Withdrawal Records” for full data traceability.
+</Note>

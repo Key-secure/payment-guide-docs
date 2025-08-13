@@ -1,0 +1,162 @@
+{
+  "name": "Payment-guide",
+
+  "logo": {
+    "dark": "/logo/KeySecure Logo - Original 1.svg",
+    "light": "/logo/KeySecure Logo - Original 1.svg"
+  },
+
+  "favicon": "/logo/Frame 4.svg",
+
+  "colors": {
+    "primary": "#2662FF",
+    "light": "#2662FF",
+    "dark": "#2662FF",
+    "anchors": {
+      "from": "#DAF4F1",
+      "to": "#DAF4F1"
+    }
+  },
+
+  "topbarLinks": [
+    {
+      "name": "ZH-CN",
+      "url": "https://docs-cn.keysecure.io/"
+    }
+  ],
+
+  "modeToggle": {
+    "default": "light",
+    "isHidden": true
+  },
+
+  "topbarCtaButton": {
+    "name": "Official Website",
+    "url": "https://keysecure.io/zh-CN"
+  },
+
+  "tabs": [
+    { "name": "Payment Soluation", "url": "overview" },
+    { "name": "Quick Start", "url": "quick-start" },
+    { "name": "Feature Guide", "url": "feature-guide" },
+    { "name": "FAQ", "url": "FAQ" }
+  ],
+
+  "primaryTab": {
+    "name": "Payment Solution"
+  },
+
+  "navigation": [
+    {
+      "group": "Overview",
+      "pages": [
+        "Introduce/overview/introduction",
+        "Introduce/overview/termlist",
+        "Introduce/overview/fitst-phase"
+      ]
+    },
+    {
+      "group": "Budget Card Mode",
+      "pages": [
+        "Introduce/budget-card/budgt-card-introduction",
+        "Introduce/budget-card/open-card",
+        "Introduce/budget-card/authorization",
+        "Introduce/budget-card/transaction"
+      ]
+    },
+    {
+      "group": "Previous Preparation",
+      "pages": [
+        "quick-start/preparation/custody-wallet",
+        "quick-start/preparation/back-end-permission"
+      ]
+    },
+    {
+      "group": "Card Business Configuration",
+      "pages": [
+        "quick-start/card-management/open-coin",
+        "quick-start/card-management/budget-fund",
+        "quick-start/card-management/reserve-ratio",
+        "quick-start/card-management/app-card",
+        "quick-start/card-management/other-settings"
+      ]
+    },
+    {
+      "group": "Online Operation",
+      "pages": [
+        "quick-start/operation/manage-user",
+        "quick-start/operation/open-card-manage",
+        "quick-start/operation/approve-withdrawl",
+        "quick-start/operation/finance",
+        "quick-start/operation/revenue"
+      ]
+    },
+    {
+      "group": "System Management",
+      "pages": [
+        "feature-guide/system/admin-manage",
+        "feature-guide/system/role-manage"
+      ]
+    },
+    {
+      "group": "User Management",
+      "pages": [
+        "feature-guide/user/user-list",
+        "feature-guide/user/kyc"
+      ]
+    },
+    {
+      "group": "Card Business",
+      "pages": [
+        "feature-guide/card/card-bin",
+        "feature-guide/card/total-asset",
+        "feature-guide/card/open-card",
+        "feature-guide/card/card-package"
+      ]
+    },
+    {
+      "group": "Operation Management",
+      "pages": [
+        "feature-guide/operation/coin-manage",
+        "feature-guide/operation/benefit"
+      ]
+    },
+    {
+      "group": "Content Management",
+      "pages": [
+        "feature-guide/context/notification",
+        "feature-guide/context/carousel",
+        "feature-guide/context/other-settings"
+      ]
+    },
+    {
+      "group": "Financal Management",
+      "pages": [
+        "feature-guide/finance/deposit",
+        "feature-guide/finance/withdraw",
+        "feature-guide/finance/transaction",
+        "feature-guide/finance/revenue",
+        "feature-guide/finance/cost-manage"
+      ]
+    },
+    {
+      "group": "FAQ",
+      "pages": [
+        "FAQ/question-list"
+      ]
+    }
+  ],
+
+  "api": {
+    "baseUrl": "https://openapi.Keysecure.io/",
+    "playground": {
+      "mode": "simple"
+    }
+  },
+
+  "feedback": {
+    "suggestEdit": true,
+    "raiseIssue": true,
+    "thumbsRating": true
+  }
+}

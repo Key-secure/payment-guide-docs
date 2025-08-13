@@ -1,0 +1,53 @@
+---
+title: Budget Card Model
+---
+
+KeySecure's Budget Card system allows enterprises to share a single payment pool across all cards, enabling **flexible and controlled spending management** while **reducing capital reserve pressure**.
+
+## I. What is the Budget Card Model?
+
+A budget card is a **prepaid card model sharing a master account balance**. All cards draw from the same merchant budget account (USD), but each card can have individual spending rules (limits, categories, frequency, etc.).
+
+This model is commonly used for corporate expense management, vendor payments, employee spending control, and other scenarios, **balancing payment convenience with financial governance and compliance**.
+
+---
+
+## Key Features
+
+| Feature | Description |
+|---------|------------|
+| Real-Time Budget Control | Each transaction is verified against the available budget; transactions exceeding the limit are declined. |
+| Single-Pool Management | All cards share a single fund pool, eliminating the need to manage individual card balances. |
+| Dynamic Adjustment | Admins can adjust budgets, freeze cards, or update permissions in real time. |
+| Risk & Compliance | Supports geographic restrictions, transaction frequency limits, and anomaly alerts. |
+
+---
+
+## Operational Mechanism: Module Composition
+
+| Module | Function Description |
+|--------|--------------------|
+| Card Management System | Generate, activate, freeze, or cancel cards. |
+| Budget Account | Central account managing all card spending limits. |
+| Transaction Authorization System | Every transaction must pass real-time budget verification before approval. |
+| Budget Logging System | Tracks all transactions, budget usage, and failure reasons. |
+| Anomaly Alert System | Monitors overspending and unauthorized actions, notifying administrators in real time. |
+
+---
+
+## Differences from Traditional Cards
+
+| Comparison | Budget Card | Standard Prepaid / Credit Card |
+|-----------|------------|-------------------------------|
+| Spending Control | ✅ Total assets represent the spending limit | ❌ Users need to preload funds onto individual cards |
+| Expense Categorization | ✅ Configurable | ❌ Not supported |
+| Risk Management | ✅ Multi-dimensional risk checks | ❌ Limited |
+| Billing & Reporting | ✅ Real-time, transparent, automated | ❌ Some information requires manual processing |
+
+---
+
+## Tips
+
+- Merchant **budget accounts** are currently in USD by default; all transactions are settled in USD.  
+- All spending, refunds, and failed transaction records are linked to the central account, simplifying reconciliation.  
+- Budget can be replenished using USDT / USDC or other stablecoins; excess funds can be withdrawn as needed.

@@ -1,0 +1,58 @@
+---
+title: Merchant Role Management
+---
+
+## Overview
+
+To ensure internal members can use the payment card management backend under controlled access, the **Merchant Role Management** module allows merchant administrators to define custom roles and configure permissions. This module helps merchants establish a fine-grained permission framework to maintain system security, operational compliance, and clear responsibility boundaries.
+
+Using this feature, merchants can create roles based on positions (e.g., Finance, Customer Service, Risk Control) and assign specific menu access rights, ensuring members can only access modules relevant to their responsibilities.
+
+## Operation Instructions
+
+### Create a New Role  
+Navigation: Click the **"Create Role"** button.
+
+**Steps:**  
+- Enter the role name (e.g., "Finance Officer", "KYC Reviewer")  
+- Add a role description (to clarify its scope of responsibility)  
+- In the permission configuration area, select the functional menus the role can access (supports module-level grouping)  
+- Click **"Save"** to complete role creation  
+
+<Note>
+Once created, roles can be assigned to organization members. Administrators are advised to plan the role structure in advance.
+</Note>
+
+### Assign Page Permissions  
+Navigation: Configure this during role creation or editing by selecting the functional pages the role can access.
+
+<Note>  
+1. Only selected pages will be visible and accessible to members assigned to this role; other modules will be hidden and inaccessible.  
+2. Permissions are dynamically updated and take effect immediately after modification.  
+</Note>
+
+### Edit or Delete a Role  
+
+**Edit Role:**  
+Click **"Edit"** in the role list to modify the name, description, or permission scope.
+
+**Delete Role:**  
+Click **"Delete"** in the role list.  
+If members are still assigned to the role, the system will prompt you to unbind them before deletion.
+
+<Note>
+Keep at least one “Super Administrator” role to avoid accidental removal of full permissions.
+</Note>
+
+## Recommendations & Best Practices
+
+**Principle of Least Privilege:** Assign only the minimum required access rights for a member’s position to reduce operational risks.
+
+**Role Reuse Strategy:** For operational efficiency, use standardized role models (e.g., Operations, Finance, Technical Support) and reuse configurations.
+
+**Regular Role Audits:** Review role settings and member assignments quarterly to prevent permission drift or misuse by inactive accounts.
+
+<Note>
+Currently, each member can only be assigned one role. For multi-function requirements, create combined-permission roles.  
+For advanced permission models (e.g., operation-level control, multi-role binding), contact the KeySecure team for support.
+</Note>

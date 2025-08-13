@@ -1,0 +1,55 @@
+---
+title: Glossary
+---
+
+## Card & Payment Related
+
+### White-Label Card
+A bank card product provided by a third-party service, allowing enterprises to customize branding, features, and fee policies. Ideal for quickly launching a branded payment experience.
+
+### Virtual Card
+A non-physical card existing only in an app or mobile wallet, supporting online spending or integration with Apple Pay / Google Pay for offline payments.
+
+### Card BIN (Bank Identification Number)
+The first few digits of a card number (usually 6), used to identify the issuing institution and card network type, such as Visa or MasterCard.
+
+
+
+## Security & Identity Authentication
+
+### MPC (Multi-Party Computation)
+A distributed key management mechanism where multiple parties jointly generate and manage private keys. Ensures no single party can control funds independently, enhancing wallet security.
+
+### Google Authenticator (GA)
+A time-based one-time password (TOTP) app used for two-factor authentication, improving account login and operation security.
+
+
+## Compliance Processes
+
+### KYC (Know Your Customer)
+A process to verify the identity of end-users, typically including document upload, facial recognition, and risk assessment. Users who have not completed KYC cannot access core functions.
+
+### KYB (Know Your Business)
+A process to identify business clients (e.g., exchanges, wallets), verifying legal representatives and business nature. It is a pre-requisite for merchant onboarding.
+
+### AML (Anti-Money Laundering)
+Mechanisms to detect and prevent illegal fund flows, including terrorist financing, illicit money transfers, and other suspicious activities.
+
+### KYT (Know Your Transaction)
+A mechanism for real-time monitoring and risk assessment of each on-chain and off-chain transaction to prevent abnormal activities.
+
+### Sumsub
+A third-party identity verification service integrated within KeySecure, supporting KYC/KYB, user verification, and blacklist checks.
+
+
+
+## IV. Merchant Configuration & System Components
+
+### woekspace ID / App ID
+Unique identifiers for a merchant’s wallet woekspace and associated app on the KeySecure platform, used for on-chain configuration and identity recognition.
+
+### Budget Account
+A USD account for card spending and refunds. Digital assets (e.g., USDT) can be deposited and converted to USD. The system checks this account’s balance to determine card spending eligibility.
+
+### Reserve Ratio Policy
+A strategy managing the proportion between budget account balances and user assets. Proper configuration improves payment success rates and optimizes fund usage efficiency.

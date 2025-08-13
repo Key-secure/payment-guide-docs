@@ -1,0 +1,62 @@
+---
+title: Adding Your Team to the Merchant System
+---
+
+## Overview
+To ensure that employees in operations, risk management, finance, and other roles can securely and compliantly use the KeySecure merchant backend, merchants must complete administrator setup, role configuration, and team member addition. This guide walks you through connecting your team to the system.
+
+## Applicable Roles
+* Initial Administrator (designated by the merchant)  
+* Internal team members requiring backend access  
+
+## Steps
+
+### Step 1: Obtain Initial Administrator Account
+Contact the KeySecure merchant support team to request backend access and provide:
+
+* Merchant name  
+* Initial administrator email address  
+* Contact phone number (if applicable)  
+
+Once received, the system will create the initial administrator account and send a login link via email with instructions.
+
+### Step 2: Bind Google Authenticator (GA) for Two-Factor Authentication
+Upon first login, the initial administrator will be prompted to bind GA.
+
+* Completing the binding enables 2FA for enhanced account security.
+
+### Step 3: Create Roles and Assign Permissions
+After login, the administrator can create roles based on team structure and configure corresponding permissions.
+
+**Navigation:** System Management > Merchant Role Management
+
+**Steps:**
+
+1. Click **Add Role** and enter a role name (e.g., Operations, Finance, Risk).  
+2. Select the backend menus and functionalities this role can access (e.g., Card Management, Withdrawal Approval).  
+3. Save the role configuration.
+
+<Note>
+It is recommended to create templates for common roles to simplify assigning multiple members later.
+</Note>
+
+### Step 4: Add Team Members and Assign Roles
+Once roles are configured, administrators can add team members.
+
+**Navigation:** System Management > Merchant Administrator Management
+
+**Steps:**
+
+1. Click **Add Member**.  
+2. Enter the following information:
+
+   * Login email  
+   * User nickname  
+   * Login password (initial password, can be changed after first login)  
+   * Assigned role (select from previously created roles)  
+
+<Tip>
+1. After saving, members can immediately log in using the provided email and password.  
+2. First-time login requires binding their own GA authenticator.  
+3. Members can only access functions allowed by their assigned role, ensuring the principle of least privilege.
+</Tip>

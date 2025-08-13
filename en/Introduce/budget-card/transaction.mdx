@@ -1,0 +1,76 @@
+---
+title: Transaction Types
+---
+
+## Overview of Transaction Types
+
+A virtual card’s full transaction lifecycle includes the following five types:
+
+1. **Auth Request** – Authorization Request  
+2. **Settlement** – Transaction Settlement  
+3. **Reversal** – Authorization Reversal  
+4. **Refund** – Refund  
+5. **Declined Refund** – Declined Refund  
+
+ 
+
+## Auth Request (Authorization)
+
+**Process:**  
+When an end-user makes a purchase, the merchant initiates an authorization request. The system evaluates whether to approve the transaction.
+
+**Authorization Criteria:**
+
+1. Card status – the user’s virtual card must be **active**.  
+2. User asset sufficiency – the user must have enough funds to cover the payment.  
+3. Merchant budget account – the merchant’s budget account must have sufficient balance to cover fees.
+
+If any condition fails, the system denies authorization and marks the transaction as **failed**.
+
+ 
+
+## Settlement
+
+**A. Normal Settlement (Amount Unchanged)**  
+The system completes the settlement for an authorized transaction. Status changes from **pending** to **completed**.
+
+**B. Settlement with Amount Change (Increase/Decrease)**  
+If the actual settlement amount differs from the authorized amount:
+
+- A new transaction is generated.  
+- The new transaction contains a **preTransactionId** field linking it to the original authorization.
+
+---
+
+## Reversal (Authorization Cancellation)
+
+**Scenario:**  
+If an authorized transaction is not yet settled (e.g., user cancels or authorization times out), a **Reversal** can be initiated.
+
+- The system creates a new **reversal** transaction linked to the original authorization ID.  
+- Status is **completed**.  
+- Merchant receives a refund minus applicable fees.
+
+---
+
+## Refund
+
+**Scenario:**  
+Refunds apply when a transaction has completed both authorization and settlement, but the user cancels or the merchant initiates a refund.
+
+- Merchant submits a **Refund** request.  
+- The system generates a new **refund** transaction, with `preTransactionId = null` (not linked to the original transaction).  
+
+<Note>
+Refunds occur **after funds have been fully settled**.
+</Note>
+
+---
+
+## Declined Refund
+
+**Scenario:**  
+The system approves an authorization, but the issuing bank rejects the transaction.
+
+- A **declined_refund** transaction is automatically generated.  
+- The user’s funds and associated fees are returned.

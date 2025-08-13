@@ -1,0 +1,47 @@
+---
+title: Transaction Authorization
+---
+
+## What is Authorization Check
+
+Authorization is the core step in virtual card transactions, determining whether a user can complete a transaction. The authorization process is fully automated and consists of two main stages: **Basic Authorization Check** and **User Asset Check**. Only when both stages pass will the system issue authorization to allow the transaction to proceed.
+
+### Stage 1: Basic Authorization Check
+The system first performs preliminary validation on key card and merchant parameters to ensure the transaction can be executed under compliance and cost-control requirements.
+
+#### Authorization Criteria
+* **Card Status Verification**
+  1. Verify that the user’s virtual card is in “Active” status.
+  2. If the card is reported lost, frozen, or cancelled, the transaction is immediately declined.
+
+* **Merchant Budget Account Verification**
+  1. Calculate the transaction cost based on the card BIN and issuance cost rules (including base fees and settlement fees).
+  2. Check if the merchant's budget account has sufficient balance to cover the transaction cost.
+
+ **If any condition fails:** Authorization is denied immediately, the transaction is marked as “Failed,” and the user cannot complete payment.
+
+
+
+## Stage 2: User Asset Check
+Once the basic check passes, the system evaluates the user’s account to ensure sufficient funds to complete the transaction.
+
+### Asset Verification Criteria
+
+* **User Account Status**
+  1. Verify if the user is restricted from spending (due to risk rules, blacklists, or account freezes).
+  2. If restrictions exist, authorization is denied.
+
+* **Asset Availability Assessment**
+  1. Calculate the user’s ability to pay based on the transaction amount, currency, and the merchant’s configured **Payment Priority** strategy.
+  2. Consider merchant parameters such as exchange rate slippage and minimum payable thresholds to ensure sufficient assets are available.
+
+> **If user assets are insufficient:** Authorization is denied immediately, the transaction is marked as “Failed,” and the user cannot complete payment.
+
+---
+
+## Stage 3: System Approval
+When both stages succeed, the system performs the following:
+
+1. Sends the official authorization instruction to the card network to allow the transaction.
+2. Freezes the corresponding amount of the user’s digital assets (in the merchant’s configured currency) and marks it as **Authorized (Pending)**.
+3. Returns an authorization success response, awaiting subsequent settlement.
