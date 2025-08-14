@@ -1,22 +1,16 @@
 ---
-title: 开通币种
-
+title: Setup Supported Coins
 ---
-配置支持币种用于开启商户可用币种的充值与提现功能，并设定交易规则，确保资金操作安全与退款流程顺畅。
 
-访问「运营管理」>「商户币种管理」，添加需要支持的币种，并配置以下参数：
+Configure supported coins to enable deposit and withdrawal functions for merchants, and set transaction rules to ensure secure fund operations and smooth refund processes.
 
-* 是否开启充值 / 提现：启用后C端用户可使用该币种充值或提现
+Go to **“Operations Management” > “Merchant Coin Management”**, add the desired supported coins, and configure the following parameters:
 
-* 最小充值金额：设置充值下限，达到最小充值数才进行入账
+* **Enable Deposit / Withdrawal:** When enabled, end-users can deposit or withdraw using the selected coin.
+* **Minimum Deposit Amount:** Set the minimum threshold for deposits; only deposits meeting or exceeding this amount will be credited.
+* **Minimum Withdrawal Amount:** Set the minimum withdrawal threshold to restrict end-user withdrawals.
+* **Exchange Rate Slippage:** Set a slippage percentage for card payments to mitigate losses from cryptocurrency price fluctuations.
 
-* 最小提现金额：设置提现下限，限制C端用户提现
-
-* 汇率滑点：卡片消费时，增加支付滑点避免数字货币汇率波动造成的损失（%）
-
-<Warning>
-请务必开通 USDC（ETH）：系统默认使用 USDC（ETH）进行退款处理，若未开通，将可能导致无法向C端用户退款。
-</Warning>
 
 
 
