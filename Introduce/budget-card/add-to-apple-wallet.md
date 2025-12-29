@@ -16,8 +16,8 @@ title: 绑定至Apple Wallet
 
 - **操作**: iPhone主屏幕 → 点击自带的「Wallet（钱包）」应用
 - **功能说明**: Apple Wallet为官方数字钱包，用于管理支付卡凭证
-![打开钱包](../../images\apple1.png)
-![添加卡片入口](../../images\apple2.png)
+![打开钱包](../../images/apple1.png)
+![添加卡片入口](../../images/apple2.png)
 
 ---
 
@@ -25,7 +25,7 @@ title: 绑定至Apple Wallet
 
 
 - **操作**: 选择「借记卡或信用卡」选项（首次添加自动跳转）
-![添加卡片入口](../../images\apple3.png)
+![添加卡片入口](../../images/apple3.png)
 
 ---
 
@@ -33,8 +33,8 @@ title: 绑定至Apple Wallet
 
 
 - **操作**: 点击「手动输入卡片信息」→ 填写卡号、有效期、CVV
-![填写卡片信息](../../images\apple6.png)
-![添加成功提示](../../images\apple7.png)
+![填写卡片信息](../../images/apple6.png)
+![添加成功提示](../../images/apple7.png)
 
 ---
 
@@ -43,8 +43,8 @@ title: 绑定至Apple Wallet
 
 - **操作1**: 阅读并接受银行/支付服务商条款
 - **操作2**: 完成验证（短信验证码/邮箱验证）。注：优先选择电子邮箱验证，部分地区可能无法接收短信认证。
-![阅读条款](../../images\apple10.png)
-![验证方式选择](../../images\apple8.png)
+![阅读条款](../../images/apple10.png)
+![验证方式选择](../../images/apple8.png)
 
 
 ---
@@ -53,7 +53,7 @@ title: 绑定至Apple Wallet
 
 
 - **结果**: 卡片激活成功
-![卡片激活](../../images\apple9.png)
+![卡片激活](../../images/apple9.png)
 
 ---
 

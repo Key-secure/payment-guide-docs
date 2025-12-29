@@ -14,7 +14,7 @@ title: 下载安装App
 PayFun官方网站
 
 ### 截图示例
-![App下载页面](../../images\download.png)
+![App下载页面](../../images/download.png)
 
 ---
 

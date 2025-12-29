@@ -13,7 +13,7 @@ Open the official PayFun website and download the PayFun App version compatible 
 Official PayFun Website
 
 ### Screenshot Example
-![App下载页面](../../images\download.png)
+![App下载页面](../../images/download.png)
 
 ---
 

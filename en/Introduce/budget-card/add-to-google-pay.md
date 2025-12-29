@@ -17,36 +17,36 @@ title: Bind to Google wallet
   - Not installed: Search for 「Google Wallet」 in Google Play Store to download and install
   - First-time launch: Log in to your Google Account → Tap 「Get Started」
 - **Action**: Open the installed Google Pay/Google Wallet app
-![卡片激活](../../images\google1.png)
+![卡片激活](../../images/google1.png)
 
 ---
 
 ### Step 2: Add a Payment Card
 
 - **Action**: Tap 「Add Payment Card」 or the 「+」 icon on the homepage
-![卡片激活](../../images\google2.png)
-![卡片激活](../../images\google3.png)
+![卡片激活](../../images/google2.png)
+![卡片激活](../../images/google3.png)
 ---
 
 ### Step 3: Enter Card Information
 
 - **Action**: Fill in the card number, expiration date, CVV, and cardholder name
-![卡片激活](../../images\google6.png)
+![卡片激活](../../images/google6.png)
 
 ---
 
 ### Step 4: Accept Terms
 
 - **Action**: Read and accept the card issuer's service terms
-![卡片激活](../../images\google4.png)
-![卡片激活](../../images\google5.png)
+![卡片激活](../../images/google4.png)
+![卡片激活](../../images/google5.png)
 
 ---
 
 ### Step 5: Identity Verification
 
 - **Action**: Complete the verification process via SMS/email/App
-![卡片激活](../../images\google7.png)
+![卡片激活](../../images/google7.png)
 
 ---
 ### Step 6: Binding Successful
@@ -56,7 +56,7 @@ title: Bind to Google wallet
   - In-store offline NFC payments
   - In-app and online web payments
   - Linking to Google services (YouTube Premium, Google Play Store, etc.)
-![卡片激活](../../images\google10.png)
+![卡片激活](../../images/google10.png)
 
 ---
 
