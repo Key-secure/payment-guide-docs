@@ -23,5 +23,5 @@ PayFun App → 卡片管理 → 查看卡片详情
 
 ### 截图示例
 
-![ ](../../images\details1.png)
-![ ](../../images\details2.png)
+![ ](../../images/details1.png)
+![ ](../../images/details2.png)

@@ -15,23 +15,23 @@ title: Bind to Apple Wallet
 
 - **Operation**: iPhone Home Screen → Tap the pre-installed **Wallet** app
 - **Function Description**: Apple Wallet is the official digital wallet for managing payment card credentials
-![打开钱包](../../images\apple1.png)
-![添加卡片入口](../../images\apple2.png)
+![打开钱包](../../images/apple1.png)
+![添加卡片入口](../../images/apple2.png)
 
 ---
 
 ### Step 2: Select to Add a Card
 
 - **Operation**: Choose the **Debit or Credit Card** option (auto-redirected for first-time addition)
-![添加卡片入口](../../images\apple3.png)
+![添加卡片入口](../../images/apple3.png)
 
 ---
 
 ### Step 3: Enter Card Information
 
 - **Operation**: Tap **Enter Card Information Manually** → Fill in the card number, expiration date, and CVV
-![填写卡片信息](../../images\apple6.png)
-![添加成功提示](../../images\apple7.png)
+![填写卡片信息](../../images/apple6.png)
+![添加成功提示](../../images/apple7.png)
 
 ---
 
@@ -39,14 +39,14 @@ title: Bind to Apple Wallet
 
 - **Operation 1**: Read and accept the terms and conditions of the bank/payment service provider
 - **Operation 2**: Complete verification (SMS verification code/email verification). Note: Priority is given to email verification; SMS verification may not be available in some regions.
-![验证方式选择](../../images\apple8.png)
+![验证方式选择](../../images/apple8.png)
 
 ---
 
 ### Step 5: Complete Binding
 
 - **Result**: Card activation successful
-![绑定成功](../../images\apple10.png)
+![绑定成功](../../images/apple10.png)
 
 ---
 

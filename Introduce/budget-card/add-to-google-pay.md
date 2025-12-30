@@ -18,7 +18,7 @@ title: 绑定至Google wallet
   - 未安装：Google Play商店搜索「Google Wallet」下载安装
   - 首次打开：登录Google账户 → 点击「开始使用」
 - **操作**: 打开已安装的Google Pay/Google Wallet应用
-![卡片激活](../../images\google1.png)
+![卡片激活](../../images/google1.png)
 
 ---
 
@@ -26,15 +26,15 @@ title: 绑定至Google wallet
 
 
 - **操作**: 点击首页「添加支付卡」或「+」图标
-![卡片激活](../../images\google2.png)
-![卡片激活](../../images\google3.png)
+![卡片激活](../../images/google2.png)
+![卡片激活](../../images/google3.png)
 ---
 
 ### 步骤3：输入卡片信息
 
 
 - **操作**: 填写卡号、有效期、CVV、持卡人姓名
-![卡片激活](../../images\google6.png)
+![卡片激活](../../images/google6.png)
 
 ---
 
@@ -42,15 +42,15 @@ title: 绑定至Google wallet
 
 
 - **操作**: 阅读并接受发卡机构服务条款
-![卡片激活](../../images\google4.png)
-![卡片激活](../../images\google5.png)
+![卡片激活](../../images/google4.png)
+![卡片激活](../../images/google5.png)
 
 ---
 
 ### 步骤5：身份验证
 
 - **操作**: 通过短信/邮件/App完成验证流程。
-![卡片激活](../../images\google7.png)
+![卡片激活](../../images/google7.png)
 
 ---
 ### 步骤6：绑定成功
@@ -60,7 +60,7 @@ title: 绑定至Google wallet
   - 实体店线下NFC支付
   - App内和网页线上支付
   - 关联Google服务（YouTube Premium、Play商店等）
-![卡片激活](../../images\google10.png)
+![卡片激活](../../images/google10.png)
 
 ---
 

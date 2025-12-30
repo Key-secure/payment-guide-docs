@@ -23,5 +23,5 @@ Card number, expiration date, and CVV are sensitive data and must not be disclos
 
 ### Screenshot Examples
 
-![ ](../../images\details1.png)
-![ ](../../images\details2.png)
+![ ](../../images/details1.png)
+![ ](../../images/details2.png)
