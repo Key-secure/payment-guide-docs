@@ -1,0 +1,68 @@
+---
+title: 创建托管钱包
+
+---
+为确保您顺利接入 KeySecure 支付卡业务，请按照以下步骤完成 MPC 钱包的开通与相关配置工作。
+
+为确保您顺利接入 KeySecure 支付卡业务，请按照以下步骤完成 MPC 钱包的开通与相关配置工作。
+
+## I. 下载并初始化 KeySecure App
+### 步骤 1：下载 App
+点击下方链接下载安装 KeySecure App：
+[下载地址](https://www.keysecure.io/download-app/)
+
+### 步骤 2：创建 MPC 工作站 & 托管钱包
+参考以下指引完成钱包初始化，并务必备份私钥：
+[创建指南](https://docs-cn.keysecure.io/user-guide/mpc-wallet/wallet/create-wallet)
+
+完成后请提供以下信息给 KeySecure 客户团队：
+
+* 商户名称
+
+* 工作站 ID
+
+我们将在收到信息后，依据合同为您开通所需区块链网络与托管基础设施。
+
+## II. 启用归集功能并配置策略
+### 步骤 2.1：启用归集功能
+登录 MPC Web 控制台，启用币种归集：
+[开通归集功能指南](https://docs-cn.keysecure.io/user-guide/mpc-wallet/consolidate/co-signer/execute)
+
+### 步骤 2.2：配置归集策略
+设置自动归集规则，支持用户充值后资金自动归集：
+[归集规则配置文档](https://docs-cn.keysecure.io/user-guide/mpc-wallet/consolidate/co-signer/rules)
+
+<Note>
+如需启用 TRON 能量代理，请提前与团队确认开通流程与费用：
+ [TRON 能量代理开通指南](https://docs-cn.keysecure.io/help-center/manage-mpc/Tron-delegation/resource-from-custody)
+</Note>
+
+## III. 配置 API 签名功能（Cosigner）
+为支持自动化提现与授权消费，请完成以下配置：
+
+[API 接入指南](https://docs-cn.keysecure.io/user-guide/mpc-wallet/api-integration/api)
+
+[Cosigner 配置指南](https://docs-cn.keysecure.io/user-guide/mpc-wallet/api-integration/co-signer)
+
+## IV. 提交卡业务初始配置信息
+请整理以下信息，提交给 KeySecure 客户团队：
+
+| 类型 | 内容说明 |
+|------|------|
+| 账户信息 | 商户邮箱,用于初始化商户管理员权限并注册卡商账户 |
+| 托管基础信息 | 工作站 ID、工作站 APP ID、归集钱包 ID |
+| 消息服务 | 短信服务（如 Twilio）、邮件服务（如 SMTP） |
+| KYB 文件 | 包含行业类型、英文描述及合规资料（按您的合同要求） |
+| 组织 IP | 公司所在国家的IP |
+| 卡业务网站 | 公司支付卡业务官网，如无现成网站，请联系团队协助部署落地页 |
+
+
+
+KeySecure 将协助您完成子账户申请、卡 BIN 开通、预算账户配置等准备工作，为开卡、充值、消费和结算做好准备。
+
+
+<Tip> 
+如有疑问，请联系客户经理，或通过以下方式获取支持：
+
+官方邮箱：support@keysecure.io
+</Tip>

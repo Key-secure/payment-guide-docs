@@ -1,0 +1,81 @@
+---
+title: Managing Financial Records
+---
+
+## Overview
+
+Merchants can access **Financial Management** to view deposit records, withdrawal records, and card transaction records. This module allows monitoring fund flows, validating transaction legitimacy, and performing daily reconciliations and anomaly checks.
+
+## Applicable Roles
+
+* Finance Personnel  
+* Merchant Administrators  
+* Risk/Compliance Review Staff  
+
+## Record Types
+
+### 1. Deposit Records
+
+Records of members depositing digital assets into the merchant's MPC wallet.
+
+**Key fields:**
+
+* Member ID  
+* Deposit currency (e.g., USDT, ETH)  
+* Blockchain network (e.g., Tron, Ethereum)  
+* Deposit amount  
+* Deposit address  
+* TXID (transaction hash)  
+* Status  
+
+<Note>
+Only after reaching the required on-chain confirmations will a deposit be considered successful by the system.  
+
+Successful deposits are automatically credited to the member’s account balance.  
+
+Failed or unconfirmed deposits will not be recorded.  
+
+Finance staff are advised to regularly reconcile deposit amounts with on-chain transactions to ensure accuracy.
+</Note>
+
+### 2. Withdrawal Records
+
+Displays member withdrawal requests to on-chain addresses. These require manual approval in the backend.
+
+**Key fields:**
+
+* Member ID  
+* Withdrawal currency / network  
+* Withdrawal amount  
+* Withdrawal address  
+* TXID (on-chain transaction hash)  
+* Approval status (Pending / Approved / Rejected)  
+* Approver / Approval time  
+
+<Note>
+Withdrawal requests must be manually approved (see Withdrawal Approval Workflow).  
+
+Once approved, the system automatically triggers on-chain transfer via the MPC wallet and executes Co-signer signatures.  
+
+Ensure that the MPC wallet has **sweeping enabled** and that the gas station wallet contains sufficient fees for the transaction.  
+
+Common withdrawal failures are due to insufficient gas fees or incomplete sweeping. Regularly check wallet status to avoid delays.
+</Note>
+
+### 3. Card Transaction Records
+
+Tracks all transactions conducted via virtual payment cards, including **authorization, settlement, and refund stages**.
+
+**Key fields:**
+
+* Transaction type  
+* Transaction timestamp & status  
+* Member information (ID, nickname)  
+* Card details (card number / type)  
+* Transaction amount & currency  
+* Merchant name (location of transaction)  
+
+**Account balance impact:**
+
+1. Merchant budget account balance changes  
+2. Member total asset changes

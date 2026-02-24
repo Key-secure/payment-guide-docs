@@ -1,0 +1,101 @@
+---
+title: Merchant Total Assets
+---
+
+## Overview
+
+The “Merchant Total Assets” page is the core fund management module under the budget card business model. Merchants can view and manage budget assets used for card operations, including total balance, budget account details, card information, asset utilization rate, and reserve monitoring. This module enables merchants to maintain full visibility over operational funds, ensure business stability, and respond promptly to spending pressure.
+
+## Budget Accounts and Asset Structure
+
+In the budget card model, each merchant must pre-fund a budget account, which serves as a unified fund pool for:
+
+* Card issuance costs
+* Card transaction costs (deducted from the budget account when members make purchases)
+
+If a merchant uses multiple BINs from different issuers, the system maintains separate budget accounts for each issuer to ensure fund segregation and refined management.
+
+## Functional Operations
+
+### Viewing Merchant Total Assets Overview
+
+Merchants can view the following key information:
+
+* Merchant ID
+* Associated Issuer Name
+* Budget Account ID
+* Budget Account Balance (USD)
+* Total Value of Members’ Digital Assets (USD)
+* Current Reserve Ratio (Budget Balance / Member Assets)
+* Total Number of Issued Cards
+* Card information under each budget account (expandable for details)
+
+Clicking the **[Details]** button on any card opens its full details page.
+
+### Recharging the Budget Account
+
+Click **[Top Up Budget Account (USD)]** to fund the account via digital Coin(e.g., USDT, USDC). The system automatically converts it to USD at the current exchange rate and credits the relevant budget account. This balance directly supports subsequent card issuance and transactions.
+
+### Withdrawing to MPC woekspace
+
+Merchants can withdraw unused budget balances to their linked MPC woekspace address for internal asset management. The withdrawal process follows the standard flow and requires both system approval and on-chain confirmation.
+
+### Card Details Management
+
+Within the budget account details page, merchants can view all cards issued under the account and perform basic operations.
+
+**Card Information Fields:**
+
+* Card Number (last 4 digits)
+* Card ID
+* Card BIN
+* Member Email / Member ID
+* KYC Status
+* Card Activation Date
+* Current Status: System Frozen / User Frozen
+
+**Fee-Related Information:**
+
+* Member Card Issuance Cost
+* Member Transaction Rate (Domestic/International)
+* Small Transaction Threshold (USD)
+* Small Transaction Fee (per transaction, USD)
+* Small Transaction Fee Waiver Count
+* Remaining Waiver Count
+* Waiver Cycle (days)
+
+**Available Actions:**
+
+* Freeze Card
+* Unfreeze Card
+* View Full Card Details
+
+### Reserve Ratio Monitoring and Alerts
+
+**1. Reserve Ratio Definition**
+
+Reserve Ratio = Merchant Budget Account Balance / Total Member Asset Value (USD)
+
+A higher reserve ratio means sufficient available funds, ensuring stronger transaction reliability.  
+A low reserve ratio may cause transaction failures and reduced user satisfaction.
+
+**2. Alert Configuration**
+
+Merchants can set monitoring thresholds and notification rules for the reserve ratio:
+
+* **Trigger Conditions:**
+  1. Alert when below the system’s recommended value
+  2. Alert when below X% of the recommended value (customizable)
+
+* **Notification Settings:**
+  * Alert Email Addresses (multiple supported)
+  * Alert Frequency (e.g., daily, hourly)
+  * Custom Alert Message Template
+
+The system automatically sends email alerts when thresholds are reached, helping merchants promptly top up budgets and ensure uninterrupted card services.
+
+## Recommendations
+
+* Monitor the reserve ratio regularly and replenish funds based on peak transaction volumes to avoid shortages.
+* Prioritize budget accounts that support multi-Cointop-ups to improve fund flexibility.
+* Configure reasonable alerts to maintain sufficient funds automatically and reduce operational risk.

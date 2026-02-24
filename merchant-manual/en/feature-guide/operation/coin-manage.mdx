@@ -1,0 +1,29 @@
+---
+title: Merchant Coin Management
+---
+
+## Overview
+
+The "Merchant Coin Management" page is a key module within the payment card system that supports Coinconfiguration and transaction parameter management. It enables merchants to flexibly define the range of digital assets supported by their business and to specify detailed Deposit, withdrawal, and consumption rules for each coin. This module ensures that payment processes run in a compliant, secure, and efficient manner.
+
+On this page, merchants can perform the following configuration operations:
+
+### Enable/Disable Coin Functions
+
+Merchants can choose whether to enable Deposit and withdrawal functions for a specific coin. Once enabled, end users can Deposit their accounts or request withdrawals using that coin.
+
+### Settings
+
+For each enabled coin, the system allows configuration of the following parameters to ensure operational compliance and risk control:
+
+**Minimum Deposit Amount:** Sets the minimum allowable Deposit amount for the Coinin the system to prevent invalid or trivial deposits and optimize fund settlement efficiency.
+
+**Minimum Withdrawal Amount:** Defines the minimum amount limit for user withdrawal requests to avoid frequent small withdrawals that increase operational burden and on-chain transaction costs.
+
+**Exchange Slippage Percentage:** In Coinexchange scenarios, this setting controls the allowable price fluctuation range. Merchants can set this ratio to handle market volatility and protect both their own and users’ expected transaction prices.
+
+### Payment Priority Management
+
+Merchants can freely add mainstream currencies supported by the system (e.g., USDT, USDC, ETH) for payment purposes. Once added, merchants can centrally manage the payment priority of all currencies.
+
+Setting payment priority means that when an end user initiates a card payment, the system attempts to deduct funds sequentially based on the configured priority, prioritizing higher-ranked currencies to complete the payment. This mechanism improves user experience and increases transaction success rates.

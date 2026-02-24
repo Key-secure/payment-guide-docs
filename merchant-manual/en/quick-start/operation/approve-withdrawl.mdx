@@ -1,0 +1,59 @@
+---
+title: Approving Withdrawal Requests
+---
+
+## Overview
+
+Withdrawal requests initiated by members in the App are aggregated in the backend for management and approval. Merchant administrators can manually review requests on the withdrawal records page to ensure fund security and compliance. If automatic approval is enabled, the system can release small withdrawals based on preset thresholds, improving processing efficiency.
+
+## Applicable Roles
+
+* Merchant Administrator  
+* Operations / Finance personnel with withdrawal approval permissions  
+
+## Steps
+
+<Steps>
+<Step title="Access the Withdrawal Records Page">
+1. Log in to the merchant backend.  
+2. In the left menu, click **Transaction Records Management**.  
+3. Select **Withdrawal Records** to open the list of withdrawal requests.
+</Step>
+
+<Step title="View Pending Requests">
+Filter the list by **Status: Pending** to locate requests awaiting approval.  
+
+Each record displays key details:
+
+* Withdrawal amount and currency  
+* Member information (email, nickname)  
+* Withdrawal address  
+* Request submission time  
+* Current status
+</Step>
+
+<Step title="Manually Approve or Reject">
+Click **Approve** for the target record to open the approval detail page.
+
+Actions:
+
+* **Approve:** Click **Approve**, the system automatically triggers the on-chain withdrawal via the MPC workstation, with signature confirmation handled by Co-signer nodes.  
+* **Reject:** Click **Reject**, enter the rejection reason in the popup, and the system notifies the member and halts the withdrawal process.
+</Step>
+</Steps>
+
+## Enable Automatic Approval
+
+To streamline small withdrawal processing, the system supports automatic approval:
+
+**Steps:**
+
+1. Click **Automatic Approval Configuration** at the top right.  
+2. Set the automatic approval threshold (e.g., 100 USD).  
+3. Enable the automatic approval switch and save the configuration.
+
+<Tip>
+1. Requests below the configured threshold are automatically approved.  
+2. Automatic approval triggers on-chain withdrawal and signature processes.  
+3. It is recommended to use this in conjunction with risk control and wallet strategies to ensure fund security.
+</Tip>

@@ -1,0 +1,104 @@
+---
+title: App Card Packages
+---
+
+## Overview
+
+The “App Card Issuance Packages” page is used to configure virtual card product packages that end-users can apply for within the white-label app. Merchants can flexibly create multiple user-facing card packages based on business needs, cost structure, and target markets, defining package prices, fee rules, and service levels to achieve differentiated pricing, control profit margins, and enhance the user experience.  
+Each card issuance package represents a sellable card product that users can freely choose when applying for a card in the app.
+
+Merchants can design differentiated service offerings (e.g., fees, free allowances) for different user types (such as regular users and high-net-worth users).
+
+The system supports multilingual configuration to meet localization needs for a global user base.
+
+## Configuration Details
+
+<Note>
+Before creating a card issuance package, you must first set the Cointo which refunded card balances will be credited in the member account. Without this, package configuration cannot be completed.
+</Note>
+
+### Package Basic Information (Chinese & English)
+
+Merchants must provide clear and intuitive basic information for each package to ensure users can accurately understand the card product’s features and applicability in the front-end app.
+
+**Package Name**
+
+Displayed in the app as the card’s name (supports Chinese and English), e.g., “Basic Virtual Card,” “VIP Premium Card.”
+
+**Package Description**
+
+Provides detailed information about applicable scenarios, key features, or fee details to help improve conversion rates.
+
+**Package Tags**
+
+Quick identifiers for card types, such as “Basic,” “Premium,” “No Service Fee,” which can be highlighted in the front-end as badges.
+
+### Package Fee Structure
+
+Defines the cost a user must pay when applying for the package, as well as the applicable service fee rates for future transactions.
+
+**Card Issuance Fee (USD)**
+
+The one-time fee charged when a user applies for this package, usually covering the merchant’s issuance cost and profit margin.
+
+**Transaction Service Fee Settings**
+
+* Domestic Transaction Rate: Percentage fee applied when a user makes a purchase in their registered country.
+* International Transaction Rate: Fee applied when the card is used outside the registered country (including non-USD region transactions).
+
+The system will calculate the service fee based on the original product price and add it to the total payable amount according to the configured rate. For example:
+
+Original price: 100 USD  
+Domestic rate: 5%  
+Total payable = 100 × (1 + 5%) = 105 USD
+
+The system will check the user’s digital asset balance (in USD) to determine whether they have sufficient funds. If not, the transaction will be declined.
+
+<Tip>
+Profitability Recommendation:
+
+To earn revenue from transactions, set the service fee rate higher than the card BIN cost rate. For example, if the BIN rate is 2%, set the service fee to 7% (2% cost + 5% profit margin).
+</Tip>
+
+### Small Transaction Fee Rules
+
+To control the low-margin, high-frequency nature of small transactions, the system allows fee and waiver settings for small transactions.
+
+**Small Transaction Threshold (USD)**
+
+Defines the transaction amount below which a purchase is considered a “small transaction.”
+
+Example: Setting “10” means any transaction < 10 USD will be considered small.
+
+**Small Transaction Fee (USD)**
+
+A fixed fee applied to each small transaction.
+
+Example: Setting “0.5” means 0.5 USD is charged for each small transaction.
+
+**Small Transaction Fee Waiver Count**
+
+The number of small transactions allowed without a fee within a given cycle.
+
+Example: Setting “3” means the user can have up to 3 small transactions per cycle without fees.
+
+**Waiver Cycle (Days)**
+
+Defines the reset period for counting fee waivers.
+
+Example: Setting “30” means the count resets every 30 days.
+
+## III. Recommendations & Notes
+
+The system only supports U.S. card BINs; all transactions outside USD regions are considered “international transactions.” Set international rates accordingly.
+
+<Tip>
+Configuration Tips:
+
+1. Avoid setting card issuance fees too high to prevent user drop-off.
+2. Ensure the fee structure aligns with actual card BIN costs to avoid losses.
+3. Highlight unique selling points in package tags and descriptions to guide users toward premium packages.
+4. Align small transaction fee strategies with transaction activity levels to avoid harming the user experience through frequent charges.
+</Tip>
+```
+

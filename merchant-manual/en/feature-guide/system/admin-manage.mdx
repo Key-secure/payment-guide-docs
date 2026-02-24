@@ -1,0 +1,55 @@
+---
+title: Merchant Admin Management
+---
+
+## I. Overview
+
+The Merchant Admin module manages organizational members and their permission settings within the backend system. It supports adding new members, assigning roles and permissions, editing account details, and deleting member accounts. This module serves as a core entry point for structuring the organization, enforcing access boundaries, and ensuring secure backend operation.
+
+By properly configuring member permissions, merchants can enable multi-role collaboration across card management, user services, transaction review, and other functions, ensuring both operational flexibility and system security.
+
+## II. Page Structure
+
+**Member List:** Displays all current backend members in the organization, including basic information and role assignments.
+
+**Add Member:** Allows manual creation of new organizational member accounts with assigned login credentials and role permissions.
+
+**Member Management:** Supports editing member details, adjusting roles, or permanently deleting member accounts.
+
+## III. Operation Instructions
+
+### Add New Member  
+Navigation: Click the "Add Member" button at the top-right of the page.
+
+**Steps:**  
+- Enter email address: used as the member’s login account.  
+- Set user nickname: for display and identification within the backend.  
+- Set initial login password: member can change this upon first login.  
+- Assign system role: select from existing roles to determine accessible menu permissions.  
+- Click "Confirm Add" to create the member who can then log in.
+
+### Edit Member Information or Roles  
+Navigation: Click the "Edit" button next to the target member in the member list.
+
+**Supported operations:**  
+- Modify user nickname  
+- Reset login password  
+- Reassign roles (change menu access permissions)  
+
+<Tip>Changes take effect immediately without requiring reactivation by the member.</Tip>
+
+### Delete Member  
+Navigation: Click the "Delete" button next to the target member in the member list.
+
+<Tip>  
+Deleted members lose login access permanently. Historical operation logs remain in the system audit records. It is recommended to revoke permissions and complete internal handover before deletion.  
+</Tip>
+
+## IV. Best Practices & Recommendations
+
+**Role Separation:** Assign roles according to business functions (e.g., Operations, Risk Control, Finance) to avoid overlapping permissions.
+
+**Regular Member Review:** Conduct monthly reviews of member accounts to promptly disable accounts of inactive or departed personnel.
+
+**Operation Traceability:** The system automatically logs all critical member operations to support audits and accountability tracking.
+```

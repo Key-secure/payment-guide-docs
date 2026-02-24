@@ -1,0 +1,73 @@
+---
+title: Creating App Card Issuance Packages
+---
+
+Configuring **App Card Issuance Packages** allows users to select and purchase card services directly within the white-label App, enabling flexible adaptation to different markets and pricing strategies.
+
+Navigate to: **Card Services > Card Management > App Card Packages**
+
+Create one or more consumer-facing packages based on business needs. These configurations will be displayed in the white-label App for users to select and apply.
+
+<Warning>
+Before creating an App card issuance package, please set the refund coin for the card. In the event of a refund transaction, the system will return the equivalent amount of coin to the user's account based on the refund amount and the exchange rate.
+</Warning>
+
+
+
+## Configuration Details
+
+### Basic Package Information (in both Chinese & English)
+
+* Package name  
+* Package description  
+* Package label (e.g., "Basic", "VIP Exclusive")  
+
+### Package Fee Structure
+
+* Card issuance cost to member (USD)  
+* Transaction fee settings:  
+  * Domestic transaction rate  
+  * International transaction rate (non-USD transactions are treated as international)  
+
+<Tip>
+**Fee Calculation**  
+For each transaction, the system applies a service fee percentage on top of the original purchase price.  
+Example:  
+If the item price is **100 USD** and the package fee percentage is **5%**, the total charged to the member will be:  
+`100 * (1 + 5%) = 105 USD`  
+
+**Balance Check**  
+The system evaluates the member’s total digital asset balance (in USD) before approving the transaction. If the balance is insufficient to cover both the original price and service fees, the transaction will be rejected.
+
+**Setting Transaction Rates**  
+To pass all transaction costs to members and generate revenue, set the package fee percentage above the card BIN rate.  
+Example: If the BIN rate is **2%** and you want **5%** revenue, the package fee should be at least **7%**.  
+This ensures cost coverage and profitability, supporting sustainable operations.
+</Tip>
+
+### Small Transaction Fee Rules
+
+* **Small transaction threshold** — Amount below which a transaction is considered "small".  
+<Tip>
+Example: If set to `10`, any transaction below 10 USD is treated as a small transaction.
+</Tip>
+
+* **Small transaction fee** — Fixed fee applied to each small transaction.  
+<Tip>
+Example: If set to `0.5`, each qualifying small transaction incurs an additional 0.5 USD fee.
+</Tip>
+
+* **Exemption count** — Number of small transactions exempt from fees per cycle.  
+<Tip>
+Example: If set to `3`, the first three small transactions in each cycle are free.
+</Tip>
+
+* **Exemption cycle** — Time period for counting exemptions (days, weeks, or months).  
+<Tip>
+Example: If set to `30`, the exemption count resets every 30 days.
+</Tip>
+
+<Note>
+1. The current system supports **U.S. card BINs only**; transactions outside the USD region are automatically treated as international.  
+2. Match package contents with user expectations and business strategy to avoid fee settings that may harm conversion rates.
+</Note>

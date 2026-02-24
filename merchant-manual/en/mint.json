@@ -1,0 +1,154 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Payment-guide",
+  "logo": {
+    "dark": "/logo/keysecure.png",
+    "light": "/logo/keysecure.png"
+  },
+  "favicon": "/logo/Frame 4.svg",
+  "colors": {
+    "primary": "#2662FF",
+    "light": "#2662FF",
+    "dark": "#2662FF",
+    "anchors": {
+      "from": "#2662FF",
+      "to": "#1E50E0"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Chinese",
+      "url": "https://docs-payment-en.keysecure.io/"
+    }
+  ],
+  "modeToggle": {
+    "default": "light",
+    "isHidden": true
+  },
+  "topbarCtaButton": {
+    "name": "Official website",
+    "url": "https://keysecure.io/zh-CN"
+  },
+  "tabs": [
+    {
+      "name": "Feature Guide",
+      "url": "feature-guide"
+    }
+  ],
+  "primaryTab": {
+    "name": "Quick Start"
+  },
+  "navigation": [
+    {
+      "group": "Introduction",
+      "pages": [
+        "Introduce/overview/introduction",
+        "Introduce/overview/fitst-phase",
+        "Introduce/overview/termlist"
+      ]
+    },
+    {
+      "group": "Common Scenarios",
+      "pages": [
+        {
+          "group": "Preparation",
+          "pages": [
+            "quick-start/preparation/back-end-permission",
+            "quick-start/preparation/custody-wallet"
+          ]
+        },
+        {
+          "group": "Card Management",
+          "pages": [
+            "quick-start/card-management/app-card",
+            "quick-start/card-management/budget-fund",
+            "quick-start/card-management/open-coin",
+            "quick-start/card-management/other-settings",
+            "quick-start/card-management/reserve-ratio"
+          ]
+        },
+        {
+          "group": "Operations",
+          "pages": [
+            "quick-start/operation/approve-withdrawl",
+            "quick-start/operation/finance",
+            "quick-start/operation/manage-user",
+            "quick-start/operation/open-card-manage",
+            "quick-start/operation/revenue"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "FAQ",
+      "pages": [
+        "FAQ/question-list"
+      ]
+    },
+    {
+      "group": "Operation Guide",
+      "pages": [
+        {
+          "group": "Card",
+          "pages": [
+            "feature-guide/card/card-bin",
+            "feature-guide/card/card-package",
+            "feature-guide/card/open-card",
+            "feature-guide/card/total-asset"
+          ]
+        },
+        {
+          "group": "Context",
+          "pages": [
+            "feature-guide/context/carousel",
+            "feature-guide/context/notification",
+            "feature-guide/context/other-settings"
+          ]
+        },
+        {
+          "group": "Finance",
+          "pages": [
+            "feature-guide/finance/transaction",
+            "feature-guide/finance/deposit",
+            "feature-guide/finance/withdraw",
+            "feature-guide/finance/revenue",
+            "feature-guide/finance/reserve",
+            "feature-guide/finance/cost-manage"
+          ]
+        },
+        {
+          "group": "Operation",
+          "pages": [
+            "feature-guide/operation/benefit",
+            "feature-guide/operation/coin-manage"
+          ]
+        },
+        {
+          "group": "System",
+          "pages": [
+            "feature-guide/system/admin-manage",
+            "feature-guide/system/role-manage"
+          ]
+        },
+        {
+          "group": "User",
+          "pages": [
+            "feature-guide/user/kyc",
+            "feature-guide/user/user-list"
+          ]
+        }
+      ]
+    }
+  ],
+  "api": {
+    "baseUrl": "https://openapi.keysecure.io/",
+    "playground": {
+      "mode": "simple"
+    }
+  },
+  "feedback": {
+    "suggestEdit": true,
+    "raiseIssue": true,
+    "thumbsRating": true
+  }
+}

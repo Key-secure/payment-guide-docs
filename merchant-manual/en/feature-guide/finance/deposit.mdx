@@ -1,0 +1,48 @@
+---
+title: Deposit Records
+---
+
+## Overview
+
+The “Top-up Records” page displays a complete log of digital asset deposits made by members to the merchant’s MPC wallet address via on-chain transactions. It helps merchants promptly confirm settlement status, verify deposit paths, and serves as an important reference for incoming funds.
+
+By combining blockchain monitoring with the internal membership system, this module ensures deposit data is transparent, real-time, and traceable — making it a critical entry point for cryptoCoininflows.
+
+### Top-up Record Fields
+
+Each deposit record contains the following key fields:
+
+| Field | Description |
+|-------|-------------|
+| Member ID | Unique ID of the member initiating the deposit request |
+| Deposit Token | The cryptoCoindeposited by the user |
+| Blockchain Network | The blockchain used for the deposit, e.g., Tron, Ethereum, Polygon |
+| Deposit Amount | The asset amount deposited, recorded based on the actual transferred amount |
+| Deposit Address | The MPC wallet sub-address assigned to the member |
+| TXID | Blockchain transaction ID, with copy function for viewing in a blockchain explorer |
+| Status | Pending Confirmation / Successful / Failed |
+
+## Deposit Process Description
+
+**Address Allocation**
+
+Each member is assigned a unique MPC wallet deposit address.
+
+Supports different addresses by coin/network to ensure a clear and identifiable deposit path.
+
+**Initiating a Deposit**
+
+The member initiates an on-chain transfer from an external wallet, sending cryptoCointo their assigned deposit address.
+
+**Blockchain Monitoring**
+
+The system continuously monitors transactions on each supported chain, capturing incoming transfers and matching the TXID, deposit address, and amount.
+
+**Settlement Confirmation**
+
+If the transaction meets the required conditions (e.g., confirmation count threshold, deposit amount above the minimum), the system automatically validates it and updates the member’s total assets.
+
+<Warning>
+
+On-chain deposits are irreversible. Ensure users transfer funds only to the correct system-assigned address to avoid asset loss.
+</Warning>
