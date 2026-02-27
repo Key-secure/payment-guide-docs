@@ -1,0 +1,275 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Payment-guide",
+  "logo": {
+    "dark": "/cn/logo/dark.svg",
+    "light": "/cn/logo/light.png"
+  },
+  "favicon": "/cn/logo/Frame 4.svg",
+  "colors": {
+    "primary": "#2662FF",
+    "light": "#2662FF",
+    "dark": "#2662FF"
+  },
+  "modeToggle": {
+    "default": "light",
+    "isHidden": false
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Payfun",
+        "href": "https://www.payfun.com/"
+      }
+    ],
+    "primary": 
+      {
+        "type": "button",
+        "label": "KeySecure",
+        "href": "https://keysecure.io/"
+      }
+  },
+  "navigation": {
+    "languages": [
+      {
+        "language": "cn",
+        "tabs": [
+          {
+            "tab": "快速入门",
+            "groups": [
+              {
+                "group": "介绍",
+                "pages": [
+                  "cn/Introduce/overview/introduction",
+                  "cn/Introduce/overview/fitst-phase",
+                  "cn/Introduce/overview/termlist"
+                ]
+              },
+              {
+                "group": "常见场景",
+                "pages": [
+                  {
+                    "group": "准备阶段",
+                    "pages": [
+                      "cn/quick-start/preparation/back-end-permission",
+                      "cn/quick-start/preparation/custody-wallet"
+                    ]
+                  },
+                  {
+                    "group": "卡片管理",
+                    "pages": [
+                      "cn/quick-start/card-management/app-card",
+                      "cn/quick-start/card-management/budget-fund",
+                      "cn/quick-start/card-management/open-coin",
+                      "cn/quick-start/card-management/other-settings",
+                      "cn/quick-start/card-management/reserve-ratio"
+                    ]
+                  },
+                  {
+                    "group": "运营操作",
+                    "pages": [
+                      "cn/quick-start/operation/approve-withdrawl",
+                      "cn/quick-start/operation/finance",
+                      "cn/quick-start/operation/manage-user",
+                      "cn/quick-start/operation/open-card-manage",
+                      "cn/quick-start/operation/revenue"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "常见问题",
+                "pages": ["cn/FAQ/question-list"]
+              }
+            ]
+          },
+          {
+            "tab": "功能指南",
+            "groups": [
+              {
+                "group": "操作指南",
+                "pages": [
+                  {
+                    "group": "卡片",
+                    "pages": [
+                      "cn/feature-guide/card/card-bin",
+                      "cn/feature-guide/card/card-package",
+                      "cn/feature-guide/card/open-card",
+                      "cn/feature-guide/card/total-asset"
+                    ]
+                  },
+                  {
+                    "group": "内容",
+                    "pages": [
+                      "cn/feature-guide/context/carousel",
+                      "cn/feature-guide/context/notification",
+                      "cn/feature-guide/context/other-settings"
+                    ]
+                  },
+                  {
+                    "group": "财务",
+                    "pages": [
+                      "cn/feature-guide/finance/transaction",
+                      "cn/feature-guide/finance/deposit",
+                      "cn/feature-guide/finance/withdraw",
+                      "cn/feature-guide/finance/revenue",
+                      "cn/feature-guide/finance/reserve",
+                      "cn/feature-guide/finance/cost-manage"
+                    ]
+                  },
+                  {
+                    "group": "运营",
+                    "pages": [
+                      "cn/feature-guide/operation/benefit",
+                      "cn/feature-guide/operation/coin-manage"
+                    ]
+                  },
+                  {
+                    "group": "系统",
+                    "pages": [
+                      "cn/feature-guide/system/admin-manage",
+                      "cn/feature-guide/system/role-manage"
+                    ]
+                  },
+                  {
+                    "group": "用户",
+                    "pages": [
+                      "cn/feature-guide/user/kyc",
+                      "cn/feature-guide/user/user-list"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "en",
+        "tabs": [
+          {
+            "tab": "Quick Start",
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "en/Introduce/overview/introduction",
+                  "en/Introduce/overview/fitst-phase",
+                  "en/Introduce/overview/termlist"
+                ]
+              },
+              {
+                "group": "Common Scenarios",
+                "pages": [
+                  {
+                    "group": "Preparation",
+                    "pages": [
+                      "en/quick-start/preparation/back-end-permission",
+                      "en/quick-start/preparation/custody-wallet"
+                    ]
+                  },
+                  {
+                    "group": "Card Management",
+                    "pages": [
+                      "en/quick-start/card-management/app-card",
+                      "en/quick-start/card-management/budget-fund",
+                      "en/quick-start/card-management/open-coin",
+                      "en/quick-start/card-management/other-settings",
+                      "en/quick-start/card-management/reserve-ratio"
+                    ]
+                  },
+                  {
+                    "group": "Operations",
+                    "pages": [
+                      "en/quick-start/operation/approve-withdrawl",
+                      "en/quick-start/operation/finance",
+                      "en/quick-start/operation/manage-user",
+                      "en/quick-start/operation/open-card-manage",
+                      "en/quick-start/operation/revenue"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "FAQ",
+                "pages": ["en/FAQ/question-list"]
+              }
+            ]
+          },
+          {
+            "tab": "Feature Guide",
+            "groups": [
+              {
+                "group": "Operation Guide",
+                "pages": [
+                  {
+                    "group": "Card",
+                    "pages": [
+                      "en/feature-guide/card/card-bin",
+                      "en/feature-guide/card/card-package",
+                      "en/feature-guide/card/open-card",
+                      "en/feature-guide/card/total-asset"
+                    ]
+                  },
+                  {
+                    "group": "Context",
+                    "pages": [
+                      "en/feature-guide/context/carousel",
+                      "en/feature-guide/context/notification",
+                      "en/feature-guide/context/other-settings"
+                    ]
+                  },
+                  {
+                    "group": "Finance",
+                    "pages": [
+                      "en/feature-guide/finance/transaction",
+                      "en/feature-guide/finance/deposit",
+                      "en/feature-guide/finance/withdraw",
+                      "en/feature-guide/finance/revenue",
+                      "en/feature-guide/finance/reserve",
+                      "en/feature-guide/finance/cost-manage"
+                    ]
+                  },
+                  {
+                    "group": "Operation",
+                    "pages": [
+                      "en/feature-guide/operation/benefit",
+                      "en/feature-guide/operation/coin-manage"
+                    ]
+                  },
+                  {
+                    "group": "System",
+                    "pages": [
+                      "en/feature-guide/system/admin-manage",
+                      "en/feature-guide/system/role-manage"
+                    ]
+                  },
+                  {
+                    "group": "User",
+                    "pages": [
+                      "en/feature-guide/user/kyc",
+                      "en/feature-guide/user/user-list"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "feedback": {
+    "suggestEdit": true,
+    "raiseIssue": true,
+    "thumbsRating": true
+  },
+  "footer": {
+    "socials": {
+        "github": "https://github.com/payfun-io",
+        "linkedin": "https://www.linkedin.com/company/payfun-io/",
+        "x": "https://x.com/payfun_io"
+      }
+  }
+}
