@@ -1,34 +1,32 @@
 ---
-title: System Permission Management
+title: Get Account and Create Team
 ---
 
-To ensure your organization members can safely and efficiently use the KeySecure payment card management system, please complete the following permission configuration and member management steps.
+To ensure your organization members can safely and efficiently use the KeySecure payment card management system, after you receive the administrator account, please bind GA and complete role creation and team member account setup.
 
-## Register Initial Administrator Account
+## 1. Obtain Initial Administrator Account
 
-Contact the KeySecure customer team to request merchant system access.  
+After the contract is signed and merchant information verification is completed, the KeySecure customer service team will create an administrator account based on the email address you provide.
 
-Please prepare and provide the following information in advance:  
-* Email address for binding the initial administrator account (this email will receive the first login link)
+Please prepare and provide the following information in advance:
+- Email address used to bind the initial administrator account
 
-After verification, KeySecure will grant system login access to this email.
+## 2. Bind GA Authentication (Google Authenticator)
 
- 
-
-## Bind Two-Factor Authentication (Google Authenticator)
-
-During the initial login, the administrator will be guided to bind **Google Authenticator (GA)** for two-factor authentication (2FA) login.
+When the initial administrator logs into the system for the first time, they will be guided to bind **Google Authenticator (GA)** for subsequent two-factor authentication (2FA) logins.
 
 <Note>
-- It is recommended to use a verified corporate email for admin login and GA binding.  
-- If GA is lost, it can be reset in the backend or contact KeySecure support to unbind.
+- Keep the GA device properly secured. Subsequent business configurations require GA verification.
+- If GA is lost, you can reset it in the backend or contact the KeySecure team to unbind it.
 </Note>
 
- 
+## 3. Create Roles & Configure Page Permissions
 
-## Create Organization Roles & Configure Page Permissions
+<Card title="Role Management Guide" href="/en/feature-guide/system">
+    Create roles and manage staff accounts
+</Card>
 
-After logging in, navigate to: **System Management > Merchant Role Management**  
+After logging in, navigate to: **System Management > Merchant Role Management**
 
 You can create multiple roles according to your team’s needs (e.g., Operations, Finance, Technical Support) and assign menu permissions for each role.
 
@@ -37,19 +35,14 @@ You can create multiple roles according to your team’s needs (e.g., Operations
 | Finance Role | Financial Management, Revenue Management, Cost Management, etc. |
 | Operations | Operations Management, Member Management, etc. |
 
----
+## 4. Add Organization Members & Assign Roles
 
-## Add Organization Members & Assign Roles
+Go to: **System Management > Merchant Admin Management**
 
-Go to: **System Management > Merchant Admin Management**  
+Add member emails, set basic info (name, position, etc.), and assign the corresponding roles.
 
-Add member emails, set basic info (name, position, etc.), and assign the corresponding roles.  
+Members can log in via the website link and bind GA to start using the backend system.
 
-The system will automatically send invitation emails. Invited members can set their login password and bind GA to access the backend.
-
- 
-
-**After completing team setup, you will have the following capabilities:**  
-* Multi-member collaborative management of payment card operations  
-* Strict role-based access control to prevent unauthorized actions  
-* Audit logs to trace key operational activities
+**After completing team setup, you will have the following capabilities:**
+* Multi-member collaboration to manage payment card business  
+* Strict role-based permission control to avoid unauthorized operations

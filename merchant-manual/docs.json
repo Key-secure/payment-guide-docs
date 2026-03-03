@@ -41,40 +41,30 @@
               {
                 "group": "介绍",
                 "pages": [
-                  "cn/Introduce/overview/introduction",
-                  "cn/Introduce/overview/fitst-phase",
-                  "cn/Introduce/overview/termlist"
-                ]
+                  "cn/Introduce/overview/introduction"                ]
               },
               {
-                "group": "常见场景",
+                "group": "常用流程",
                 "pages": [
+                    "cn/quick-start/fitst-phase",
                   {
                     "group": "准备阶段",
                     "pages": [
                       "cn/quick-start/preparation/back-end-permission",
-                      "cn/quick-start/preparation/custody-wallet"
+                      "cn/quick-start/preparation/custody-wallet",
+                      "cn/quick-start/preparation/open-coin",
+                      "cn/quick-start/preparation/app-card",
+                      "cn/quick-start/preparation/other-settings"
                     ]
                   },
                   {
-                    "group": "卡片管理",
+                    "group": "日常运营",
                     "pages": [
-                      "cn/quick-start/card-management/app-card",
+                      "cn/quick-start/operation/manage-user",
                       "cn/quick-start/card-management/budget-fund",
-                      "cn/quick-start/card-management/open-coin",
-                      "cn/quick-start/card-management/other-settings",
-                      "cn/quick-start/card-management/reserve-ratio"
-                    ]
-                  },
-                  {
-                    "group": "运营操作",
-                    "pages": [
                       "cn/quick-start/operation/approve-withdrawl",
                       "cn/quick-start/operation/finance",
-                      "cn/quick-start/operation/manage-user",
-                      "cn/quick-start/operation/open-card-manage",
-                      "cn/quick-start/operation/revenue"
-                    ]
+                      "cn/quick-start/operation/open-card-manage"                    ]
                   }
                 ]
               },
@@ -128,8 +118,8 @@
                   {
                     "group": "系统",
                     "pages": [
-                      "cn/feature-guide/system/admin-manage",
-                      "cn/feature-guide/system/role-manage"
+                      "cn/feature-guide/system/role-manage",
+                      "cn/feature-guide/system/admin-manage"
                     ]
                   },
                   {
@@ -154,39 +144,31 @@
               {
                 "group": "Introduction",
                 "pages": [
-                  "en/Introduce/overview/introduction",
-                  "en/Introduce/overview/fitst-phase",
-                  "en/Introduce/overview/termlist"
+                  "en/Introduce/overview/introduction"                
                 ]
               },
               {
                 "group": "Common Scenarios",
                 "pages": [
+                  "en/quick-start/fitst-phase",
                   {
                     "group": "Preparation",
                     "pages": [
                       "en/quick-start/preparation/back-end-permission",
-                      "en/quick-start/preparation/custody-wallet"
-                    ]
-                  },
-                  {
-                    "group": "Card Management",
-                    "pages": [
-                      "en/quick-start/card-management/app-card",
-                      "en/quick-start/card-management/budget-fund",
-                      "en/quick-start/card-management/open-coin",
-                      "en/quick-start/card-management/other-settings",
-                      "en/quick-start/card-management/reserve-ratio"
+                      "en/quick-start/preparation/custody-wallet",
+                      "en/quick-start/preparation/open-coin",
+                      "en/quick-start/preparation/app-card",
+                      "en/quick-start/preparation/other-settings"
                     ]
                   },
                   {
                     "group": "Operations",
                     "pages": [
+                      "en/quick-start/operation/manage-user",
+                      "en/quick-start/card-management/budget-fund",
                       "en/quick-start/operation/approve-withdrawl",
                       "en/quick-start/operation/finance",
-                      "en/quick-start/operation/manage-user",
-                      "en/quick-start/operation/open-card-manage",
-                      "en/quick-start/operation/revenue"
+                      "en/quick-start/operation/open-card-manage"
                     ]
                   }
                 ]
@@ -267,9 +249,7 @@
   },
   "footer": {
     "socials": {
-        "github": "https://github.com/payfun-io",
-        "linkedin": "https://www.linkedin.com/company/payfun-io/",
-        "x": "https://x.com/payfun_io"
+        "x": "https://x.com/ChainUpOfficial"
       }
   }
 }
