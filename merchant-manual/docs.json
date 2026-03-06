@@ -41,7 +41,8 @@
               {
                 "group": "介绍",
                 "pages": [
-                  "cn/Introduce/overview/introduction"                ]
+                  "cn/Introduce/overview/introduction"                
+                ]
               },
               {
                 "group": "常用流程",
@@ -60,11 +61,11 @@
                   {
                     "group": "日常运营",
                     "pages": [
-                      "cn/quick-start/operation/manage-user",
-                      "cn/quick-start/card-management/budget-fund",
+                      "cn/quick-start/operation/budget-fund",
                       "cn/quick-start/operation/approve-withdrawl",
                       "cn/quick-start/operation/finance",
-                      "cn/quick-start/operation/open-card-manage"                    ]
+                      "cn/quick-start/operation/open-card-manage"                    
+                    ]
                   }
                 ]
               },
@@ -164,8 +165,7 @@
                   {
                     "group": "Operations",
                     "pages": [
-                      "en/quick-start/operation/manage-user",
-                      "en/quick-start/card-management/budget-fund",
+                      "en/quick-start/operation/budget-fund",
                       "en/quick-start/operation/approve-withdrawl",
                       "en/quick-start/operation/finance",
                       "en/quick-start/operation/open-card-manage"
