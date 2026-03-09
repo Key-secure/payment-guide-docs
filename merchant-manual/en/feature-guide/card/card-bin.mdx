@@ -1,59 +1,69 @@
 ---
 title: Merchant Card BIN Management
 ---
-## Feature Overview
 
-The **Merchant Card BIN Management** page displays the configuration details of all card BINs (Bank Identification Numbers) that the merchant has activated and can use for card issuance. It serves as a key management tool for payment card product configuration and cost control. Through this page, merchants can gain a comprehensive understanding of their connected BIN resources and related business parameters, enabling more effective operational coordination, risk control, and pricing strategy development.
+## I. Feature Overview
 
-## Card BIN Information
+The **Merchant Card BIN Management** page displays the card BIN (Bank Identification Number) configuration that the merchant has activated and can use for card issuance. It is an important management tool for payment card product configuration and cost control. Through this page, merchants can get a full view of their connected card BIN resources and related business parameters, supporting operations, risk control, and pricing strategy.
+
+## II. Card BIN Information
 
 Merchants can view detailed information for each card BIN on this page, including:
 
 **1. Basic Information**
 
-* **Card Issuer**: Displays the issuing partner or card network associated with the BIN, such as Visa, Mastercard, UnionPay, or other card service providers partnered with the merchant.
+* **Card Issuer**: The issuing partner that owns the BIN.
 
-* **Card BIN Number**: The unique BIN identifier (first 6–8 digits) for the card series, which determines card ownership, intended use, and geographic coverage.
+* **Card BIN Number**: The unique BIN (first 6–8 digits) that identifies the card series and determines card ownership, use case, and regional support.
 
-* **Card BIN Status**: Shows the current operational status of the BIN (e.g., "Active", "Inactive") to help merchants quickly determine whether it can be used for card issuance and transactions.
+* **Card BIN Status**: The current status of the BIN (e.g., "Active", "Inactive"), so merchants can see whether it is available for card issuance and transactions.
 
-**2. Cost and Fee Information**
+* **AVS (Address Verification Service) Support**: Whether the BIN supports address verification to check the cardholder’s billing address, improving risk control and reducing fraud.
 
-* **Domestic Transaction Fee Rate**: The transaction fee rate applied when a cardholder makes purchases in their country/region of registration. This is used to calculate the merchant’s cost for domestic transactions.
+* **3DS (3D Secure) Support**: Whether the BIN supports the 3D Secure protocol (e.g., Visa Secure, Mastercard Identity Check) for stronger security and lower chargeback risk.
 
-* **International Transaction Fee Rate**: The fee rate applied when a cardholder uses the card outside their registration country. This is typically higher than the domestic rate and should be monitored for cross-border cost control.
+* **Google Pay / Apple Pay Support**: Whether the BIN can be added to Google Pay or Apple Pay and other mobile wallets for better usability.
 
-* **Card Issuance Cost**: The per-card issuance cost (in USD) incurred by the merchant. This serves as a reference for evaluating the base expense of issuing each card and for pricing in-app card packages.
+* **Virtual Card / Physical Card Support**: Some BINs support only one of the two.
 
-**3. Card BIN Capabilities**
+**2. Fee Information**
 
-* **AVS (Address Verification Service) Support**: Indicates whether the BIN supports verifying the billing address through AVS to improve risk control and reduce fraudulent transactions.
+* **Card Issuance Cost**: The merchant’s cost per card issued.
 
-* **3DS (3D Secure) Support**: Indicates whether the BIN supports the 3D Secure authentication protocol (e.g., Visa Secure, Mastercard Identity Check) to enhance transaction security and reduce chargeback risks.
+* **Transaction Fee**: The fee charged when the user pays with the card.
 
-* **Google Pay / Apple Pay Support**: Shows whether the BIN can be added to mobile wallets such as Google Pay or Apple Pay, improving convenience and user experience.
+* **FX (Foreign Exchange) Rate**: The conversion fee when the transaction currency differs from the card currency.
 
-**4. Small Transaction & Fee Information**
+* **Refund Fee Rate**: The extra fee charged when the user requests a refund.
 
-* **Small Transaction Threshold (USD)**: The defined amount under which a transaction is considered a "small transaction" in the system.
+* **Cancellation Fee**: The extra fee charged when the user cancels a transaction.
 
-* **Small Transaction Fee Waiver Count**: The number of small transactions a user can make within a given period without incurring a fee. Once exceeded, the system applies the small transaction fee.
+* **Cancellation Fee Waiver**: The number of free cancellations allowed per card.
 
-* **Small Transaction Fee Amount (USD)**: The fixed fee charged per small transaction once the waiver limit has been exceeded.
+* **Small Transaction Threshold (USD)**: The amount below which a transaction is treated as a small transaction in the system.
 
-**5. App Card Package Configuration**
+* **Small Transaction Fee Waiver Count**: How many small transactions per period are exempt from the small transaction fee before the fee applies.
 
-* **App Card Package**: Displays the in-app card package(s) linked to the BIN, including sale price, validity period, and available currencies. Merchants can design differentiated products (e.g., standard cards, premium cards, Apple Pay-enabled cards) based on issuance costs and BIN capabilities.
+* **Small Transaction Fee**: The fixed fee per small transaction after the waiver limit is exceeded.
+
+**3. Physical Card Fees**
+
+* **ATM Withdrawal Fee**: The extra fee for ATM cash withdrawals with a physical card.
+
+* **ATM Withdrawal Minimum Deduction**: The minimum amount deducted for an ATM withdrawal.
+
+* **Physical Card Production Fee**: The production cost charged when the user activates a physical card.
+
+* **Shipping Fee**: The shipping cost when the user activates a physical card.
+
+**4. Linked Card Issuance Packages**
+
+* **App Card Package**: The card issuance package(s) linked to this BIN, including sale price, validity, and available currencies.
 
 <Tip> 
-Example Use Cases:
 
-1. Operations staff can quickly identify and troubleshoot card issuance issues based on BIN status.  
+1. You can adjust App package prices based on fees and costs.
 
-2. The operations team can adjust in-app package prices based on transaction rates and issuance costs.  
+2. Use each BIN’s capabilities to define different operational strategies.
 
-3. The risk control team can prioritize enabling BINs with 3DS/AVS support to improve transaction security.  
-
-4. The marketing team can filter BINs supporting Apple/Google Pay for promoting mobile payment card products.  
 </Tip>
-```

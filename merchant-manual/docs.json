@@ -86,8 +86,7 @@
                     "pages": [
                       "cn/feature-guide/card/card-bin",
                       "cn/feature-guide/card/card-package",
-                      "cn/feature-guide/card/open-card",
-                      "cn/feature-guide/card/total-asset"
+                      "cn/feature-guide/card/open-card"
                     ]
                   },
                   {
@@ -190,8 +189,7 @@
                     "pages": [
                       "en/feature-guide/card/card-bin",
                       "en/feature-guide/card/card-package",
-                      "en/feature-guide/card/open-card",
-                      "en/feature-guide/card/total-asset"
+                      "en/feature-guide/card/open-card"
                     ]
                   },
                   {

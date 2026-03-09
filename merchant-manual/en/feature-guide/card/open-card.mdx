@@ -1,70 +1,76 @@
-
 ---
-title: Open Card Records
+title: Card Issuance Records
 ---
 
-## Overview
+## I. Feature Overview
 
-The “Card Issuance Records” module is used to manage and review all virtual card applications submitted by end-users. Merchants can view all submitted applications in one place and review those pending approval. This module helps track application activity, expedite the issuance process, and identify anomalies—making it a key part of daily card operations and risk control.
+The **Card Issuance Records** module is used to manage and review all users’ card application flows. Merchants can view all card issuance applications submitted by users in one place and review applications pending approval. This module helps track application behavior, process issuance quickly, and troubleshoot issues, and is a key part of daily card operations and risk control.
 
-## Core Features
+## II. Core Features
 
-### Real-Time View of Card Applications
+### Real-Time Card Issuance List
 
-Displays all card issuance requests from end-users, with support for filtering and sorting by application status, including:
+The page shows all card issuance requests from end-users, with filtering and sorting. Application statuses include:
 
-* **Pending Review**: Awaiting merchant approval or rejection.
-* **In Progress**: The system is processing the issuance request, e.g., creating the card or binding the BIN.
-* **KYC Required**: The user must upload identity documents or complete profile information before proceeding.
-* **Successful**: The card has been issued and is available for use in the app.
-* **Failed**: The process was interrupted or canceled by the user, and no usable card was created.
+* **Pending Review**: After the user submits an application, the merchant must manually approve or reject it.
 
-Advanced filters allow precise search by status, date, user email, merchant ID, and more.
+* **In Progress**: The system is processing the issuance request (e.g. creating the card, binding the card BIN).
 
-### Reviewing Card Applications
+* **KYC Required**: The user must upload identity information or complete profile details before the issuance flow can continue.
 
-For applications in “Pending Review” status, merchants can:
+* **Success**: The card has been issued successfully and the user can use it in the App.
 
-* **Approve**: Moves to the next issuance step and automatically creates the card.
-* **Reject**: Terminates the application process; the user receives a rejection notification (with optional rejection reason).
+* **Failed**: The issuance flow was interrupted or canceled by the user; no usable card was created.
 
-### Viewing Application Details
+You can use filters to search by application status, time, user email, merchant ID, and other criteria.
 
-Clicking the **[Details]** button opens a full record of the application, including:
+### Review Card Applications
+
+For records in **Pending Review**, the merchant can:
+
+* **Approve**: The system proceeds to the next step and automatically completes the card creation flow.
+
+* **Reject**: The current application is terminated and the user receives a rejection notification (you can set a rejection reason).
+
+### View Application Details
+
+Click the **[Details]** button on any application to open the detail page with full issuance data, including:
 
 **Basic Information**
 
-* Merchant ID  
-* Application Time  
-* Status  
-* Failure Reason (if applicable)  
-* Transaction ID  
+* Merchant ID
+* Application time
+* Status
+* Failure reason (if the application failed)
+* Transaction ID
 
-**User Information**  
-* Email  
-* Member ID  
-* KYC Status  
+**User Information**
+
+* User email
+* Member ID
+* Identity verification status
 
 <Tip> 
-Currently, only members who have completed KYC verification can apply for a card.
+Currently, only members who have passed identity verification can apply for a card.
 </Tip>
 
 **Card Information**
 
-* Card Type: Virtual or Physical  
-* App Card Issuance Package  
-* Card Issuance Fee (Member)  
-* Domestic Transaction Rate (Member)  
-* International Transaction Rate (Member)  
-* Small Transaction Fee (per transaction)  
-* Small Transaction Fee Waiver Count  
-* Small Transaction Fee Waiver Cycle  
+* Card type: Virtual or physical
+* App card issuance package
+* Member card issuance cost
+* Member transaction fee rate (domestic)
+* Member transaction fee rate (international)
+* Small transaction fee (per transaction)
+* Small transaction fee waiver (count)
+* Small transaction fee waiver cycle
 
 ## Recommendations & Notes
 
-1. Combine automated and manual review to improve efficiency while maintaining risk control.
-2. If many applications remain in “KYC Required” status, consider optimizing the KYC process or front-end guidance text.
-3. Use in conjunction with “Card BIN Settings,” “Card Packages,” and “Budget Accounts” to coordinate cost control and risk strategy.
-4. Regularly export issuance data for user behavior analysis and market feedback review.
-```
+1. Use a combination of automated and manual review to improve efficiency while keeping room for risk control.
 
+2. When many applications are in **KYC Required**, consider optimizing the identity verification flow or front-end guidance copy.
+
+3. Use together with **Card BIN settings**, **Card issuance packages**, and **Budget account** to control funding and risk strategy.
+
+4. Export card issuance data regularly for user behavior analysis and market feedback review.
