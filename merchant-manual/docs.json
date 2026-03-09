@@ -82,7 +82,7 @@
                 "group": "操作指南",
                 "pages": [
                   {
-                    "group": "卡片",
+                    "group": "卡片管理",
                     "pages": [
                       "cn/feature-guide/card/card-bin",
                       "cn/feature-guide/card/card-package",
@@ -90,7 +90,7 @@
                     ]
                   },
                   {
-                    "group": "内容",
+                    "group": "内容管理",
                     "pages": [
                       "cn/feature-guide/context/carousel",
                       "cn/feature-guide/context/notification",
@@ -98,32 +98,30 @@
                     ]
                   },
                   {
-                    "group": "财务",
+                    "group": "财务管理",
                     "pages": [
                       "cn/feature-guide/finance/transaction",
                       "cn/feature-guide/finance/deposit",
                       "cn/feature-guide/finance/withdraw",
-                      "cn/feature-guide/finance/revenue",
-                      "cn/feature-guide/finance/reserve",
-                      "cn/feature-guide/finance/cost-manage"
-                    ]
+                      "cn/feature-guide/finance/reserve"
+                      ]
                   },
                   {
-                    "group": "运营",
+                    "group": "运营管理",
                     "pages": [
                       "cn/feature-guide/operation/benefit",
                       "cn/feature-guide/operation/coin-manage"
                     ]
                   },
                   {
-                    "group": "系统",
+                    "group": "系统管理",
                     "pages": [
                       "cn/feature-guide/system/role-manage",
                       "cn/feature-guide/system/admin-manage"
                     ]
                   },
                   {
-                    "group": "用户",
+                    "group": "会员管理",
                     "pages": [
                       "cn/feature-guide/user/kyc",
                       "cn/feature-guide/user/user-list"
@@ -185,7 +183,7 @@
                 "group": "Operation Guide",
                 "pages": [
                   {
-                    "group": "Card",
+                    "group": "Card Management",
                     "pages": [
                       "en/feature-guide/card/card-bin",
                       "en/feature-guide/card/card-package",
@@ -193,7 +191,7 @@
                     ]
                   },
                   {
-                    "group": "Context",
+                    "group": "Content Management",
                     "pages": [
                       "en/feature-guide/context/carousel",
                       "en/feature-guide/context/notification",
@@ -201,32 +199,30 @@
                     ]
                   },
                   {
-                    "group": "Finance",
+                    "group": "Finance Management",
                     "pages": [
                       "en/feature-guide/finance/transaction",
                       "en/feature-guide/finance/deposit",
                       "en/feature-guide/finance/withdraw",
-                      "en/feature-guide/finance/revenue",
-                      "en/feature-guide/finance/reserve",
-                      "en/feature-guide/finance/cost-manage"
+                      "en/feature-guide/finance/reserve"
                     ]
                   },
                   {
-                    "group": "Operation",
+                    "group": "Operation Management",
                     "pages": [
                       "en/feature-guide/operation/benefit",
                       "en/feature-guide/operation/coin-manage"
                     ]
                   },
                   {
-                    "group": "System",
+                    "group": "System Management",
                     "pages": [
                       "en/feature-guide/system/admin-manage",
                       "en/feature-guide/system/role-manage"
                     ]
                   },
                   {
-                    "group": "User",
+                    "group": "Member Management",
                     "pages": [
                       "en/feature-guide/user/kyc",
                       "en/feature-guide/user/user-list"

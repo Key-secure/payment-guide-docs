@@ -2,29 +2,23 @@
 title: Merchant Role Management
 ---
 
-## Overview
+## I. Feature Introduction
 
-To ensure internal members can use the payment card management backend under controlled access, the **Merchant Role Management** module allows merchant administrators to define custom roles and configure permissions. This module helps merchants establish a fine-grained permission framework to maintain system security, operational compliance, and clear responsibility boundaries.
+With this feature, merchants can create roles based on different positions (e.g., Finance, Customer Service, Risk Control) and assign specific menu access permissions, ensuring members can only access modules within their responsibilities.
 
-Using this feature, merchants can create roles based on positions (e.g., Finance, Customer Service, Risk Control) and assign specific menu access rights, ensuring members can only access modules relevant to their responsibilities.
-
-## Operation Instructions
+## II. Operation Instructions
 
 ### Create a New Role  
-Navigation: Click the **"Create Role"** button.
+Navigation: Click the **[Create Role]** button.
 
 **Steps:**  
-- Enter the role name (e.g., "Finance Officer", "KYC Reviewer")  
-- Add a role description (to clarify its scope of responsibility)  
-- In the permission configuration area, select the functional menus the role can access (supports module-level grouping)  
-- Click **"Save"** to complete role creation  
-
-<Note>
-Once created, roles can be assigned to organization members. Administrators are advised to plan the role structure in advance.
-</Note>
+- Enter the role name (e.g., “Finance Specialist”, “KYC Reviewer”).  
+- Add a role description (to identify the scope of responsibilities).  
+- In the permission configuration area, select the functional menus the role can access (supports collapsing by module).  
+- Click **[Save]** to complete role creation.  
 
 ### Assign Page Permissions  
-Navigation: Configure this during role creation or editing by selecting the functional pages the role can access.
+Navigation: Configure this on the role creation or role edit page by selecting the pages the role can access.
 
 <Note>  
 1. Only selected pages will be visible and accessible to members assigned to this role; other modules will be hidden and inaccessible.  
@@ -41,18 +35,6 @@ Click **"Delete"** in the role list.
 If members are still assigned to the role, the system will prompt you to unbind them before deletion.
 
 <Note>
-Keep at least one “Super Administrator” role to avoid accidental removal of full permissions.
-</Note>
-
-## Recommendations & Best Practices
-
-**Principle of Least Privilege:** Assign only the minimum required access rights for a member’s position to reduce operational risks.
-
-**Role Reuse Strategy:** For operational efficiency, use standardized role models (e.g., Operations, Finance, Technical Support) and reuse configurations.
-
-**Regular Role Audits:** Review role settings and member assignments quarterly to prevent permission drift or misuse by inactive accounts.
-
-<Note>
-Currently, each member can only be assigned one role. For multi-function requirements, create combined-permission roles.  
-For advanced permission models (e.g., operation-level control, multi-role binding), contact the KeySecure team for support.
+1. Keep at least one “Super Administrator” role to avoid accidentally removing all permissions.
+2. Currently, each member can only be assigned one role. For multi-function requirements, create combined-permission roles.
 </Note>

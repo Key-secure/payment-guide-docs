@@ -2,28 +2,27 @@
 title: Merchant Coin Management
 ---
 
-## Overview
+## I. Feature Overview
 
-The "Merchant Coin Management" page is a key module within the payment card system that supports Coinconfiguration and transaction parameter management. It enables merchants to flexibly define the range of digital assets supported by their business and to specify detailed Deposit, withdrawal, and consumption rules for each coin. This module ensures that payment processes run in a compliant, secure, and efficient manner.
+Manage the range of digital assets supported by the business, and define deposit, withdrawal, and spending behaviors for each token.
 
-On this page, merchants can perform the following configuration operations:
+## II. Operation Instructions
+On this page, merchants can complete the following configuration operations:
 
-### Enable/Disable Coin Functions
+### Enable/Disable token functions
 
-Merchants can choose whether to enable Deposit and withdrawal functions for a specific coin. Once enabled, end users can Deposit their accounts or request withdrawals using that coin.
+Merchants can choose whether to support deposits and withdrawals for a specific token. Once enabled, end users can deposit using that token or request withdrawals from their account balance.
 
-### Settings
+### Token parameter settings
 
-For each enabled coin, the system allows configuration of the following parameters to ensure operational compliance and risk control:
+For each enabled token, the system allows configuration of the following parameters to meet operational and risk-control requirements:
 
-**Minimum Deposit Amount:** Sets the minimum allowable Deposit amount for the Coinin the system to prevent invalid or trivial deposits and optimize fund settlement efficiency.
+**Minimum deposit amount:** Set the minimum deposit amount allowed in the system to prevent invalid small deposits.
 
-**Minimum Withdrawal Amount:** Defines the minimum amount limit for user withdrawal requests to avoid frequent small withdrawals that increase operational burden and on-chain transaction costs.
+**Minimum withdrawal amount:** Set the minimum amount limit for withdrawals to avoid frequent small withdrawals and reduce on-chain costs.
 
-**Exchange Slippage Percentage:** In Coinexchange scenarios, this setting controls the allowable price fluctuation range. Merchants can set this ratio to handle market volatility and protect both their own and users’ expected transaction prices.
+**Withdrawal fee:** The fee charged and deducted for each user withdrawal.
 
 ### Payment Priority Management
 
-Merchants can freely add mainstream currencies supported by the system (e.g., USDT, USDC, ETH) for payment purposes. Once added, merchants can centrally manage the payment priority of all currencies.
-
-Setting payment priority means that when an end user initiates a card payment, the system attempts to deduct funds sequentially based on the configured priority, prioritizing higher-ranked currencies to complete the payment. This mechanism improves user experience and increases transaction success rates.
+When an end user initiates a card payment, the system attempts to deduct funds sequentially based on the configured priority, prioritizing higher-ranked tokens to complete the payment.

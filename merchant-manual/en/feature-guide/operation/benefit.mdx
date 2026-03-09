@@ -1,167 +1,103 @@
 ---
-title: Campaign List Feature
+title: Invite Rebates
 ---
 
-Merchants can configure and manage “Invite & Rebate” campaigns via the campaign list. By leveraging user referrals, this feature encourages new user registration, card issuance, and spending activities, ultimately improving user acquisition, engagement, and retention.
+This is a card-related marketing campaign. By leveraging referral relationships, it boosts user registration, card issuance, and spending activity, strengthening user growth and retention.
 
-The feature consists of five main modules:
+## 1. Campaign Settings
+Used to create and maintain campaign rules. Merchants can flexibly configure invitation conditions, member levels, rebate rates, reward distribution, and clawback logic.
 
-## Reward Rules Module
-Used to create and maintain the core mechanism of the Invite & Rebate campaign. Merchants can flexibly configure invitation criteria, member levels, rebate rates, reward distribution, and clawback rules to ensure the incentive mechanism is both controllable and sustainable.
+![Campaign Rules](/cn/images/huodonggz.png)
 
-### Activity Visibility Settings
-Control whether the campaign is displayed in the App frontend, with one-click activation or deactivation.
+### Member Level Settings
+Defines when a formal invitation relationship is established, and configures the rebate rate for each member level after the relationship is created.
 
-* **Enabled:** The campaign is displayed in the App, allowing users to view campaign details and participation requirements.
-* **Disabled:** The campaign is hidden, used for backend data tracking or testing only.
+**Valid Invitees**
+An invite is considered valid based on the following conditions:
+- Successful card issuance
+- Successful KYC
+- Successful registration
 
-### Valid Referrals
-Defines when a formal invitation relationship is established. The system supports multiple activation triggers, selectable by the merchant:
+**Level reward settings**
+You can set rewards for different tiers and upgrade based on the number of valid invitees.
+- Direct invitation
+- Indirect invitation
 
-* Successful registration
-* Completed KYC verification
-* Successful card issuance
-
-<Note>
-The system supports a default 2-tier invitation structure:  
-Direct invitation: A enters inviter code B upon registration — A is B’s direct invitee.  
-Indirect invitation: B enters code A upon registration, and C enters B’s code — C has an indirect relationship with A.
-</Note>
-
-### Member Level System Configuration
-Merchants can define multiple invitation levels (up to V10) for more complex reward strategies.
-
-* **Level Requirements:** Each level requires a certain number of valid invitees.
-* **Level Rewards:**  
-  Distinguish between direct and indirect relationships.  
-  Supported triggers include:
-  - Invitee successfully opening a card  
-  - Invitee completing a qualified transaction (with configurable spending thresholds)  
-  Configure rebate percentages for each trigger.
+Rewards can also be triggered in different scenarios:
+- After successful card issuance
+- After successful spending settlement
 
 <Note>
-Example: Level V3 can be set to “≥ 30 valid invitees” with a 1% rebate for direct invitees’ transactions exceeding 50 USDT.
+The system supports 2 tiers of invitation relationships:
+- Direct invitation: A enters inviter code B during registration; A is B’s direct invitee.
+- Indirect invitation: B enters code A during registration, and C enters B’s code; C is indirectly related to A.
 </Note>
 
 ### Reward Settlement Rules
-Define reward distribution mechanics to ensure compliance and budget control.
+Defines the reward distribution mechanism to ensure risk control:
 
-* **Reward Currency:** Select the payout currency (recommend stablecoins such as USDT to avoid FX volatility).
-* **Settlement Cycle:**  
-  - Card issuance rewards: daily settlement recommended  
-  - Spending rebates: 30-day settlement recommended
-* **Reward Claim Threshold:** Set a minimum claimable amount to avoid frequent payouts of small rewards and reduce operational costs.
+**Reward currency**
+Select the currency used to pay rewards. Stablecoins (e.g., USDT) are recommended to reduce FX volatility risk.
 
-### Reward Reversal Rules
-If an invitee issues a refund, the inviter’s reward is clawed back proportionally:
+**Settlement cycle**
+Set the frequency of reward calculation and distribution.
 
-Refund Reversal = Refund Amount × Rebate Percentage
+**Reward claim threshold**
+Set a minimum claimable amount to avoid frequent settlement of many small transactions and reduce operational costs.
 
-By default, the amount is deducted from the inviter’s unclaimed reward pool (can go negative) to maintain a closed-loop reward model.
+**Reward clawback rules:**
+If an invitee generates a refund, the inviter’s reward will be clawed back proportionally. By default, the amount is deducted from the inviter’s unclaimed reward pool and can go negative.
 
-###Rule Copywriting
-Provide clear operational text for frontend display, including but not limited to:
+### Campaign Rule Copy
+Manage the campaign period and operational copy so the frontend can clearly display the rules to users.
 
-* Reward life cycle
-* Referral Level explanation
-* Reward distribution and claiming logic
-* Reward clawback conditions
+- Reward cycle
+- Member level rules
+- Reward introduction
+- Reward distribution rules
+- Reward claiming rules
+- Reward clawback rules
 
----
+## 2. Earnings Ranking
+Shows members’ participation in the invite campaign, including invitation records and reward claiming/settlement/clawback records.
 
-## II. Member Ranking 
-Displays the performance rankings of members participating in the activity, helping merchants identify high-value users and measure effectiveness.
+![Ranking](/cn/images/huodongph.png)
 
-### Invitation Performance Data
-* Member referral code
-* Current level
-* Rule details
+**Invitation performance:**
+The member’s current campaign level, invitation reward stats, and invitees’ spending status.
 
-### Earnings Statistics
-* Total accumulated rewards
-* Claimed reward amount
-* Unclaimed reward amount
-* Overall earnings rank
+**Invitation records:**
+Records invited users, including activation status and time.
 
-### Invitation Effectiveness Analysis
-* Number of direct invitees
-* Number of activated invitees
-* Activation rate (Activated / Total Invited)
-* Successful card issuances by invitees
-* Number of settled transactions
+**Reward claim records:**
+Records the member’s actual reward claims.
 
-### Invitation Records
-Detailed historical records of each invitation:
+**Reward settlement records:**
+Historical records of rebate settlements.
 
-* Invitee ID, email
-* Activation status and method (Registration / KYC / Card Issuance)
-* Relationship start date
+**Reward clawback records:**
+If refunds occur, the system records clawback details in real time.
 
-### Reward Claim Records
-Detailed logs of claimed rewards:
+## 3. Invitation Records
+View all invitation records and manually create invitation relationships.
 
-* Currency, amount, claim date
+- Inviter
+- Invitee
+- Invitation time
 
-### Reward Settlement Records
-Historical rebate settlement logs:
+## 4. Commission Settlement
+All settlement records for members participating in the invite campaign.
 
-* Invitee ID, email
-* Relationship type (Direct / Indirect)
-* Trigger event (Card issuance / Spending settlement)
-* Rebate rate, reward amount, settlement date
-* Linked original record (transaction or issuance, with clickable link)
+- Reward currency and amount
+- Invitee ID and email
+- Relationship (direct/indirect)
+- Trigger action (spending settlement / successful card issuance)
+- Rebate rate and settlement time
 
-### Reward Reversal Records
-Reward Reversal due to refunds:
+## 5. Commission Claims
+Reward claim history for all members.
 
-* Original inviter ID, email
-* Referral type
-* Refund type (Spending refund)
-* Clawback percentage, amount, currency, date
-
-<Note>
-By default, refunds result in proportional reward clawbacks from the inviter’s unclaimed reward pool in real time.
-</Note>
-
----
-
-## III. Member Invitation Records Module
-Enables operators to review all member invitation activities.
-
-Main fields:
-
-* Member ID, invite code
-* Total invitees
-* Activated invitees
-* Invitation date, activation criteria
-* Relationship type and tier (Direct / Indirect)
-
----
-
-## IV. Merchant Reward Settlement Module
-Displays all rewards settled by the merchant to members, enabling audit and traceability to ensure authenticity and compliance.
-
-Fields include:
-
-* Reward currency and amount
-* Invitee ID, email
-* Relationship type (Direct / Indirect)
-* Trigger action (transaction settlement / Card issuance)
-* Rebate rate, settlement date
-
-<Note>
-Click to view related transactions or issuance details.
-</Note>
-
----
-
-## Member Reward Claim Records
-Displays all member reward claim history, supporting financial tracking and reconciliation.
-
-Fields include:
-
-* Claimant ID, email
-* Reward currency
-* Reward amount
-* Payout date
-* Status (Success / Failed / Rejected)
+- Claimant ID
+- Reward currency
+- Claimed amount
+- Payout time

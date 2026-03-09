@@ -2,31 +2,28 @@
 title: Withdrawal Records
 ---
 
-## Overview
+## I. Feature Overview
 
-The Withdrawal Records page is used to manage withdrawal requests initiated by members (end-users) for on-chain asset transfers. It supports approval operations and full tracking of the on-chain execution status.  
-This module is a core step in the digital asset cash-out process, involving manual review, wallet signing, and on-chain broadcasting to ensure fund security and compliance.
-
-It displays all withdrawal requests submitted by members, including current status, processing progress, and on-chain execution details. Each record contains the following fields:
+Displays all withdrawal requests initiated by members, including current status, processing progress, and on-chain execution details. Each record contains the following fields:
 
 | Field | Description |
 |-------|-------------|
-| Member ID | Unique identifier of the member initiating the withdrawal request |
-| Coin/ Network | The cryptoCointo be withdrawn |
-| Withdrawal Amount | Amount of assets to be withdrawn in this request |
-| Withdrawal Address | The recipient wallet address provided by the user |
+| Initiator | Unique identifier of the member initiating the withdrawal request |
+| Token | The cryptocurrency to be withdrawn and the corresponding blockchain network |
+| Amount | The actual on-chain transferred amount for this withdrawal |
+| Fee Amount | The fee amount charged for this withdrawal |
+| Withdrawal Amount | The amount requested by the customer to withdraw |
+| To | The recipient wallet address provided by the user |
 | TXID | On-chain transaction hash generated after a successful withdrawal, used for blockchain lookup and traceability |
-| Approval Status | Pending / Approved / Rejected |
-| Approver | Account that performed the manual review |
-| Approval Time | Timestamp of the manual review |
+| Status | Pending Approval / Transaction Successful / Approval Rejected |
 
-## Operation Process
+## II. Operation Process Description
 
 Withdrawal requests follow the **“Manual Approval + MPC Wallet Automated Execution”** process to ensure secure, transparent, and controllable cash-out actions.
 
 <Steps>
 <Step title="User Submits Withdrawal Request">
-    The user submits a withdrawal request in the payment app or via the relevant withdrawal interface. The system generates a pending record with the status set to "Pending".
+    The user submits a withdrawal request in the payment app. The system generates a pending record with the status set to “Pending Approval”.
 </Step>
 
 <Step title="Manual Review in Admin Console">
@@ -35,38 +32,17 @@ Withdrawal requests follow the **“Manual Approval + MPC Wallet Automated Execu
 Approved: Proceeds to the next step, where the system automatically calls the MPC wallet for on-chain execution.
 
 Rejected: The request is terminated, and a rejection reason may be provided (e.g., KYC failure, mismatched withdrawal address).
-
-<Note>
-It is recommended to review the member’s identity verification status, transaction history, and alerts from anomaly detection systems to aid in the approval decision.
-
-Automatic withdrawal policies can be configured — for example, withdrawals below a certain value can be auto-approved.
-</Note>
 </Step>
 
 <Step title="System Initiates On-Chain Withdrawal">
     Once approved, the system calls the MPC wallet service to initiate the blockchain transaction.
 
-The multi-party signing mechanism is coordinated automatically by the system (Co-signer).
-
 Upon successful submission, a TXID (transaction hash) is generated, with a link to view on-chain details.
-
-<Note>
-A blockchain transaction is considered complete once confirmed on-chain, and the status will update to “Approved”. Otherwise, the system will automatically retry or log a failed status.
-</Note>
 </Step>
 </Steps>
 
-## Key Operational Requirements & Reminders
-
-**MPC Wallet Collection Feature Must Be Enabled**
-
-The system’s withdrawal logic depends on automated asset collection and address management to ensure a complete process chain for each withdrawal request.
-
-**Ensure Gas Fees for Funding Addresses Are Sufficient**
-
-All on-chain withdrawals consume gas fees. It is recommended to regularly top up native tokens (e.g., ETH, TRX) in the MPC wallet’s funding accounts to avoid withdrawal failures.
-
-**Monitor MPC Wallet Status in Real Time**
-
-If the wallet service goes offline or encounters signing errors, withdrawals will be directly affected.  
-It is recommended to integrate with an alerting system for status monitoring and automated notifications.
+<Tip> 
+1. An on-chain transaction is considered complete once it succeeds on-chain, and the status will update to “Approved”. Otherwise, the system will automatically retry or record a failed status.
+2. For SaaS + merchant deployments, the MPC wallet collection feature must be enabled, and the gas-station wallet must have sufficient miner fees.
+3. If the wallet service goes offline or encounters signing errors, withdrawals will be directly affected. It is recommended to integrate an alerting system for status monitoring and automated notifications.
+</Tip>
