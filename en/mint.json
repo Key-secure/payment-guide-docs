@@ -48,11 +48,11 @@
     {
       "group": "Basic Operations",
       "pages": [
-        "Introduce/budget-card/create-account",
+        "Introduce/budget-card/quick-start",
         "Introduce/budget-card/download-the-app",
+        "Introduce/budget-card/create-account",
         "Introduce/budget-card/kyc-identity-verification",
-        "Introduce/budget-card/obtain-card-information",
-        "Introduce/budget-card/quick-start"
+        "Introduce/budget-card/obtain-card-information"
       ]
     },
     {

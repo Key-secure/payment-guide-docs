@@ -16,7 +16,7 @@ title: 快速入门指南
 ### 步骤一：下载PayFun App
 
 **官方下载渠道**:
-- **官方网站**: https://www.payfun.com/download
+- **官方网站**: https://www.payfun.com/
 - **应用商店**:
   - iOS: App Store 搜索 "PayFun"
   - Android: Google Play 搜索 "PayFun" 或下载官方APK

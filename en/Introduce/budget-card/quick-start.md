@@ -21,7 +21,7 @@ title: Quick Start Guide
 ### Step 1: Download the PayFun App
 
 **Official Download Channels**:
-- **Official Website**: https://www.payfun.com/download
+- **Official Website**: https://www.payfun.com/
 - **App Stores**:
   - iOS: Search for "PayFun" in the App Store
   - Android: Search for "PayFun" in Google Play or download the official APK
