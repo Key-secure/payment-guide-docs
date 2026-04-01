@@ -17,17 +17,11 @@
     "isHidden": false
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Payfun",
-        "href": "https://www.payfun.com/"
-      }
-    ],
     "primary": 
       {
         "type": "button",
         "label": "KeySecure",
-        "href": "https://keysecure.io/"
+        "href": "https://pay.keysecure.io/"
       }
   },
   "navigation": {
@@ -240,10 +234,5 @@
     "suggestEdit": true,
     "raiseIssue": true,
     "thumbsRating": true
-  },
-  "footer": {
-    "socials": {
-        "x": "https://x.com/ChainUpOfficial"
-      }
   }
 }
