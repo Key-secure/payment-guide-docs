@@ -1,0 +1,74 @@
+---
+title: Management Fee
+---
+
+## 1. Overview
+
+Management fees are charged to cardholders on a recurring basis — monthly or annual. Bills are generated automatically at the beginning of each month or year, and deductions are attempted from cardholders.
+
+If a deduction fails, the system sends an email reminder and retries at the end of the month. To prevent continued outstanding balances, cards are automatically cancelled if the month-end deduction also fails.
+
+<Info>
+**Overview**
+- **Management Fee Records**: Displays all cardholder billing records, organized by billing cycle.
+- **Management Fee Cost**: If the current card BIN incurs a management fee cost, the platform (KeySecure) will make a one-time deduction for all active cards at the beginning of each month or year.
+- **Whitelist**: Cards on the whitelist will not be auto-cancelled even if they have outstanding fees. Use this for internal cards or high-value users you want to retain.
+</Info>
+
+---
+
+## 2. Management Fee Configuration
+
+Management fees must be enabled in the card package. Once enabled, newly issued cards under that package will be charged management fees according to the configuration.
+
+<Card title="Card Package Management" href="/en/feature-guide/card/card-package">
+    Configure card packages for users to purchase based on their needs
+</Card>
+
+<Tip>
+1. When a cardholder's spending amount or transaction count during the billing cycle meets the platform's exemption threshold, the management fee is automatically waived and marked as "Exempted."
+
+2. Included in calculation: purchases and ATM withdrawals from transaction records.
+
+3. Not included: card issuance fee, card production fee, management fee itself, express shipping fee.
+</Tip>
+
+---
+
+## 3. Management Fee Records and Cost
+
+Management fee records display all deduction attempts made from cardholders.
+
+Management fee cost displays all fees deducted by the platform (no data if the platform has not charged).
+
+![Management Fee Records Page](/en/images/glf-record.png)
+
+### Filter Records
+
+Use the filters at the top of the page to locate specific records:
+
+| Filter | Description |
+|--------|-------------|
+| Fee Type | Select Monthly, Annual, or All |
+| Billing Cycle | Select the billing month or year |
+| Status | Filter by status: Deducted / Pending Cancellation / Cancelled / Exempted |
+
+---
+
+## 4. Whitelist Configuration
+
+Members on the whitelist will still be charged during management fee deduction, but will not be auto-cancelled for outstanding fees. This prevents internal cards or high-value users from being cancelled.
+
+![Whitelist Configuration Page](/en/images/glf-whitelist.png)
+
+---
+
+## 5. Email Notifications
+
+The system automatically sends email notifications to cardholders in the following scenarios:
+
+| Scenario | Trigger |
+|----------|---------|
+| Deduction Notice | Sent after a successful deduction, informing the cardholder of the charge |
+| Pre-Cancellation Notice | Sent when balance is insufficient and cancellation is imminent, prompting the cardholder to top up |
+| Cancellation Notice | Sent after auto-cancellation is completed, notifying the cardholder that the card has been cancelled |
