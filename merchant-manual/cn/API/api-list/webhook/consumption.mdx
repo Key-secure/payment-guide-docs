@@ -1,0 +1,92 @@
+---
+title: 消费订单通知
+playground: none
+---
+
+消费交易创建、状态变更时平台主动推送至商户回调地址。
+
+<Note>
+- 请求体结构：`{ "id": "...", "action": "...", "data": { ... } }`。
+- `fee_detail` 字段名与查询接口的 `fee_list` 不同，且 `fee_type` 为 8.5 枚举。
+</Note>
+
+## 触发场景
+
+- 消费交易创建、状态变更（成功 / 失败 / 撤销 / 退款）
+- 手续费拆分、商户信息补全后推送
+
+## 请求头
+
+<ParamField header="Timestamp" type="string" required>
+  Unix 时间戳（毫秒）
+</ParamField>
+
+<ParamField header="Signature" type="string" required>
+  签名值，对 `data` 对象签名，见接入指引
+</ParamField>
+
+<ParamField header="Sign-Version" type="string" default="V1">
+  签名算法版本，默认 V1
+</ParamField>
+
+<ParamField header="Timezone" type="string" default="UTC+8">
+  时区，默认 UTC+8
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 推送参数
+
+<ParamField body="id" type="string" required>
+  推送 ID
+</ParamField>
+
+<ParamField body="action" type="string" required>
+  推送动作，见 8.6（Consumption）
+</ParamField>
+
+<ParamField body="data" type="object" required>
+  推送数据（含 consume_no、fee_detail、merchant_info 等）
+</ParamField>
+
+## 商户应答
+
+<ResponseField name="code" type="number" required>
+  状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  失败原因，失败时必填
+</ResponseField>
+
+<RequestExample>
+
+```json Request
+{
+  "id": "",
+  "action": "Consumption",
+  "data": {
+    "consume_no": "",
+    "card_no": "",
+    "type": "Consumption",
+    "amount": 100.00,
+    "status": "Success",
+    "time": 1716307200000
+  }
+}
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "message": ""
+}
+```
+
+</ResponseExample>

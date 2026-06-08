@@ -1,0 +1,109 @@
+---
+title: 获取卡套餐列表
+api: POST /open-api/v1/card/package/list
+authMethod: none
+---
+
+获取卡套餐列表（**授信模式**）。
+
+## 请求头
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey（商户凭证，与 IP 白名单绑定）
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required default="1716307200000">
+  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  登录标识（除获取 Token 外必填）
+</ParamField>
+
+<ParamField header="accept" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 请求体
+
+<ParamField body="type" type="string" default="Virtual">
+  套餐类型，见 8.3 卡类型
+</ParamField>
+
+<ParamField body="package_no" type="string">
+  卡套餐单号
+</ParamField>
+
+<ParamField body="page" type="number" default="0">
+  查询页码，默认 `0`
+</ParamField>
+
+<ParamField body="size" type="number" default="10">
+  查询条数，默认 `10`（最多 100 条）
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  返回数据
+
+  <Expandable title="data">
+    <ResponseField name="list" type="object[]">
+      卡套餐列表（含 consumption_limit、fee_detail 等字段）
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/package/list \
+  --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --data '{
+    "type": "Virtual",
+    "package_no": "",
+    "page": 0,
+    "size": 10
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "list": [{
+      "package_no": "",
+      "package_en_name": "",
+      "package_cn_name": "",
+      "card_bin": "",
+      "card_bin_no": "",
+      "organization": "",
+      "package_type": "Virtual"
+    }]
+  }
+}
+```
+
+</ResponseExample>

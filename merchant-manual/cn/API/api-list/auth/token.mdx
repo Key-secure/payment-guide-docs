@@ -1,0 +1,72 @@
+---
+title: 获取 Token接口
+api: GET /open-api/v1/merchant/token
+authMethod: none
+---
+
+获取商户 API 访问凭证，用于后续接口鉴权。本接口仅需 `Api-Key` 与 `Timestamp`，无需 `Access-Token`。
+
+## 请求头
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey（商户凭证，与 IP 白名单绑定）
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required default="1716307200000">
+  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+</ParamField>
+
+<ParamField header="accept" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  返回数据
+
+  <Expandable title="data">
+    <ResponseField name="access_token" type="string">
+      登录标识
+    </ResponseField>
+
+    <ResponseField name="expired_time" type="number">
+      过期时间（Unix 毫秒时间戳）
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request GET \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/token \
+  --header 'accept: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "access_token": "",
+    "expired_time": 1
+  }
+}
+```
+
+</ResponseExample>

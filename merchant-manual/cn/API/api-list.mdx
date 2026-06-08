@@ -1,0 +1,170 @@
+---
+title: 接口清单
+---
+
+## 接口清单（merchant-api）
+
+所有接口路径前缀均为 `/open-api`。对接模式由商户配置 `integration_mode` 决定，标注 `@IntegrationModeRequired` 的接口会校验 Token 中的模式，不匹配返回 **1012**。
+
+除 **获取 Token** 外，其余接口均需请求头：`Api-Key`、`Timestamp`、`Access-Token`（PCI iframe 内部接口使用 `Client-Access-Token`）。
+
+### 1. 通用接口（授信 / 授权模式均可调用）
+
+授信模式和授权模式均支持的通用接口。
+
+| 模块 | 方法 | 路径 | 说明 |
+| ---- | ---- | ---- | ---- |
+| 认证 | GET | /open-api/v1/merchant/token | 获取 Access-Token（仅需 Api-Key，无需 Access-Token） |
+| 持卡人 | POST | /open-api/v1/cardholder/apply | 持卡人认证申请 |
+| 持卡人 | POST | /open-api/v1/cardholder/list | 持卡人列表 |
+| 持卡人 | GET | /open-api/v1/cardholder/{cardholder_no}/info | 持卡人详情 |
+| 卡 | POST | /open-api/v1/card/apply | 开卡（授信传 `package_no`，授权传 `card_bin_no`） |
+| 卡 | POST | /open-api/v1/card/list | 卡列表 |
+| 卡 | GET | /open-api/v1/card/{card_no}/detail | 卡详情 |
+| 卡 | GET | /open-api/v1/card/{card_no}/private/info | 卡隐私 JSON（需 `pci_flag=1`，`data` 为加密字符串） |
+| 卡 | POST | /open-api/v1/card/active | 实体卡激活（`cvv` 须 AES 加密） |
+| 卡 | POST | /open-api/v1/card/status/update | 修改卡状态（Frozen / Activated / Delete） |
+| 卡 | POST | /open-api/v1/card/pin/set | 设置实体卡 PIN（`pin` 须 AES 加密） |
+| 消费 | GET | /open-api/v1/card/consume/{consume_no}/info | 消费详情 |
+| 消费 | POST | /open-api/v1/card/consume/list | 消费列表 |
+| PCI | GET | /open-api/v1/merchant/client/{card_no}/token | 颁发 PCI Client Access Token（商户服务端调用） |
+| PCI | POST | /open-api/v1/merchant/pci/card/detail | 获取卡敏感信息 JWE（**不对外开放**，仅供内部 iframe SDK 调用） |
+
+### 2. 授信模式接口（CREDIT_EXTENSION）
+
+仅对接模式为 **授信扩展** 的商户可调用。
+
+| 模块 | 方法 | 路径 | 说明 |
+| ---- | ---- | ---- | ---- |
+| 账户 | POST | /open-api/v1/account/transfer | 持卡人金额划转（固定 TUSDT） |
+| 账户 | GET | /open-api/v1/account/{cardholder_no}/info | 持卡人账户列表 |
+| 账户 | POST | /open-api/v1/account/transfer/list | 账户划转流水列表 |
+| 卡 | POST | /open-api/v1/card/package/list | 卡套餐列表 |
+
+### 3. 授权模式接口（AUTHORIZATION）
+
+仅对接模式为 **授权** 的商户可调用。
+
+| 模块 | 方法 | 路径 | 说明 |
+| ---- | ---- | ---- | ---- |
+| 卡 | POST | /open-api/v1/card/support/bins | 支持的卡 BIN 列表 |
+
+### 4. 交易模拟接口（Webhook 造数）
+
+联调/测试用接口，查库组包后向业务系统模拟卡商 Webhook 回调（Interlace / XLink）。**不使用** 请求头参数中的 `Api-Key` / `Access-Token` 鉴权。
+
+路径前缀：
+- 本地：`http://127.0.0.1:18080/testapi`
+- 沙盒：`https://sandbox-openplatform.keysecure.io/open-api/v1/simulate`
+
+| 模块 | 方法 | 路径后缀 | 说明 |
+| ---- | ---- | -------- | ---- |
+| 模拟 | POST | /auth | 模拟授权（Interlace 一步；XLink 为确认 + 第二步消费授权/失败） |
+| 模拟 | POST | /consumption_clear | 模拟消费清算成功 |
+| 模拟 | POST | /consumption_fail | 模拟消费失败 |
+| 模拟 | POST | /reversal | 模拟冲正/撤销 |
+| 模拟 | POST | /refund | 模拟退款 |
+
+## 快速导航
+
+### 按业务流程
+
+**持卡人流程：**
+1. 获取 Token → `GET /merchant/token`
+2. 持卡人认证申请 → `POST /cardholder/apply`
+3. 查询持卡人 → `POST /cardholder/list` 或 `GET /cardholder/{cardholder_no}/info`
+
+**开卡流程：**
+1. 获取卡套餐/BIN → `POST /card/package/list` 或 `POST /card/support/bins`
+2. 申请开卡 → `POST /card/apply`
+3. 查询卡列表 → `POST /card/list` 或获取卡详情 → `GET /card/{card_no}/detail`
+4. 激活实体卡 → `POST /card/active`（实体卡需要）
+5. 设置 PIN → `POST /card/pin/set`（实体卡可选）
+
+**交易流程：**
+1. 查询消费详情 → `GET /consume/{consume_no}/info`
+2. 查询消费列表 → `POST /consume/list`
+
+**账户流程（授信模式）：**
+1. 查询账户信息 → `GET /account/{cardholder_no}/info`
+2. 执行划转 → `POST /account/transfer`
+3. 查询划转流水 → `POST /account/transfer/list`
+
+### 按HTTP方法
+
+**GET 方法：**
+- `/merchant/token` —— 获取 Token
+- `/cardholder/{cardholder_no}/info` —— 持卡人详情
+- `/card/{card_no}/detail` —— 卡详情
+- `/card/{card_no}/private/info` —— 卡隐私信息（PCI）
+- `/consume/{consume_no}/info` —— 消费详情
+- `/account/{cardholder_no}/info` —— 账户信息
+- `/merchant/client/{card_no}/token` —— PCI Client Token
+
+**POST 方法：**
+- `/cardholder/apply` —— 持卡人申请
+- `/cardholder/list` —— 持卡人列表
+- `/card/apply` —— 开卡申请
+- `/card/list` —— 卡列表
+- `/card/active` —— 卡激活
+- `/card/status/update` —— 修改卡状态
+- `/card/pin/set` —— 设置 PIN
+- `/card/package/list` —— 卡套餐（授信）
+- `/card/support/bins` —— 支持 BIN（授权）
+- `/consume/list` —— 消费列表
+- `/account/transfer` —— 划转（授信）
+- `/account/transfer/list` —— 划转流水（授信）
+- `/merchant/pci/card/detail` —— PCI 卡敏感信息
+
+## 权限和前置条件
+
+### 认证要求
+
+| 接口 | 需要 Api-Key | 需要 Access-Token | 说明 |
+| ---- | ---- | ---- | ---- |
+| 获取 Token | ✓ | ✗ | 仅需 Api-Key + Timestamp |
+| 其他接口 | ✓ | ✓ | 需要完整认证 |
+| PCI iframe 内部接口 | ✓ | ✗（需 Client-Access-Token） | 使用 Client-Access-Token 替代 |
+
+### 前置条件
+
+**开卡前：**
+- 持卡人必须存在且 KYC 已认证成功（状态为 Approved）
+- 否则返回 2002（持卡人不存在）或 2005（认证信息未通过）
+
+**卡隐私接口（5.6）：**
+- 需商户 API 配置 `pci_flag = 1`（已开通 PCI）
+- 未开通返回 1013
+- 卡状态须为 Activated
+
+**实体卡激活：**
+- 卡状态须为 ToActivate
+- CVV 须 AES 加密后传入
+
+**设置 PIN：**
+- 仅支持实体卡
+- 卡状态须为 Activated
+- PIN 须 AES 加密后传入
+
+## 错误处理
+
+所有错误响应遵循统一格式：
+
+```json
+{
+  "code": 1003,
+  "msg": "IP address not allowed"
+}
+```
+
+常见错误码（详见「附录」→「错误码」）：
+
+| 错误码 | 含义 | 常见原因 |
+| ---- | ---- | ---- |
+| 1003 | IP 地址不正确 | 请求 IP 不在白名单内 |
+| 1005 | 时间戳已失效 | 时间戳与服务器偏差超过 60 秒 |
+| 1007 | Access-Token 已失效 | Token 已过期或无效 |
+| 2002 | 持卡人不存在 | 持卡人不存在 |
+| 4005 | 当前卡状态不允许此操作 | 卡状态不支持该操作 |
+
+更多错误码见「附录」→「错误码」章节。

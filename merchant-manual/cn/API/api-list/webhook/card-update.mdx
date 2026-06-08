@@ -1,0 +1,98 @@
+---
+title: 卡变动通知
+playground: none
+---
+
+平台在卡状态变更时 POST 至商户配置的回调 URL。
+
+<Note>
+- 请求体结构：`{ "id": "...", "action": "...", "data": { ... } }`，`action` 见 8.6。
+- 商户须返回 `{ "code": 0, "message": "" }`；`code ≠ 0` 时平台按策略重试。
+</Note>
+
+## 触发场景
+
+- 卡状态发生变更
+
+## 请求头
+
+<ParamField header="Timestamp" type="string" required>
+  Unix 时间戳（毫秒）
+</ParamField>
+
+<ParamField header="Signature" type="string" required>
+  签名值，对 `data` 对象签名，见接入指引
+</ParamField>
+
+<ParamField header="Sign-Version" type="string" default="V1">
+  签名算法版本，默认 V1
+</ParamField>
+
+<ParamField header="Timezone" type="string" default="UTC+8">
+  时区，默认 UTC+8
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 推送参数
+
+<ParamField body="id" type="string" required>
+  推送 ID
+</ParamField>
+
+<ParamField body="action" type="string" required>
+  推送动作，见 8.6 推送动作（Card_update）
+</ParamField>
+
+<ParamField body="data" type="object" required>
+  推送数据
+</ParamField>
+
+### data 字段
+
+<ResponseField name="card_no" type="string">卡单号</ResponseField>
+<ResponseField name="before_status" type="string">变动前状态，见 8.2 卡状态</ResponseField>
+<ResponseField name="after_status" type="string">变动后状态，见 8.2 卡状态</ResponseField>
+<ResponseField name="reason" type="string">变动原因</ResponseField>
+<ResponseField name="time" type="number">变动时间（Unix 毫秒）</ResponseField>
+
+## 商户应答
+
+<ResponseField name="code" type="number" required>
+  状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  失败原因，失败时必填
+</ResponseField>
+
+<RequestExample>
+
+```json Request
+{
+  "id": "",
+  "action": "Card_update",
+  "data": {
+    "card_no": "",
+    "before_status": "Activated",
+    "after_status": "Frozen",
+    "reason": "",
+    "time": 1716307200000
+  }
+}
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "message": ""
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,125 @@
+---
+title: Constants
+---
+
+Enumerations defined in `com.chainup.custody.enums.api` package. Values displayed in open API match enumeration **name** (JSON fields are snake_case via framework serialization; enumeration names in **code** column below).
+
+## 8.1 Common Status (ApiCommonStatusEnum)
+
+Used for transfer flow, consumption records, and other common business statuses.
+
+| code | Description | Internal Status Code |
+| ---- | ---- | ---------- |
+| Pending | In progress | 1000 |
+| Success | Successful | 2000 |
+| Fail | Failed | 3000 |
+
+## 8.2 Card Status (ApiCardStatusEnum)
+
+Used in card list, card details, and update card status interfaces' `status` field.
+
+| code | Description | Notes |
+| ---- | ---- | ---- |
+| Pending | In progress | Card manufacturing, etc. |
+| ToActivate | Awaiting activation | Awaiting cardholder activation |
+| Activated | Activated/Normal | Can pass this value in update status interface to enable |
+| Fail | Failed | Card application failure, etc. |
+| Frozen | Frozen | Can pass this value in update status interface to freeze |
+| Delete | Deleted/Cancelled | Can pass this value in update status interface to delete |
+
+<Note>
+Update card status interface only allows passing: `Activated`, `Frozen`, `Delete`.
+</Note>
+
+## 8.3 Card Type (ApiCardTypeEnum)
+
+| code | Description | Internal Type |
+| ---- | ---- | -------- |
+| Virtual | Virtual Card | 1 |
+| Physical | Physical Card | 2 |
+
+## 8.4 Consumption Type (ApiConsumeTypeEnum)
+
+| code | Description |
+| ---- | ---- |
+| Open_card | Card Issuance |
+| Consumption | Transaction |
+| Atm | ATM Withdrawal |
+| Manage_fee | Management Fee |
+| Reversal | Chargeback/Reversal |
+| Refund | Refund |
+
+## 8.5 Fee Type (ApiConsumeFeeTypeEnum)
+
+| code | Description |
+| ---- | ---- |
+| Consume_fee | Consumption Fee |
+| Apple_auth_fee | Apple Auth Fee |
+| Auth_fee | Auth Fee |
+| Atm_fee | ATM Withdrawal Fee |
+| Exchange_fee | Exchange Fee |
+| Decline_fee | Chargeback Fee |
+| Small_fee | Small Amount Fee |
+| Refund_fee | Refund Fee |
+| Cancel_fee | Transaction Cancellation Fee |
+
+## 8.6 Notification Action (NotifyActionEnum)
+
+Values for `action` field in callback notifications.
+
+| code | Description |
+| ---- | ---- |
+| Auth | Consumption Authorization |
+| Consumption | Consumption Notification |
+| Card_update | Card Status Change |
+
+## 8.7 Exemption Type (ApiExcuseTypeEnum)
+
+Period type for small amount exemption, chargeback exemption, and similar in package/fee configuration.
+
+| code | Description |
+| ---- | ---- |
+| Forever | Permanent Exemption |
+| None | No Exemption |
+| Day | Daily Exemption |
+
+## 8.8 Cardholder Status (ApiCardHolderStatusEnum)
+
+Used in cardholder list, cardholder details, and similar interfaces' `status` field.
+
+| code | Description |
+| ---- | ---- |
+| Pending | Awaiting Authentication |
+| In_progress | Authentication In Progress |
+| Approved | Authentication Successful |
+| Rejected | Authentication Failed |
+
+## 8.9 Transfer Type (ApiTransferTypeEnum)
+
+Values for `type` field in account transfer interface (case-insensitive).
+
+| code | Description |
+| ---- | ---- |
+| In | Transfer In (Company → Cardholder) |
+| Out | Transfer Out (Cardholder → Company) |
+
+## 8.10 Management Fee Type (ApiManageFeeTypeEnum)
+
+Used in package/card details `fee_detail.manage_fee_type` and similar fields.
+
+| code | Description |
+| ---- | ---- |
+| Free | Free |
+| Month | Monthly |
+| Season | Quarterly |
+| Year | Yearly |
+
+## 8.11 Management Fee Exemption Type (ApiManageFeeFreeTypeEnum)
+
+Values for `fee_detail.management_fee_free_type` field in package/card details.
+
+| code | Description |
+| ---- | ---- |
+| None | No Management Fee Exemption |
+| Amount | Exemption Based on Transaction Amount |
+| Count | Exemption Based on Transaction Count |

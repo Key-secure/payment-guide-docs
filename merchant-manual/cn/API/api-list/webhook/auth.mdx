@@ -1,0 +1,90 @@
+---
+title: Auth 订单通知（授权模式）
+playground: none
+---
+
+用户消费授权时平台推送，仅 **授权模式**（AUTHORIZATION）商户接收。
+
+<Note>
+- `action` 为 **Auth**；`data.status` 固定为 **Pending**（待商户应答）。
+- 商户须在超时内返回应答。
+</Note>
+
+## 触发场景
+
+- 用户消费授权，校验金额费用
+
+## 请求头
+
+<ParamField header="Timestamp" type="string" required>
+  Unix 时间戳（毫秒）
+</ParamField>
+
+<ParamField header="Signature" type="string" required>
+  签名值，对 `data` 对象签名，见接入指引
+</ParamField>
+
+<ParamField header="Sign-Version" type="string" default="V1">
+  签名算法版本，默认 V1
+</ParamField>
+
+<ParamField header="Timezone" type="string" default="UTC+8">
+  时区，默认 UTC+8
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 推送参数
+
+<ParamField body="id" type="string" required>
+  推送 ID
+</ParamField>
+
+<ParamField body="action" type="string" required default="Auth">
+  推送动作（Auth）
+</ParamField>
+
+<ParamField body="data" type="object" required>
+  推送数据（含 consume_no、amount、merchant_info 等）
+</ParamField>
+
+## 商户应答
+
+<ResponseField name="code" type="number" required>
+  状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  失败原因，失败时必填
+</ResponseField>
+
+<RequestExample>
+
+```json Request
+{
+  "id": "",
+  "action": "Auth",
+  "data": {
+    "consume_no": "",
+    "card_no": "",
+    "amount": 100.00,
+    "status": "Pending",
+    "time": 1716307200000
+  }
+}
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "message": ""
+}
+```
+
+</ResponseExample>

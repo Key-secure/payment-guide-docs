@@ -1,0 +1,140 @@
+---
+title: 获取卡消费记录列表
+api: POST /open-api/v1/card/consume/list
+authMethod: none
+---
+
+查询卡消费记录列表。
+
+## 请求头
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey（商户凭证，与 IP 白名单绑定）
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required default="1716307200000">
+  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  登录标识（除获取 Token 外必填）
+</ParamField>
+
+<ParamField header="accept" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+<ParamField header="Timezone" type="string" default="UTC+8">
+  时区，影响 `start_time` / `end_time` 的日界计算，默认 UTC+8
+</ParamField>
+
+## 请求体
+
+<ParamField body="cardholder_no" type="string">
+  持卡人单号
+</ParamField>
+
+<ParamField body="consume_no" type="string">
+  卡消费单号
+</ParamField>
+
+<ParamField body="card_no" type="string">
+  卡单号
+</ParamField>
+
+<ParamField body="start_time" type="string" required default="2026-01-01">
+  开始时间（`yyyy-MM-dd` 或 `yyyy-MM-dd HH:mm:ss`）
+</ParamField>
+
+<ParamField body="end_time" type="string" required default="2026-03-31">
+  结束时间（同上；间隔 ≤90 天）
+</ParamField>
+
+<ParamField body="page" type="number" default="0">
+  查询页码，默认 `0`
+</ParamField>
+
+<ParamField body="size" type="number" default="10">
+  查询条数，默认 `10`（最多 100 条）
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  返回数据
+
+  <Expandable title="data">
+    <ResponseField name="list" type="object[]">
+      消费记录列表
+      <Expandable title="list">
+        <ResponseField name="consume_no" type="string">消费单号</ResponseField>
+        <ResponseField name="card_no" type="string">卡单号</ResponseField>
+        <ResponseField name="cardholder_no" type="string">持卡人单号</ResponseField>
+        <ResponseField name="type" type="string">消费类型，见 8.4 消费类型</ResponseField>
+        <ResponseField name="amount" type="string">金额</ResponseField>
+        <ResponseField name="local_amount" type="string">原始金额</ResponseField>
+        <ResponseField name="local_currency" type="string">原始币种</ResponseField>
+        <ResponseField name="fee" type="string">费用</ResponseField>
+        <ResponseField name="status" type="string">状态，见 8.1 通用状态</ResponseField>
+        <ResponseField name="time" type="number">消费时间（Unix 毫秒）</ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/consume/list \
+  --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --header 'Timezone: UTC+8' \
+  --data '{
+    "cardholder_no": "",
+    "consume_no": "",
+    "card_no": "",
+    "start_time": "2026-01-01",
+    "end_time": "2026-03-31",
+    "page": 0,
+    "size": 10
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "list": [{
+      "consume_no": "",
+      "card_no": "",
+      "type": "Consumption",
+      "amount": "100.00",
+      "status": "Success",
+      "time": 1716307200000
+    }]
+  }
+}
+```
+
+</ResponseExample>

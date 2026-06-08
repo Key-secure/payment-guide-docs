@@ -1,0 +1,93 @@
+---
+title: 获取卡详情
+api: GET /open-api/v1/card/{card_no}/detail
+authMethod: none
+---
+
+获取单张卡的详细信息。
+
+## 请求头
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey（商户凭证，与 IP 白名单绑定）
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required default="1716307200000">
+  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  登录标识（除获取 Token 外必填）
+</ParamField>
+
+<ParamField header="accept" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 路径参数
+
+<ParamField path="card_no" type="string" required default="C202605220001">
+  卡单号
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  返回数据
+
+  <Expandable title="data">
+    <ResponseField name="card_no" type="string">卡单号</ResponseField>
+    <ResponseField name="card_unique_no" type="string">商户侧唯一单号</ResponseField>
+    <ResponseField name="cardholder_no" type="string">持卡人单号</ResponseField>
+    <ResponseField name="card_name" type="string">卡别名</ResponseField>
+    <ResponseField name="package_name_en" type="string">卡套餐英文名称</ResponseField>
+    <ResponseField name="package_name_cn" type="string">卡套餐中文名称</ResponseField>
+    <ResponseField name="card_type" type="string">卡类型，见 8.3 卡类型</ResponseField>
+    <ResponseField name="organization" type="string">卡组织</ResponseField>
+    <ResponseField name="card_last_no" type="string">卡号后四位</ResponseField>
+    <ResponseField name="fee_detail" type="object">费用详情（开卡时快照，不含 open_cost）</ResponseField>
+    <ResponseField name="status" type="string">状态，见 8.2 卡状态</ResponseField>
+    <ResponseField name="time" type="number">开卡时间（Unix 毫秒）</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request GET \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/C202605220001/detail \
+  --header 'accept: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "card_no": "",
+    "card_unique_no": "",
+    "cardholder_no": "",
+    "card_name": "",
+    "card_type": "Virtual",
+    "status": "Activated",
+    "time": 1716307200000
+  }
+}
+```
+
+</ResponseExample>

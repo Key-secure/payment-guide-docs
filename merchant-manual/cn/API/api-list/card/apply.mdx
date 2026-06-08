@@ -1,0 +1,110 @@
+---
+title: 开卡申请
+api: POST /open-api/v1/card/apply
+authMethod: none
+---
+
+开卡申请。授信模式传 `package_no`，授权模式传 `card_bin_no`（二选一）。
+
+## 请求头
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey（商户凭证，与 IP 白名单绑定）
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required default="1716307200000">
+  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  登录标识（除获取 Token 外必填）
+</ParamField>
+
+<ParamField header="accept" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 请求体
+
+<ParamField body="card_bin_no" type="string">
+  卡 BIN 单号（授权模式，与 package_no 二选一）
+</ParamField>
+
+<ParamField body="cardholder_no" type="string" required default="U202605220001">
+  持卡人单号
+</ParamField>
+
+<ParamField body="card_unique_no" type="string" required default="MERCHANT_CARD_001">
+  商户侧卡唯一单号（最长 64 字符）
+</ParamField>
+
+<ParamField body="package_no" type="string" default="PKG202605220001">
+  卡套餐单号（授信模式，与 card_bin_no 二选一）
+</ParamField>
+
+<ParamField body="card_type" type="string" required default="Virtual">
+  卡类型，见 8.3 卡类型
+</ParamField>
+
+<ParamField body="address_info" type="object">
+  地址信息（实体卡、部分虚拟卡必填）
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  返回数据
+
+  <Expandable title="data">
+    <ResponseField name="card_no" type="string">卡单号</ResponseField>
+    <ResponseField name="card_unique_no" type="string">商户侧卡唯一单号</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/apply \
+  --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --data '{
+    "card_bin_no": "",
+    "cardholder_no": "U202605220001",
+    "package_no": "PKG202605220001",
+    "card_type": "Virtual",
+    "card_unique_no": "MERCHANT_CARD_001"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "card_no": "",
+    "card_unique_no": ""
+  }
+}
+```
+
+</ResponseExample>

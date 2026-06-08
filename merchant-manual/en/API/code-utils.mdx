@@ -1,0 +1,177 @@
+---
+title: Code Utilities
+---
+
+## 10.1 Signature Utility Class (SignUtils)
+
+When the platform calls back the merchant, the request headers carry `Timestamp`, `Signature`, `Sign-Version` (V1), and `Timezone` (UTC+8).
+
+The signature is calculated on the **`data` object** (JSON string), **excluding** the top-level `id` and `action` fields.
+
+```java
+/**
+ * Signature utility class — com.chainup.custody.util.SignUtils
+ * Algorithm: HMAC-SHA256, output in lowercase hexadecimal
+ */
+public class SignUtils {
+
+    /**
+     * Calculate signature (body is the JSON string of the data field, parsed internally as Map)
+     *
+     * @param appId     Merchant Api-Key (credential.apiKey)
+     * @param timestamp Unix millisecond timestamp (consistent with request header Timestamp)
+     * @param body      JSON string of the data field in the callback JSON
+     * @param secretKey Merchant apiSecret plaintext
+     */
+    public static String sign(String appId, String timestamp, String body, String secretKey) throws Exception {
+        return sign(appId, timestamp, buildBodyMap(body), secretKey);
+    }
+
+    /**
+     * Calculate signature (body is an expanded Map)
+     */
+    public static String sign(String appId, String timestamp, Map<String, String> body, String secretKey) throws Exception {
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put("appId", appId);
+        params.put("timestamp", timestamp);
+        if (body != null && !body.isEmpty()) {
+            params.putAll(body);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            if (entry.getValue() == null) continue;
+            if (sb.length() > 0) sb.append("&");
+            sb.append(entry.getKey()).append("=").append(entry.getValue());
+        }
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
+        return bytesToHex(mac.doFinal(sb.toString().getBytes(StandardCharsets.UTF_8)));
+    }
+
+    /**
+     * Parse data JSON into a Map for signature (TreeMap dictionary order).
+     * String fields as-is; Object/Array fields JSON serialized; null skipped.
+     */
+    public static Map<String, String> buildBodyMap(String body) {
+        Map<String, String> bodyMap = new TreeMap<>();
+        if (StringUtils.isBlank(body)) return bodyMap;
+        JSONObject json = JSONObject.parseObject(body);
+        for (Map.Entry<String, Object> e : json.entrySet()) {
+            if (e.getValue() == null) continue;
+            Object v = e.getValue();
+            bodyMap.put(e.getKey(), v instanceof String ? (String) v : JSONObject.toJSONString(v));
+        }
+        return bodyMap;
+    }
+
+    private static String bytesToHex(byte[] bytes) { /* lowercase hex */ }
+}
+```
+
+<Note>
+- Platform implementation: `MerchantApiCallbackService#doCallback` calls `SignUtils.sign(appId, timestamp, payload.getString("data"), secretKey)`.
+- Parameters involved in signature: **`appId`**, **`timestamp`**, and **all fields in data**; top-level `id` and `action` **are not** involved in signature.
+- `buildBodyMap` is a **public** method that can be reused by merchants during signature verification.
+</Note>
+
+## 10.2 Merchant Sensitive Data Encryption/Decryption Utility Class (MerchantEncryptUtil)
+
+### Use Cases
+
+| Interface | Direction | Description |
+| ---- | ---- | ---- |
+| `GET /card/{card_no}/private/info` | Server → Merchant | Response `data` is encrypted string, merchant decrypts to get JSON |
+| `POST /card/active` | Merchant → Server | Request `cvv` must be encrypted Base64 ciphertext |
+| `POST /card/pin/set` | Merchant → Server | Request `pin` must be encrypted Base64 ciphertext |
+
+### Algorithm Description
+
+| Item | Value |
+| --- | --- |
+| Algorithm | AES-256 |
+| Mode/Padding | **CBC / PKCS5Padding** (16-byte random IV per encryption) |
+| Key Derivation | `SHA-256(apiSecret UTF-8)` → 32-byte AES key (apiSecret is variable-length, **cannot** be used directly as AES Key) |
+| Ciphertext Format | `Base64( IV[16 bytes] ‖ AES-CBC ciphertext )` |
+| Charset | UTF-8 (plaintext) |
+
+<Note>
+Implementation class: `com.chainup.custody.util.MerchantEncryptUtil`.
+
+PIN plaintext must be **6 digits** and cannot contain three or more identical or consecutive digits, otherwise returns **4016**.
+
+Physical card activation plaintext CVV must be **3 pure digits**; decryption failure returns **4015** / **4019**.
+</Note>
+
+### Utility Class Code (Consistent with Platform, Reference for Merchant)
+
+```java
+/**
+ * com.chainup.custody.util.MerchantEncryptUtil
+ * Sensitive field encryption/decryption: PIN / CVV / Card privacy JSON
+ */
+public class MerchantEncryptUtil {
+
+    private static final String CIPHER_CBC = "AES/CBC/PKCS5Padding";
+    private static final int IV_LENGTH = 16;
+
+    /** Encrypt: random IV + CBC, output Base64(IV‖ciphertext) */
+    public static String encrypt(String data, String secretKey) { /* see source */ }
+
+    /**
+     * Decrypt: Base64 decode, take first 16 bytes as IV, rest as ciphertext, AES/CBC decrypt.
+     * Returns null on decryption failure.
+     */
+    public static String decrypt(String encryptedData, String secretKey) { /* see source */ }
+
+    /** SHA-256(apiSecret) → AES-256 SecretKeySpec */
+    private static SecretKeySpec buildAesKey(String secretKey) { /* see source */ }
+}
+```
+
+### Usage Examples
+
+**1) Physical Card Activation — Merchant Encrypts CVV Before Submission**
+
+```java
+String apiSecret = "your_api_secret_plaintext";
+String plainCvv = "123";
+String encryptedCvv = MerchantEncryptUtil.encrypt(plainCvv, apiSecret);
+
+// Request body
+// {
+//   "card_no": "...",
+//   "cardholder_no": "...",
+//   "cvv": "<encryptedCvv>",
+//   "card_last_no": "1234"
+// }
+```
+
+**2) Set Physical Card PIN — Merchant Encrypts Before Submission**
+
+```java
+String apiSecret = "your_api_secret_plaintext";
+String plainPin = "123456";
+String encryptedPin = MerchantEncryptUtil.encrypt(plainPin, apiSecret);
+
+// Request body
+// { "card_no": "...", "cardholder_no": "...", "pin": "<encryptedPin>" }
+```
+
+**3) Get Card Privacy JSON — Merchant Decrypts Response Data**
+
+```java
+String apiSecret = "your_api_secret_plaintext";
+String encryptedData = response.getData(); // data field from HTTP response
+String json = MerchantEncryptUtil.decrypt(encryptedData, apiSecret);
+// json is card privacy information JSON string
+```
+
+### Related Error Codes
+
+| code | Description (English) | Description (Chinese) |
+| ---- | -------- | -------- |
+| 1013 | PCI sensitive card display is not enabled | 未开通 PCI 敏感卡展示能力 |
+| 4015 | PIN decryption failed, check encryption method and key | PIN 码解密失败，请检查加密方式与密钥 |
+| 4016 | Invalid PIN format. Must be 6 digits without three identical or consecutive digits (e.g. 111111, 123456, 654321). | PIN 码格式不正确，须为 6 位数字，且不可含三位相同或连续数字 |
+| 4018 | No available API credential found | 未找到可用的 API 凭证 |
+| 4019 | CVV decryption failed, check encryption method and key | CVV 解密失败，请检查加密方式与密钥 |

@@ -1,0 +1,97 @@
+---
+title: 获取卡敏感信息 JWE（内部接口）
+playground: none
+---
+
+**本接口不对外开放**，仅供平台内部 iframe SDK 调用，商户无需直接对接。
+
+## 请求头
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey（商户凭证，与 IP 白名单绑定）
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required default="1716307200000">
+  Unix 时间戳（毫秒）
+</ParamField>
+
+<ParamField header="Client-Access-Token" type="string" required placeholder="your_client_access_token">
+  PCI iframe 内部接口使用，替代 Access-Token
+</ParamField>
+
+<ParamField header="accept" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 请求体
+
+<ParamField body="epk" type="object" required>
+  iframe 侧 ECDH P-256 临时公钥（JWK）
+</ParamField>
+
+<ParamField body="nonce" type="string" required default="random_nonce_string">
+  防重放随机串
+</ParamField>
+
+<ParamField body="parent_origin" type="string" required default="https://merchant.example.com">
+  父页面 Origin，须在商户域名白名单内
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  返回数据
+
+  <Expandable title="data">
+    <ResponseField name="jwe" type="string">JWE 密文（ECDH-ES + A256GCM）</ResponseField>
+    <ResponseField name="expires_in" type="number">密文建议有效期（秒），默认 60</ResponseField>
+    <ResponseField name="received_at_ms" type="number">服务端接收请求时间戳（毫秒）</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/pci/card/detail \
+  --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Client-Access-Token: your_client_access_token' \
+  --data '{
+    "epk": {"kty": "EC", "crv": "P-256", "x": "example_x", "y": "example_y"},
+    "nonce": "random_nonce_string",
+    "parent_origin": "https://merchant.example.com"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "jwe": "",
+    "expires_in": 60,
+    "received_at_ms": 1716307200000
+  }
+}
+```
+
+</ResponseExample>

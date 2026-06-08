@@ -1,0 +1,90 @@
+---
+title: 获取持卡人详细信息
+api: GET /open-api/v1/cardholder/{cardholder_no}/info
+authMethod: none
+---
+
+获取持卡人详情，含账户与成功卡列表。
+
+## 请求头
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey（商户凭证，与 IP 白名单绑定）
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required default="1716307200000">
+  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  登录标识（除获取 Token 外必填）
+</ParamField>
+
+<ParamField header="accept" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+## 路径参数
+
+<ParamField path="cardholder_no" type="string" required default="U202605220001">
+  持卡人单号
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  返回数据
+
+  <Expandable title="data">
+    <ResponseField name="cardholder_no" type="string">持卡人单号</ResponseField>
+    <ResponseField name="cardholder_unique_no" type="string">商户侧持卡人唯一单号</ResponseField>
+    <ResponseField name="email" type="string">邮箱</ResponseField>
+    <ResponseField name="status" type="string">持卡人状态，见 8.8 持卡人状态</ResponseField>
+    <ResponseField name="total_balance" type="string">账户总资产（USD）</ResponseField>
+    <ResponseField name="time" type="number">持卡人创建时间（Unix 毫秒）</ResponseField>
+    <ResponseField name="card_list" type="object[]">成功卡列表</ResponseField>
+    <ResponseField name="account_list" type="object[]">账户列表</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request GET \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/cardholder/U202605220001/info \
+  --header 'accept: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "cardholder_no": "",
+    "cardholder_unique_no": "",
+    "email": "",
+    "status": "Approved",
+    "total_balance": "1000.00",
+    "time": 1716307200000,
+    "card_list": [{"card_no": "", "card_last_no": "", "card_type": "Virtual", "time": 1716307200000}],
+    "account_list": [{"symbol": "TUSDT", "symbol_chain": "", "balance": "500.00", "usd_balance": "500.00"}]
+  }
+}
+```
+
+</ResponseExample>

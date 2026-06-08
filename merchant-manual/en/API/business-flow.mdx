@@ -1,0 +1,277 @@
+---
+title: Business Flow Guide
+---
+
+## Core Integration Flow
+
+Complete payment card service integration consists of four stages, from user authentication to consumption reconciliation. The following details each stage and corresponding interfaces:
+
+---
+
+## Stage 1: User Registration & KYC Authentication
+
+**Scenario**: Complete cardholder authentication. Cardholders must be authenticated before they can apply for cards.
+
+### Flow Steps
+
+1. **Frontend Integration of SumSub KYC Component** — User completes identity verification
+2. **Initiate Cardholder Authentication** — Call interface to create cardholder and initiate authentication
+3. **Query Authentication Status** — Get cardholder list or details to confirm authentication passes
+
+### Related Interfaces
+
+| Interface | Method | Path | Description |
+| --- | --- | --- | --- |
+| Get Token | GET | `/open-api/v1/merchant/token` | Get Access-Token, required for all subsequent requests |
+| **Cardholder Authentication Application** | POST | `/open-api/v1/cardholder/apply` | Create cardholder and initiate authentication; after authentication failure, can update authentication info and re-initiate |
+| Get Cardholder List | POST | `/open-api/v1/cardholder/list` | Get current cardholder list |
+| Get Cardholder Details | GET | `/open-api/v1/cardholder/{cardholder_no}/info` | Get cardholder's card list and assets; can verify authentication status |
+
+### Typical Flow
+
+```
+Frontend KYC Authentication 
+    ↓
+[POST /cardholder/apply] Initiate cardholder application
+    ↓
+Authentication in progress... (Platform verifies with Sumsub)
+    ↓
+[POST /cardholder/list] Query cardholder status
+    ↓
+Authentication successful ✓ (Status: Approved)
+```
+
+### Authentication Status
+
+| Status | Description |
+| --- | --- |
+| Pending | Awaiting authentication |
+| In_progress | Authentication in progress |
+| Approved | Authentication successful ✓ (Can apply for cards) |
+| Rejected | Authentication failed (Can re-apply) |
+
+---
+
+## Stage 2: Select Package, Apply for Card, Card Management
+
+**Scenario**: After cardholder authentication passes, user selects card type (virtual/physical) and applies for card.
+
+### Flow Steps
+
+1. **Get Card Package or BIN List** — Get available card products based on integration mode
+2. **Apply for Card** — User selects card type (virtual/physical) and submits application
+3. **Query Card Status** — Get card list or card details to confirm card application success
+4. **Activate Card (Physical Cards)** — After user receives physical card, must activate to use
+5. **Manage Card Status** — Freeze, unfreeze, or delete cards
+
+### Related Interfaces
+
+| Interface | Method | Path | Mode | Description |
+| --- | --- | --- | --- | --- |
+| Get Card Package List | POST | `/open-api/v1/card/package/list` | Credit | Login merchant backend to create card packages; charge based on package when applying |
+| Get Supported Card BIN List | POST | `/open-api/v1/card/support/bins` | Auth | Get supported card BINs for authorization mode; merchant maintains card packages |
+| **Apply for Card** | POST | `/open-api/v1/card/apply` | Common | Apply for card (pass `package_no` for credit, `card_bin_no` for auth) |
+| Get Card List | POST | `/open-api/v1/card/list` | Common | Get current card list |
+| Get Card Details | GET | `/open-api/v1/card/{card_no}/detail` | Common | Get card details (including rates, fees, etc.) |
+| Get Card Privacy Info | GET | `/open-api/v1/card/{card_no}/private/info` | Common | Get card's CVV, expiry, card number (requires PCI permission) |
+| **Activate Physical Card** | POST | `/open-api/v1/card/active` | Common | Physical card needs activation after receipt (requires encrypted CVV) |
+| Update Card Status | POST | `/open-api/v1/card/status/update` | Common | Update card usage status (Frozen-freeze / Activated-enable / Delete-delete) |
+| Set PIN | POST | `/open-api/v1/card/pin/set` | Common | Set physical card PIN (requires encrypted PIN) |
+| Card Status Change Notification | — | Webhook | Common | Notification when card status changes; also notified for risk control changes |
+
+### Typical Flow
+
+**Credit Mode:**
+
+```
+[POST /card/package/list] Get package list
+    ↓
+User selects package
+    ↓
+[POST /card/apply] Apply for card (pass package_no)
+    ↓
+[POST /card/list] Query card status
+    ↓
+Virtual card: Immediately available ✓
+    or
+Physical card: Mailing → User receives card → [POST /card/active] Activate
+    ↓
+[POST /card/pin/set] Set PIN (optional)
+```
+
+**Authorization Mode:**
+
+```
+[POST /card/support/bins] Get supported BINs
+    ↓
+User selects card BIN
+    ↓
+[POST /card/apply] Apply for card (pass card_bin_no)
+    ↓
+[POST /card/list] Query card status
+    ↓
+Virtual card: Immediately available ✓
+    or
+Physical card: Mailing → User receives card → [POST /card/active] Activate
+```
+
+### Card Status
+
+| Status | Description | Available Operations |
+| --- | --- | --- |
+| Pending | In progress (manufacturing, etc.) | — |
+| ToActivate | Awaiting activation (physical card received) | Activate, update status |
+| Activated | Activated/Normal | Consume, freeze, delete, set PIN |
+| Frozen | Frozen | Unfreeze, delete |
+| Delete | Deleted/Cancelled | — |
+| Fail | Failed | Re-apply |
+
+---
+
+## Stage 3: Account & Fund Management (Credit Mode)
+
+**Scenario**: Check cardholder account balance and execute fund transfers. Credit mode only.
+
+### Flow Steps
+
+1. **Recharge Reserve** — Merchant manually recharges reserve in backend (no interface currently)
+2. **Query Account Balance** — Get cardholder account info to confirm available assets
+3. **Execute Fund Transfer** — Perform fund transfer when cardholder funds change (top-up or withdrawal)
+4. **Query Transfer Flow** — Check transfer history for reconciliation
+
+### Related Interfaces
+
+| Interface | Method | Path | Description |
+| --- | --- | --- | --- |
+| Reserve Recharge | — | — | Currently no interface available, must manually recharge in merchant backend |
+| **Cardholder Fund Transfer** | POST | `/open-api/v1/account/transfer` | Perform fund transfer when cardholder funds change (top-up or withdrawal); fixed currency TUSDT |
+| Get Cardholder Account Info List | GET | `/open-api/v1/account/{cardholder_no}/info` | Get available assets in cardholder's credit account |
+| Get Account Transfer Flow List | POST | `/open-api/v1/account/transfer/list` | Get cardholder's transfer history |
+
+### Typical Flow
+
+```
+User top-up request
+    ↓
+[POST /account/transfer] Execute transfer (type: In)
+    ↓
+Transfer successful ✓ (returns transfer reference)
+    ↓
+[GET /account/{cardholder_no}/info] Query balance to confirm
+    ↓
+[POST /account/transfer/list] Query transfer flow for reconciliation
+```
+
+### Transfer Types
+
+| Type | Direction | Description |
+| --- | --- | --- |
+| In | Company → Cardholder | User top-up (merchant account can be negative) |
+| Out | Cardholder → Company | User withdrawal (requires sufficient balance) |
+
+---
+
+## Stage 4: Consumption & Billing
+
+**Scenario**: After user uses card for consumption, view transaction records and details for merchant reconciliation.
+
+### Flow Steps
+
+1. **User Consumption** — Cardholder uses card for transaction
+2. **Receive Consumption Notification** — Platform sends consumption order notification via Webhook
+3. **Query Consumption Details** — Get detailed info by consumption reference
+4. **Query Consumption List** — Query consumption records by time range for reconciliation
+
+### Related Interfaces
+
+| Interface | Method | Path | Description |
+| --- | --- | --- | --- |
+| **Consumption Order Notification** | — | Webhook | Notification sent when cardholder consumes; also sent when order settles; includes fee details and merchant info |
+| Get Card Consumption List | POST | `/open-api/v1/card/consume/list` | Query historical consumption records by card; supports filtering by time range, card number, etc. |
+| Get Card Consumption Details | GET | `/open-api/v1/card/consume/{consume_no}/info` | Query consumption details including rates, fees, merchant info |
+
+### Typical Flow
+
+```
+User uses card for consumption
+    ↓
+[Webhook Consumption Notification] Platform sends consumption order notification
+    ↓
+Merchant handles notification (returns code: 0)
+    ↓
+[GET /consume/{consume_no}/info] Query consumption details
+    ↓
+[POST /consume/list] Periodically query consumption list for reconciliation
+    ↓
+Generate billing and reconciliation statement
+```
+
+### Consumption Types
+
+| Type | Description |
+| --- | --- |
+| Consumption | Transaction |
+| Atm | ATM withdrawal |
+| Manage_fee | Management fee |
+| Refund | Refund |
+| Reversal | Chargeback/Cancellation |
+| Open_card | Card issuance fee |
+
+---
+
+## Authorization Mode Special Flow
+
+**Authorization mode requires real-time authorization confirmation**
+
+```
+User consumption request
+    ↓
+[Webhook Auth Notification] Platform sends authorization notification
+    ↓
+Merchant must confirm within 1 second
+    ↓
+Return response { "code": 0 }
+    ↓
+Authorization approved → Transaction continues ✓
+    or
+Authorization denied → Transaction fails ✗
+    ↓
+[Webhook Consumption Notification] Final result notification
+```
+
+**Important**: Authorization mode has high performance requirements. Ensure your system can complete authorization response within 1 second.
+
+---
+
+## Complete Integration Timeline
+
+| Stage | Operation | Estimated Time |
+| --- | --- | --- |
+| Preparation | Request credentials, configure whitelist, configure callbacks | 1-2 days |
+| Authentication | Integrate SumSub, complete KYC | 3-5 days |
+| Card Application | Card interface integration, test virtual + physical cards | 5-7 days |
+| Account | Complete account and transfer interface integration (credit mode) | 3-5 days |
+| Consumption | Receive and process Webhook notifications, consumption queries | 3-5 days |
+| Testing | Full chain testing, pre-launch review | 2-3 days |
+| **Total** | | **15-25 days** |
+
+---
+
+## FAQ
+
+**Q1: Must users complete KYC before applying for cards?**  
+A: Yes, cardholders must complete KYC authentication with status `Approved` before applying for cards.
+
+**Q2: How long after card application can it be used?**  
+A: Virtual cards are immediately available after application; physical cards require activation after user receives them.
+
+**Q3: How do I distinguish between credit and authorization modes?**  
+A: Based on the `integration_mode` confirmed with business before integration:
+- `CREDIT_EXTENSION` = Credit mode
+- `AUTHORIZATION` = Authorization mode
+
+**Q4: Why must authorization mode confirm within 1 second?**  
+A: Authorization mode settles funds in real-time. Merchants must confirm within 1 second whether to allow the transaction to ensure smooth trading.
+
+**Q5: How are consumption fees calculated?**  
+A: Fee details are in the card package configuration at application time, including consumption rate, fees, exchange rate, etc. See "Constants" section for details.

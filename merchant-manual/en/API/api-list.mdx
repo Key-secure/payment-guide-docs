@@ -1,0 +1,168 @@
+---
+title: API List
+---
+
+All interface paths use `/open-api` prefix. Integration mode is configured by merchant's `integration_mode`. Interfaces marked with `@IntegrationModeRequired` will validate the mode in the Token; mismatch returns **1012**.
+
+Except for **Get Token**, all other interfaces require headers: `Api-Key`, `Timestamp`, `Access-Token` (PCI iframe internal interfaces use `Client-Access-Token`).
+
+### 1. Common Interfaces (Both Credit & Authorization Modes)
+
+Interfaces supported by both credit extension and authorization modes.
+
+| Module | Method | Path | Description |
+| ---- | ---- | ---- | ---- |
+| Authentication | GET | /open-api/v1/merchant/token | Get Access-Token (only needs Api-Key, no Access-Token) |
+| Cardholder | POST | /open-api/v1/cardholder/apply | Cardholder authentication application |
+| Cardholder | POST | /open-api/v1/cardholder/list | Cardholder list |
+| Cardholder | GET | /open-api/v1/cardholder/{cardholder_no}/info | Cardholder details |
+| Card | POST | /open-api/v1/card/apply | Apply for card (pass `package_no` for credit, `card_bin_no` for auth) |
+| Card | POST | /open-api/v1/card/list | Card list |
+| Card | GET | /open-api/v1/card/{card_no}/detail | Card details |
+| Card | GET | /open-api/v1/card/{card_no}/private/info | Card privacy JSON (requires `pci_flag=1`, `data` is encrypted) |
+| Card | POST | /open-api/v1/card/active | Physical card activation (CVV must be AES encrypted) |
+| Card | POST | /open-api/v1/card/status/update | Update card status (Frozen / Activated / Delete) |
+| Card | POST | /open-api/v1/card/pin/set | Set physical card PIN (PIN must be AES encrypted) |
+| Consumption | GET | /open-api/v1/card/consume/{consume_no}/info | Consumption details |
+| Consumption | POST | /open-api/v1/card/consume/list | Consumption list |
+| PCI | GET | /open-api/v1/merchant/client/{card_no}/token | Issue PCI Client Access Token (merchant server call) |
+| PCI | POST | /open-api/v1/merchant/pci/card/detail | Get card sensitive info JWE (**not public**, internal iframe SDK only) |
+
+### 2. Credit Extension Mode Interfaces (CREDIT_EXTENSION)
+
+Only merchants with **credit extension** integration mode can call.
+
+| Module | Method | Path | Description |
+| ---- | ---- | ---- | ---- |
+| Account | POST | /open-api/v1/account/transfer | Cardholder fund transfer (fixed TUSDT) |
+| Account | GET | /open-api/v1/account/{cardholder_no}/info | Cardholder account list |
+| Account | POST | /open-api/v1/account/transfer/list | Account transfer flow list |
+| Card | POST | /open-api/v1/card/package/list | Card package list |
+
+### 3. Authorization Mode Interfaces (AUTHORIZATION)
+
+Only merchants with **authorization** integration mode can call.
+
+| Module | Method | Path | Description |
+| ---- | ---- | ---- | ---- |
+| Card | POST | /open-api/v1/card/support/bins | Supported card BIN list |
+
+### 4. Transaction Simulation Interfaces (Webhook Testing)
+
+Testing interfaces for integration. Query database and send simulated card provider Webhook callbacks (Interlace / XLink). **Do not use** standard headers `Api-Key` / `Access-Token`.
+
+Path prefix:
+- Local: `http://127.0.0.1:18080/testapi`
+- Sandbox: `https://sandbox-openplatform.keysecure.io/open-api/v1/simulate`
+
+| Module | Method | Path | Description |
+| ---- | ---- | ---- | ---- |
+| Simulation | POST | /auth | Simulate authorization (Interlace one-step; XLink confirm + second consumption auth/fail) |
+| Simulation | POST | /consumption_clear | Simulate consumption clearance success |
+| Simulation | POST | /consumption_fail | Simulate consumption failure |
+| Simulation | POST | /reversal | Simulate reversal/cancellation |
+| Simulation | POST | /refund | Simulate refund |
+
+## Quick Navigation
+
+### By Business Flow
+
+**Cardholder Flow:**
+1. Get Token → `GET /merchant/token`
+2. Cardholder authentication → `POST /cardholder/apply`
+3. Query cardholder → `POST /cardholder/list` or `GET /cardholder/{cardholder_no}/info`
+
+**Card Application Flow:**
+1. Get packages/BINs → `POST /card/package/list` or `POST /card/support/bins`
+2. Apply for card → `POST /card/apply`
+3. Query card list → `POST /card/list` or get details → `GET /card/{card_no}/detail`
+4. Activate physical card → `POST /card/active` (physical only)
+5. Set PIN → `POST /card/pin/set` (physical optional)
+
+**Transaction Flow:**
+1. Query consumption details → `GET /consume/{consume_no}/info`
+2. Query consumption list → `POST /consume/list`
+
+**Account Flow (Credit Mode):**
+1. Query account info → `GET /account/{cardholder_no}/info`
+2. Execute transfer → `POST /account/transfer`
+3. Query transfer flow → `POST /account/transfer/list`
+
+### By HTTP Method
+
+**GET Methods:**
+- `/merchant/token` — Get Token
+- `/cardholder/{cardholder_no}/info` — Cardholder details
+- `/card/{card_no}/detail` — Card details
+- `/card/{card_no}/private/info` — Card privacy (PCI)
+- `/consume/{consume_no}/info` — Consumption details
+- `/account/{cardholder_no}/info` — Account info
+- `/merchant/client/{card_no}/token` — PCI Client Token
+
+**POST Methods:**
+- `/cardholder/apply` — Cardholder application
+- `/cardholder/list` — Cardholder list
+- `/card/apply` — Card application
+- `/card/list` — Card list
+- `/card/active` — Card activation
+- `/card/status/update` — Update card status
+- `/card/pin/set` — Set PIN
+- `/card/package/list` — Card packages (credit)
+- `/card/support/bins` — Support BINs (auth)
+- `/consume/list` — Consumption list
+- `/account/transfer` — Transfer (credit)
+- `/account/transfer/list` — Transfer flow (credit)
+- `/merchant/pci/card/detail` — PCI card info
+
+## Permissions & Prerequisites
+
+### Authentication Requirements
+
+| Interface | Needs Api-Key | Needs Access-Token | Notes |
+| ---- | ---- | ---- | ---- |
+| Get Token | ✓ | ✗ | Only needs Api-Key + Timestamp |
+| Other interfaces | ✓ | ✓ | Requires full authentication |
+| PCI iframe internal | ✓ | ✗ (needs Client-Access-Token) | Use Client-Access-Token instead |
+
+### Prerequisites
+
+**Before Card Application:**
+- Cardholder must exist and KYC authentication must succeed (status: Approved)
+- Otherwise returns 2002 (cardholder not found) or 2005 (authentication failed)
+
+**Card Privacy Interface:**
+- Requires merchant API config `pci_flag = 1` (PCI enabled)
+- Not enabled returns 1013
+- Card status must be Activated
+
+**Physical Card Activation:**
+- Card status must be ToActivate
+- CVV must be AES encrypted
+
+**Set PIN:**
+- Physical cards only
+- Card status must be Activated
+- PIN must be AES encrypted
+
+## Error Handling
+
+All error responses follow unified format:
+
+```json
+{
+  "code": 1003,
+  "msg": "IP address not allowed"
+}
+```
+
+Common error codes (see "Appendix" → "Error Codes"):
+
+| Code | Description | Common Cause |
+| ---- | ---- | ---- |
+| 1003 | IP address not allowed | Request IP not in whitelist |
+| 1005 | Timestamp invalid or expired | Timestamp deviation exceeds 60 seconds |
+| 1007 | Access-Token invalid or expired | Token expired or invalid |
+| 2002 | Cardholder does not exist | Cardholder not found |
+| 4005 | Card status does not allow this operation | Card status unsupported for operation |
+
+See "Appendix" → "Error Codes" for complete error code list.

@@ -70,6 +70,89 @@
             ]
           },
           {
+            "tab": "API文档",
+            "groups": [
+              {
+                "group": "接入指引",
+                "pages": [
+                  "cn/API/access-guide",
+                  "cn/API/business-flow",
+                  "cn/API/api-list"
+                ]
+              },
+              {
+                "group": "API文档",
+                "pages": [
+                  {
+                    "group": "统一参数",
+                    "pages": ["cn/API/api-list/common/request-headers",
+                      "cn/API/api-list/common/response-params"
+                    ]
+                  },
+                  {
+                    "group": "认证相关",
+                    "pages": ["cn/API/api-list/auth/token"]
+                  },
+                  {
+                    "group": "持卡人相关",
+                    "pages": [
+                      "cn/API/api-list/cardholder/apply",
+                      "cn/API/api-list/cardholder/list",
+                      "cn/API/api-list/cardholder/info"
+                    ]
+                  },
+                  {
+                    "group": "账户相关",
+                    "pages": [
+                      "cn/API/api-list/account/transfer",
+                      "cn/API/api-list/account/info",
+                      "cn/API/api-list/account/transfer-list"
+                    ]
+                  },
+                  {
+                    "group": "卡相关",
+                    "pages": [
+                      "cn/API/api-list/card/package-list",
+                      "cn/API/api-list/card/support-bins",
+                      "cn/API/api-list/card/apply",
+                      "cn/API/api-list/card/list",
+                      "cn/API/api-list/card/detail",
+                      "cn/API/api-list/card/private-info",
+                      "cn/API/api-list/card/client-token",
+                      "cn/API/api-list/card/pci-detail",
+                      "cn/API/api-list/card/active",
+                      "cn/API/api-list/card/status-update",
+                      "cn/API/api-list/card/pin-set"
+                    ]
+                  },
+                  {
+                    "group": "卡交易相关",
+                    "pages": [
+                      "cn/API/api-list/consume/info",
+                      "cn/API/api-list/consume/list"
+                    ]
+                  },
+                  {
+                    "group": "交易回调通知",
+                    "pages": [
+                      "cn/API/api-list/webhook/card-update",
+                      "cn/API/api-list/webhook/consumption",
+                      "cn/API/api-list/webhook/auth"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "附录",
+                "pages": [
+                  "cn/API/constants",
+                  "cn/API/error-codes",
+                  "cn/API/code-utils"
+                ]
+              }
+            ]
+          },
+          {
             "tab": "功能指南",
             "groups": [
               {
@@ -171,6 +254,27 @@
             ]
           },
           {
+            "tab": "API Documentation",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "en/API/access-guide",
+                  "en/API/business-flow",
+                  "en/API/api-list"
+                ]
+              },
+              {
+                "group": "Appendix",
+                "pages": [
+                  "en/API/constants",
+                  "en/API/error-codes",
+                  "en/API/code-utils"
+                ]
+              }
+            ]
+          },
+          {
             "tab": "Feature Guide",
             "groups": [
               {
@@ -234,5 +338,10 @@
     "suggestEdit": true,
     "raiseIssue": true,
     "thumbsRating": true
+  },
+  "api": {
+    "mdx": {
+      "server": "https://sandbox-openplatform.keysecure.io"
+    }
   }
 }

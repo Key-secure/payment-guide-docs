@@ -1,0 +1,177 @@
+---
+title: 代码工具类
+---
+
+## 10.1 签名工具类（SignUtils）
+
+平台回调商户时，请求头携带 `Timestamp`、`Signature`、`Sign-Version`（V1）、`Timezone`（UTC+8）。
+
+签名对 **`data` 对象**（JSON 字符串）计算，**不含** 顶层 `id`、`action` 字段。
+
+```java
+/**
+ * 签名工具类 — com.chainup.custody.util.SignUtils
+ * 算法：HMAC-SHA256，输出小写十六进制
+ */
+public class SignUtils {
+
+    /**
+     * 计算签名（body 为 data 的 JSON 字符串，内部解析为 Map）
+     *
+     * @param appId     商户 Api-Key（credential.apiKey）
+     * @param timestamp Unix 毫秒时间戳（与请求头 Timestamp 一致）
+     * @param body      回调 JSON 中 data 字段的 JSON 字符串
+     * @param secretKey 商户 apiSecret 明文
+     */
+    public static String sign(String appId, String timestamp, String body, String secretKey) throws Exception {
+        return sign(appId, timestamp, buildBodyMap(body), secretKey);
+    }
+
+    /**
+     * 计算签名（body 为已展开的 Map）
+     */
+    public static String sign(String appId, String timestamp, Map<String, String> body, String secretKey) throws Exception {
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put("appId", appId);
+        params.put("timestamp", timestamp);
+        if (body != null && !body.isEmpty()) {
+            params.putAll(body);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            if (entry.getValue() == null) continue;
+            if (sb.length() > 0) sb.append("&");
+            sb.append(entry.getKey()).append("=").append(entry.getValue());
+        }
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
+        return bytesToHex(mac.doFinal(sb.toString().getBytes(StandardCharsets.UTF_8)));
+    }
+
+    /**
+     * 将 data JSON 解析为签名用 Map（TreeMap 字典序）。
+     * String 字段原样；Object/Array 字段 JSON 序列化；null 跳过。
+     */
+    public static Map<String, String> buildBodyMap(String body) {
+        Map<String, String> bodyMap = new TreeMap<>();
+        if (StringUtils.isBlank(body)) return bodyMap;
+        JSONObject json = JSONObject.parseObject(body);
+        for (Map.Entry<String, Object> e : json.entrySet()) {
+            if (e.getValue() == null) continue;
+            Object v = e.getValue();
+            bodyMap.put(e.getKey(), v instanceof String ? (String) v : JSONObject.toJSONString(v));
+        }
+        return bodyMap;
+    }
+
+    private static String bytesToHex(byte[] bytes) { /* 小写 hex */ }
+}
+```
+
+<Note>
+- 平台实现：`MerchantApiCallbackService#doCallback` 调用 `SignUtils.sign(appId, timestamp, payload.getString("data"), secretKey)`。
+- 参与签名的公共参数仅 **`appId`**、**`timestamp`** 及 **data 内各字段**；顶层 `id`、`action` **不参与**签名。
+- `buildBodyMap` 为 **public** 方法，商户验签时可复用相同逻辑。
+</Note>
+
+## 10.2 商户敏感数据加解密工具类（MerchantEncryptUtil）
+
+### 适用场景
+
+| 接口 | 方向 | 说明 |
+| ---- | ---- | ---- |
+| `GET /card/{card_no}/private/info` | 服务端 → 商户 | 响应 `data` 为加密字符串，商户解密后得 JSON |
+| `POST /card/active` | 商户 → 服务端 | 请求 `cvv` 须为加密后的 Base64 密文 |
+| `POST /card/pin/set` | 商户 → 服务端 | 请求 `pin` 须为加密后的 Base64 密文 |
+
+### 算法说明
+
+| 项 | 值 |
+| --- | --- |
+| 算法 | AES-256 |
+| 模式/填充 | **CBC / PKCS5Padding**（每次加密随机 16 字节 IV） |
+| 密钥派生 | `SHA-256(apiSecret UTF-8)` → 32 字节 AES 密钥（apiSecret 为变长字符串，**不可**直接作为 AES Key） |
+| 密文格式 | `Base64( IV[16字节] ‖ AES-CBC密文 )` |
+| 字符集 | UTF-8（明文） |
+
+<Note>
+实现类：`com.chainup.custody.util.MerchantEncryptUtil`。
+
+设置 PIN 明文须 **6 位数字**且不可含三位及以上相同或连续数字，否则返回 **4016**。
+
+实体卡激活明文 CVV 须 **3 位纯数字**；解密失败返回 **4015** / **4019**。
+</Note>
+
+### 工具类代码（与平台一致，商户侧参考）
+
+```java
+/**
+ * com.chainup.custody.util.MerchantEncryptUtil
+ * 敏感字段加解密：PIN / CVV / 卡隐私 JSON
+ */
+public class MerchantEncryptUtil {
+
+    private static final String CIPHER_CBC = "AES/CBC/PKCS5Padding";
+    private static final int IV_LENGTH = 16;
+
+    /** 加密：随机 IV + CBC，输出 Base64(IV‖密文) */
+    public static String encrypt(String data, String secretKey) { /* 见源码 */ }
+
+    /**
+     * 解密：Base64 解码后取前 16 字节为 IV，其余为密文，AES/CBC 解密。
+     * 解密失败返回 null。
+     */
+    public static String decrypt(String encryptedData, String secretKey) { /* 见源码 */ }
+
+    /** SHA-256(apiSecret) → AES-256 SecretKeySpec */
+    private static SecretKeySpec buildAesKey(String secretKey) { /* 见源码 */ }
+}
+```
+
+### 调用示例
+
+**1）实体卡激活 — 商户加密 CVV 后上送**
+
+```java
+String apiSecret = "your_api_secret_plaintext";
+String plainCvv = "123";
+String encryptedCvv = MerchantEncryptUtil.encrypt(plainCvv, apiSecret);
+
+// 请求体
+// {
+//   "card_no": "...",
+//   "cardholder_no": "...",
+//   "cvv": "<encryptedCvv>",
+//   "card_last_no": "1234"
+// }
+```
+
+**2）设置实体卡 PIN — 商户加密后上送**
+
+```java
+String apiSecret = "your_api_secret_plaintext";
+String plainPin = "123456";
+String encryptedPin = MerchantEncryptUtil.encrypt(plainPin, apiSecret);
+
+// 请求体
+// { "card_no": "...", "cardholder_no": "...", "pin": "<encryptedPin>" }
+```
+
+**3）获取卡隐私 JSON — 商户解密响应 data**
+
+```java
+String apiSecret = "your_api_secret_plaintext";
+String encryptedData = response.getData(); // HTTP 响应中的 data 字段
+String json = MerchantEncryptUtil.decrypt(encryptedData, apiSecret);
+// json 为卡隐私信息 JSON 字符串
+```
+
+### 相关错误码
+
+| code | 中文描述 | 英文描述 |
+| ---- | -------- | -------- |
+| 1013 | 未开通 PCI 敏感卡展示能力 | PCI sensitive card display is not enabled |
+| 4015 | PIN 码解密失败，请检查加密方式与密钥 | PIN decryption failed, check encryption method and key |
+| 4016 | PIN 码格式不正确，须为 6 位数字，且不可含三位相同或连续数字（如 111111、123456、654321） | Invalid PIN format. Must be 6 digits without three identical or consecutive digits (e.g. 111111, 123456, 654321). |
+| 4018 | 未找到可用的 API 凭证 | No available API credential found |
+| 4019 | CVV 解密失败，请检查加密方式与密钥 | CVV decryption failed, check encryption method and key |

@@ -1,0 +1,166 @@
+---
+title: 返回参数
+---
+
+## 返回参数
+
+所有 API 响应均采用统一的 JSON 结构，HTTP 状态码一般为 **200**，通过响应体 `code` 判断业务成败。
+
+### 响应结构
+
+| **字段名** | **类型** | **描述** |
+| --- | --- | --- |
+| code | number | 状态码，0-成功，非 0 为失败 |
+| msg | string | 描述信息（支持多语言，见下方说明） |
+| data | object/array/string | 返回数据（仅成功时返回；部分接口可能为加密字符串） |
+
+### 基础示例
+
+成功响应：
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "access_token": "your_token",
+    "expired_time": 1716393600000
+  }
+}
+```
+
+失败响应：
+
+```json
+{
+  "code": 1003,
+  "msg": "IP address not allowed"
+}
+```
+
+### 多语言支持
+
+`msg` 字段支持多语言返回，通过请求头 `Language` 控制：
+
+| **请求头值** | **返回语言** | **说明** |
+| --- | --- | --- |
+| `zh_CN` | 中文 | 中文简体 |
+| `en_US` | 英文 | 英文 |
+| 不传或其他值 | 英文（默认） | 默认回退英文 |
+
+示例：
+
+```bash
+curl --request GET \
+     --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/token \
+     --header 'Api-Key: your_api_key' \
+     --header 'Timestamp: 1716307200000' \
+     --header 'Language: zh_CN'
+```
+
+### 特殊情况
+
+#### 1. 列表类接口
+
+列表类接口的 `data` 结构为对象，包含 `list` 数组：
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "list": [
+      { "id": "1", "name": "item1" },
+      { "id": "2", "name": "item2" }
+    ]
+  }
+}
+```
+
+#### 2. 卡隐私信息接口（5.6）
+
+响应 `data` 为加密字符串，需商户端使用 **MerchantEncryptUtil** 解密：
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": "Base64EncodedEncryptedString..."
+}
+```
+
+解密后得到 JSON 对象：
+
+```json
+{
+  "card_no": "C202605220001",
+  "card_unique_no": "MERCHANT_CARD_001",
+  "cvv": "123",
+  "pan": "4111111111111111",
+  "exp_year": "2028",
+  "exp_month": "12"
+}
+```
+
+#### 3. 参数校验失败
+
+参数校验失败时，`msg` 会在文案前附带 **snake_case 字段名**，格式为 `{field_name} {错误描述}`。
+
+示例：
+
+- `cardholder_no 请求参数不合法` —— `@Valid` 必填校验失败
+- `phone_code 请求参数不合法` —— 国别码格式错误或含 `+` 号
+- `city 仅支持使用英文填写` —— 地址字段英文校验失败
+- `address_info.city 请求参数不合法` —— 嵌套对象字段校验失败
+
+### HTTP 状态码
+
+| **HTTP 状态码** | **说明** |
+| --- | --- |
+| 200 | 请求成功（查看 `code` 字段判断业务成败） |
+| 400 | 请求格式错误或参数不合法 |
+| 401 | 认证失败（Api-Key / Access-Token 无效） |
+| 403 | 禁止访问（IP 不在白名单等） |
+| 404 | 资源不存在 |
+| 500 | 服务器错误 |
+
+### 错误码范围
+
+| **范围** | **描述** |
+| --- | --- |
+| 1xxx | 公共异常、权限异常、鉴权异常、PCI 相关 |
+| 2xxx | 会员/持卡人相关异常 |
+| 3xxx | 账户、划转相关异常 |
+| 4xxx | 卡、卡交易、卡隐私相关异常 |
+
+详见「附录」→「错误码」。
+
+### 字段名规范
+
+所有 JSON 字段名均为 **snake_case**（与代码 `@JsonNaming(SnakeCaseStrategy)` 一致）。
+
+示例：
+
+- `cardholder_no` —— 持卡人单号
+- `card_last_no` —— 卡号后四位
+- `total_balance` —— 账户总资产
+- `consume_no` —— 消费单号
+
+### 时间戳格式
+
+响应中的时间字段均为 **Unix 毫秒时间戳**（13 位数字），示例：
+
+```json
+{
+  "time": 1716307200000,
+  "expired_time": 1716393600000
+}
+```
+
+转换示例（JavaScript）：
+
+```javascript
+const timestamp = 1716307200000; // 毫秒
+const date = new Date(timestamp);
+console.log(date.toISOString()); // 2024-05-21T12:00:00.000Z
+```
