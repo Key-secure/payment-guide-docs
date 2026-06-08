@@ -20,21 +20,17 @@ authMethod: none
   登录标识（除获取 Token 外必填）
 </ParamField>
 
-<ParamField header="accept" type="string" default="application/json">
-  固定为 `application/json`
-</ParamField>
-
 <ParamField header="Content-Type" type="string" default="application/json">
   固定为 `application/json`
 </ParamField>
 
 ## 请求体
 
-<ParamField body="card_no" type="string" required default="C202605220001">
+<ParamField body="card_no" type="string" required >
   卡单号
 </ParamField>
 
-<ParamField body="status" type="string" required default="Frozen">
+<ParamField body="status" type="string" required >
   目标状态：Frozen-冻结 / Activated-启用 / Delete-注销（见 8.2）
 </ParamField>
 
@@ -61,7 +57,7 @@ authMethod: none
 ```bash Request
 curl --request POST \
   --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/status/update \
-  --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
   --header 'Content-Type: application/json' \
   --header 'Api-Key: your_api_key' \
   --header 'Timestamp: 1716307200000' \

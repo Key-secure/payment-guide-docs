@@ -20,10 +20,6 @@ authMethod: none
   登录标识（除获取 Token 外必填）
 </ParamField>
 
-<ParamField header="accept" type="string" default="application/json">
-  固定为 `application/json`
-</ParamField>
-
 <ParamField header="Content-Type" type="string" default="application/json">
   固定为 `application/json`
 </ParamField>
@@ -34,7 +30,7 @@ authMethod: none
   持卡人单号（**更新认证时必填**）
 </ParamField>
 
-<ParamField body="cardholder_unique_no" type="string" required default="MERCHANT_USER_001">
+<ParamField body="cardholder_unique_no" type="string" required >
   商户侧持卡人唯一单号
 </ParamField>
 
@@ -71,7 +67,6 @@ authMethod: none
 ```bash Request
 curl --request POST \
   --url https://sandbox-openplatform.keysecure.io/open-api/v1/cardholder/apply \
-  --header 'accept: application/json' \
   --header 'Content-Type: application/json' \
   --header 'Api-Key: your_api_key' \
   --header 'Timestamp: 1716307200000' \

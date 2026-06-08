@@ -2,117 +2,98 @@
 title: 错误码
 ---
 
-定义于 `com.chainup.custody.result.MerchantOpenApiResultCode`（1xxx～4xxx），与内部 `ApiResultCode`（6 位）隔离。
-
 <Note>
 - HTTP 状态码一般为 **200**，通过响应体 `code` 判断业务成败；`code = 0` 表示成功，非 0 为失败。
-- **多语言**：`msg` 优先取 `config_language` 中对应 `languageKey`；请求头 `Language` 控制中英文（如 `zh_CN` / `en_US`）。
-- **字段占位**：含 `%s` 的文案由 `MerchantResultUtil` 注入字段名；多字段时以 `, ` 拼接（如 `card_bin_no, package_no 请求参数不合法`）。
+- **多语言**：请求头 `Language` 控制中英文（如 `zh_CN` / `en_US`）。
 - 参数类错误 **1004、2007～2010、4010** 等会在描述前/后附带 **snake_case 字段名**。
 </Note>
 
 ## 错误码分段
 
-| code | 中文描述 | 英文描述 |
-| ---- | -------- | -------- |
-| 0 | 成功 | Success |
-| 1xxx | 公共异常、权限异常、鉴权异常、PCI 相关 | Common, auth, and PCI errors |
-| 2xxx | 会员/持卡人相关异常 | Cardholder errors |
-| 3xxx | 账户、划转相关异常 | Account and transfer errors |
-| 4xxx | 卡、卡交易、卡隐私相关异常 | Card, transaction, and privacy errors |
+| code | 中文描述 | 
+| ---- | -------- | 
+| 0 | 成功 | 
+| 1xxx | 公共异常、权限异常、鉴权异常、PCI 相关 | 
+| 2xxx | 会员/持卡人相关异常 |
+| 3xxx | 账户、划转相关异常 |
+| 4xxx | 卡、卡交易、卡隐私相关异常 | 
 
 ## 9.1 公共 / 鉴权 / PCI（1xxx）
 
-| code | 中文描述 | 英文描述 |
-| ---- | -------- | -------- |
-| 1001 | 系统开小差了 | System error, please try again later |
-| 1002 | Api-Key 不能为空 | Api-Key is required |
-| 1003 | IP 地址不正确 | IP address not allowed |
-| 1004 | {field} 请求参数不合法 | {field} Invalid request parameter |
-| 1005 | 时间戳已失效 | Timestamp invalid or expired |
-| 1006 | Access-Token 不能为空 | Access-Token is required |
-| 1007 | Access-Token 已失效 | Access-Token invalid or expired |
-| 1008 | Api-Key 不存在 | Api-Key does not exist |
-| 1009 | 操作频繁，请稍后重试 | Operation too frequent, please try again later |
-| 1010 | Api-Key 未启用 | Api-Key is not enabled |
-| 1011 | Api-Key 已过期 | Api-Key has expired |
-| 1012 | 商户对接模式不支持 | Merchant integration mode not supported |
-| 1013 | 未开通 PCI 敏感卡展示能力 | PCI sensitive card display is not enabled |
-| 1014 | Client-Access-Token 无效或已使用 | Client-Access-Token invalid or already used |
-| 1015 | 父页 Origin 不在报备白名单 | Parent page Origin not in whitelist |
-| 1016 | 请求 Origin 与托管配置不一致 | Request Origin does not match hosted configuration |
-| 1017 | 请求重放或 nonce 已使用 | Request replay or nonce already used |
-| 1018 | Sec-Fetch 校验未通过 | Sec-Fetch validation failed |
-| 1019 | 结束时间不能小于开始时间 | Query end time must be after start time |
-| 1020 | 查询时间间隔超过限制阈值 | Query time range exceeds the allowed limit |
-| 1021 | 商户不存在 | Merchant does not exist |
-| 1022 | 商户状态异常，请联系管理员 | Merchant status is abnormal, please contact administrator |
+| code | 中文描述 | 
+| ---- | -------- |
+| 1001 | 系统开小差了 | 
+| 1002 | Api-Key 不能为空 |
+| 1003 | IP 地址不正确 | 
+| 1004 |  请求参数不合法 |  
+| 1005 | 时间戳已失效 | 
+| 1006 | Access-Token 不能为空 | 
+| 1007 | Access-Token 已失效 | 
+| 1008 | Api-Key 不存在 | 
+| 1009 | 操作频繁，请稍后重试 | 
+| 1010 | Api-Key 未启用 | 
+| 1011 | Api-Key 已过期 | 
+| 1012 | 商户对接模式不支持 | 
+| 1013 | 未开通 PCI 敏感卡展示能力 | 
+| 1014 | Client-Access-Token 无效或已使用 | 
+| 1015 | 父页 Origin 不在报备白名单 | 
+| 1016 | 请求 Origin 与托管配置不一致 | 
+| 1017 | 请求重放或 nonce 已使用 | 
+| 1018 | Sec-Fetch 校验未通过 | 
+| 1019 | 结束时间不能小于开始时间 | 
+| 1020 | 查询时间间隔超过限制阈值 | 
+| 1021 | 商户不存在 | 
+| 1022 | 商户状态异常，请联系管理员 |
 
 ## 9.2 持卡人（2xxx）
 
-| code | 中文描述 | 英文描述 |
-| ---- | -------- | -------- |
-| 2001 | 持卡人已存在 | Cardholder already exists |
-| 2002 | 持卡人不存在 | Cardholder does not exist |
-| 2003 | 持卡人已认证成功 | Cardholder already verified |
-| 2004 | 持卡人存在进行中的认证 | Cardholder has a pending verification |
-| 2005 | 持卡人认证信息未通过 | Cardholder verification failed |
-| 2006 | 持卡人 KYC 信息获取失败 | Failed to retrieve cardholder KYC information |
-| 2007 | {field} 请使用英文字母、数字、空格或常用地址符号（如 - / #）填写。 | {field} Please use English letters, numbers, spaces, or common address symbols (e.g. - / #). |
-| 2008 | {field} 仅支持使用英文填写 | {field} Only English is supported |
-| 2009 | {field} 国家不支持 | {field} Country is not supported |
-| 2010 | {field} 您填写的邮编与所选地址（州 / 省、城市）不匹配 | {field} The postal code does not match the selected address (state/province, city) |
-| 2011 | 持卡人对应唯一编码不一致 | Cardholder unique number mismatch |
+| code | 中文描述 | 
+| ---- | -------- | 
+| 2001 | 持卡人已存在 | 
+| 2002 | 持卡人不存在 | 
+| 2003 | 持卡人已认证成功 | 
+| 2004 | 持卡人存在进行中的认证 | 
+| 2005 | 持卡人认证信息未通过 | 
+| 2006 | 持卡人 KYC 信息获取失败 |
+| 2007 |  请使用英文字母、数字、空格或常用地址符号（如 - / #）填写。 | 
+| 2008 |  仅支持使用英文填写 | 
+| 2009 |  国家不支持 | 
+| 2010 |  您填写的邮编与所选地址（州 / 省、城市）不匹配 |
+| 2011 | 持卡人对应唯一编码不一致 |
 
 ## 9.3 账户 / 划转（3xxx）
 
-| code | 中文描述 | 英文描述 |
-| ---- | -------- | -------- |
-| 3001 | 商户不支持该币种 | Currency not supported by merchant |
-| 3002 | 持卡人账户余额不足 | Insufficient cardholder account balance |
-| 3003 | 币种主链不匹配 | Currency chain mismatch |
-| 3004 | 划转流水号已存在 | Transfer reference number already exists |
-| 3005 | 划转金额格式或精度不合法 | Invalid transfer amount format or precision |
-| 3006 | 划转类型不合法 | Invalid transfer type |
-| 3007 | 商户账户余额不足 | Insufficient merchant account balance |
-| 3008 | 账户余额不足 | Insufficient account balance |
+| code | 中文描述 | 
+| ---- | -------- |
+| 3001 | 商户不支持该币种 |
+| 3002 | 持卡人账户余额不足 |
+| 3003 | 币种主链不匹配 |
+| 3004 | 划转流水号已存在 |
+| 3005 | 划转金额格式或精度不合法 |
+| 3006 | 划转类型不合法 |
+| 3007 | 商户账户余额不足 | 
+| 3008 | 账户余额不足 |
 
 ## 9.4 卡 / 消费 / PIN / 隐私（4xxx）
 
-| code | 中文描述 | 英文描述 |
-| ---- | -------- | -------- |
-| 4001 | 卡 Bin 不可用 | Card BIN not available |
-| 4002 | 卡套餐不存在 | Card package not found |
-| 4003 | 商户卡唯一号已存在 | Merchant card unique number already exists |
-| 4004 | 卡不存在 | Card does not exist |
-| 4005 | 当前卡状态不允许此操作 | Card status does not allow this operation |
-| 4006 | 开卡数量已达上限 | Card issuance limit reached |
-| 4007 | 卡商操作失败 | Card provider operation failed |
-| 4008 | 实体卡激活请使用商户 App 完成 | Physical card activation must be completed in merchant app |
-| 4009 | 卡消费记录不存在 | Card transaction record not found |
-| 4010 | {field} 实体卡账单地址信息不能为空 | {field} Physical card billing address cannot be empty |
-| 4011 | 当前申请卡不支持此国家 | Country not supported for this card application |
-| 4012 | 卡信息不存在 | Card information not found |
-| 4013 | 卡信息状态不支持 | Card status not supported |
-| 4014 | 当前卡不支持激活 | Card activation not supported |
-| 4015 | PIN 码解密失败，请检查加密方式与密钥 | PIN decryption failed, check encryption method and key |
-| 4016 | PIN 码格式不正确，须为 6 位数字，且不可含三位相同或连续数字（如 111111、123456、654321） | Invalid PIN format. Must be 6 digits without three identical or consecutive digits (e.g. 111111, 123456, 654321). |
-| 4017 | 该卡不是实体卡，不支持设置 PIN 码 | Not a physical card, PIN setting not supported |
-| 4018 | 未找到可用的 API 凭证 | No available API credential found |
-| 4019 | CVV 解密失败，请检查加密方式与密钥 | CVV decryption failed, check encryption method and key |
-
-## 9.5 错误码与 languageKey 对照（节选）
-
-完整列表见源码 `MerchantOpenApiResultCode`；下表为带 `%s` 占位或近期 i18n 调整的项。
-
-| code | languageKey | 中文（config_language / 枚举默认） |
-| ---- | ----------- | ---------------------------------- |
-| 1004 | result.open.merchant.param.invalid | %s 请求参数不合法 |
-| 2007 | result.open.merchant.card.address.error | %s 请使用英文字母、数字、空格或常用地址符号（如 - / #）填写。 |
-| 2008 | result.open.merchant.card.name.error | %s 仅支持使用英文填写 |
-| 2009 | result.open.merchant.card.country.not.support | %s 国家不支持 |
-| 2010 | result.open.merchant.card.postal.code.not.match | %s 您填写的邮编与所选地址（州 / 省、城市）不匹配 |
-| 4010 | result.open.merchant.card.apply.address.not.empty | %s 实体卡账单地址信息不能为空 |
-| 4015 | result.open.merchant.card.pin.decrypt.error | PIN 码解密失败，请检查加密方式与密钥 |
-| 4016 | result.open.merchant.card.pin.format.error | PIN 码格式不正确，须为 6 位数字…（见 9.4） |
-| 4019 | result.open.merchant.card.cvv.decrypt.error | CVV 解密失败，请检查加密方式与密钥 |
+| code | 中文描述 |
+| ---- | -------- |
+| 4001 | 卡 Bin 不可用 | 
+| 4002 | 卡套餐不存在 | 
+| 4003 | 商户卡唯一号已存在 | 
+| 4004 | 卡不存在 | 
+| 4005 | 当前卡状态不允许此操作 |
+| 4006 | 开卡数量已达上限 | 
+| 4007 | 卡商操作失败 |
+| 4008 | 实体卡激活请使用商户 App 完成 |
+| 4009 | 卡消费记录不存在 | 
+| 4010 |  实体卡账单地址信息不能为空 |
+| 4011 | 当前申请卡不支持此国家 |
+| 4012 | 卡信息不存在 | 
+| 4013 | 卡信息状态不支持 | 
+| 4014 | 当前卡不支持激活 | 
+| 4015 | PIN 码解密失败，请检查加密方式与密钥 | 
+| 4016 | PIN 码格式不正确，须为 6 位数字，且不可含三位相同或连续数字（如 111111、123456、654321） | 
+| 4017 | 该卡不是实体卡，不支持设置 PIN 码 | 
+| 4018 | 未找到可用的 API 凭证 |
+| 4019 | CVV 解密失败，请检查加密方式与密钥 | 

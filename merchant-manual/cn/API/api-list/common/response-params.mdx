@@ -2,6 +2,8 @@
 title: 返回参数
 ---
 
+## 返回参数
+
 所有 API 响应均采用统一的 JSON 结构，HTTP 状态码一般为 **200**，通过响应体 `code` 判断业务成败。
 
 ### 响应结构
@@ -44,7 +46,7 @@ title: 返回参数
 | --- | --- | --- |
 | `zh_CN` | 中文 | 中文简体 |
 | `en_US` | 英文 | 英文 |
-| 不传或其他值 | 英文（默认） | 默认回退英文 |
+| 不传或其他值 | 英文（默认） | 默认英文 |
 
 示例：
 
@@ -102,11 +104,11 @@ curl --request GET \
 
 #### 3. 参数校验失败
 
-参数校验失败时，`msg` 会在文案前附带 **snake_case 字段名**，格式为 `{field_name} {错误描述}`。
+参数校验失败时，`msg` 会在文案前附带 **snake_case 字段名**，格式为 `cardholder_no 请求参数不合法`。
 
 示例：
 
-- `cardholder_no 请求参数不合法` —— `@Valid` 必填校验失败
+- `cardholder_no 请求参数不合法` —— 必填校验失败
 - `phone_code 请求参数不合法` —— 国别码格式错误或含 `+` 号
 - `city 仅支持使用英文填写` —— 地址字段英文校验失败
 - `address_info.city 请求参数不合法` —— 嵌套对象字段校验失败
@@ -135,7 +137,7 @@ curl --request GET \
 
 ### 字段名规范
 
-所有 JSON 字段名均为 **snake_case**（与代码 `@JsonNaming(SnakeCaseStrategy)` 一致）。
+所有 JSON 字段名均为 **snake_case**（与接口参数 一致）。
 
 示例：
 

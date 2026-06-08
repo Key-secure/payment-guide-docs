@@ -16,7 +16,7 @@ authMethod: none
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 
-<ParamField header="accept" type="string" default="application/json">
+<ParamField header="Content-Type" type="string" default="application/json">
   固定为 `application/json`
 </ParamField>
 
@@ -49,7 +49,7 @@ authMethod: none
 ```bash Request
 curl --request GET \
   --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/token \
-  --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
   --header 'Api-Key: your_api_key' \
   --header 'Timestamp: 1716307200000'
 ```

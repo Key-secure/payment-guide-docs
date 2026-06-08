@@ -119,7 +119,6 @@
                       "cn/API/api-list/card/detail",
                       "cn/API/api-list/card/private-info",
                       "cn/API/api-list/card/client-token",
-                      "cn/API/api-list/card/pci-detail",
                       "cn/API/api-list/card/active",
                       "cn/API/api-list/card/status-update",
                       "cn/API/api-list/card/pin-set"

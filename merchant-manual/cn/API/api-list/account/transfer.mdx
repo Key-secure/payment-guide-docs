@@ -20,30 +20,26 @@ authMethod: none
   登录标识（除获取 Token 外必填）
 </ParamField>
 
-<ParamField header="accept" type="string" default="application/json">
-  固定为 `application/json`
-</ParamField>
-
 <ParamField header="Content-Type" type="string" default="application/json">
   固定为 `application/json`
 </ParamField>
 
 ## 请求体
 
-<ParamField body="cardholder_no" type="string" required default="U202605220001">
+<ParamField body="cardholder_no" type="string" required >
   持卡人单号
 </ParamField>
 
-<ParamField body="transfer_unique_no" type="string" required default="TRANSFER_202605220001">
+<ParamField body="transfer_unique_no" type="string" required >
   商户侧划转唯一单号（最长 64 字符）
 </ParamField>
 
-<ParamField body="type" type="string" required default="In">
+<ParamField body="type" type="string" required>
   划转类型，见 8.9（In-转入 / Out-转出）
 </ParamField>
 
-<ParamField body="balance" type="string" required default="100.00">
-  划转金额
+<ParamField body="balance" type="string" required>
+  划转金额（支持小数点后两位）
 </ParamField>
 
 ## 返回参数
@@ -72,7 +68,6 @@ authMethod: none
 ```bash Request
 curl --request POST \
   --url https://sandbox-openplatform.keysecure.io/open-api/v1/account/transfer \
-  --header 'accept: application/json' \
   --header 'Content-Type: application/json' \
   --header 'Api-Key: your_api_key' \
   --header 'Timestamp: 1716307200000' \

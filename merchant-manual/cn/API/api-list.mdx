@@ -2,9 +2,11 @@
 title: 接口清单
 ---
 
-所有接口路径前缀均为 `/open-api`。对接模式由商户配置 `integration_mode` 决定，标注 `@IntegrationModeRequired` 的接口会校验 Token 中的模式，不匹配返回 **1012**。
+## 接口清单（merchant-api）
 
-除 **获取 Token** 外，其余接口均需请求头：`Api-Key`、`Timestamp`、`Access-Token`（PCI iframe 内部接口使用 `Client-Access-Token`）。
+所有接口路径前缀均为 `/open-api`。
+
+除 **获取 Token** 外，其余接口均需请求头：`Api-Key`、`Timestamp`、`Access-Token`。
 
 ### 1. 通用接口（授信 / 授权模式均可调用）
 
@@ -19,14 +21,13 @@ title: 接口清单
 | 卡 | POST | /open-api/v1/card/apply | 开卡（授信传 `package_no`，授权传 `card_bin_no`） |
 | 卡 | POST | /open-api/v1/card/list | 卡列表 |
 | 卡 | GET | /open-api/v1/card/{card_no}/detail | 卡详情 |
-| 卡 | GET | /open-api/v1/card/{card_no}/private/info | 卡隐私 JSON（需 `pci_flag=1`，`data` 为加密字符串） |
+| 卡 | GET | /open-api/v1/card/{card_no}/private/info | 卡隐私 JSON（`data` 为AES加密字符串） |
 | 卡 | POST | /open-api/v1/card/active | 实体卡激活（`cvv` 须 AES 加密） |
 | 卡 | POST | /open-api/v1/card/status/update | 修改卡状态（Frozen / Activated / Delete） |
 | 卡 | POST | /open-api/v1/card/pin/set | 设置实体卡 PIN（`pin` 须 AES 加密） |
 | 消费 | GET | /open-api/v1/card/consume/{consume_no}/info | 消费详情 |
 | 消费 | POST | /open-api/v1/card/consume/list | 消费列表 |
-| PCI | GET | /open-api/v1/merchant/client/{card_no}/token | 颁发 PCI Client Access Token（商户服务端调用） |
-| PCI | POST | /open-api/v1/merchant/pci/card/detail | 获取卡敏感信息 JWE（**不对外开放**，仅供内部 iframe SDK 调用） |
+| PCI | GET | /open-api/v1/merchant/client/{card_no}/token | 颁发 PCI Client Access Token（ifram集成时调用） |
 
 ### 2. 授信模式接口（CREDIT_EXTENSION）
 
@@ -49,15 +50,14 @@ title: 接口清单
 
 ### 4. 交易模拟接口（Webhook 造数）
 
-联调/测试用接口，查库组包后向业务系统模拟卡商 Webhook 回调（Interlace / XLink）。**不使用** 请求头参数中的 `Api-Key` / `Access-Token` 鉴权。
+联调/测试用接口，查库组包后向业务系统模拟 Webhook 回调。**不使用** 请求头参数中的 `Api-Key` / `Access-Token` 鉴权。
 
 路径前缀：
-- 本地：`http://127.0.0.1:18080/testapi`
 - 沙盒：`https://sandbox-openplatform.keysecure.io/open-api/v1/simulate`
 
 | 模块 | 方法 | 路径后缀 | 说明 |
 | ---- | ---- | -------- | ---- |
-| 模拟 | POST | /auth | 模拟授权（Interlace 一步；XLink 为确认 + 第二步消费授权/失败） |
+| 模拟 | POST | /auth | 模拟授权 |
 | 模拟 | POST | /consumption_clear | 模拟消费清算成功 |
 | 模拟 | POST | /consumption_fail | 模拟消费失败 |
 | 模拟 | POST | /reversal | 模拟冲正/撤销 |
@@ -122,7 +122,6 @@ title: 接口清单
 | ---- | ---- | ---- | ---- |
 | 获取 Token | ✓ | ✗ | 仅需 Api-Key + Timestamp |
 | 其他接口 | ✓ | ✓ | 需要完整认证 |
-| PCI iframe 内部接口 | ✓ | ✗（需 Client-Access-Token） | 使用 Client-Access-Token 替代 |
 
 ### 前置条件
 
@@ -131,7 +130,7 @@ title: 接口清单
 - 否则返回 2002（持卡人不存在）或 2005（认证信息未通过）
 
 **卡隐私接口（5.6）：**
-- 需商户 API 配置 `pci_flag = 1`（已开通 PCI）
+- 需商户开通 PCI
 - 未开通返回 1013
 - 卡状态须为 Activated
 

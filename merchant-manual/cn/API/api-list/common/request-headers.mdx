@@ -2,6 +2,8 @@
 title: 请求头参数
 ---
 
+## 请求头参数
+
 所有 API 请求均需在 HTTP 请求头中携带以下参数（除特殊说明外）：
 
 | **字段名** | **描述** | **必填** | **说明** |
@@ -9,7 +11,6 @@ title: 请求头参数
 | Api-Key | apiKey（商户凭证，与 IP 白名单绑定） | 是* | 除获取 Token 外必填；获取 Token 仅需此项 |
 | Timestamp | Unix 时间戳（毫秒） | 是* | 与服务器时间差须在 **60 秒**内，且**不接受未来时间戳** |
 | Access-Token | 登录标识 | 是* | 除获取 Token 外必填；**不接受未来时间戳**时返回 **1005** |
-| Client-Access-Token | PCI iframe 内部接口使用 | 否 | 仅 PCI iframe 内部接口使用，**替代** `Access-Token` |
 | Signature | 签名值 | 否 | **平台→商户回调**时使用，见第 10 章 |
 | Sign-Version | 签名算法版本 | 否 | 默认 V1（回调时使用） |
 | Timezone | 时区 | 否 | 默认 UTC+8，影响列表查询时间边界 |
@@ -22,7 +23,6 @@ title: 请求头参数
 
 - **获取 Token**（2.1）：仅需 `Api-Key` + `Timestamp`，无需 `Access-Token`
 - **其他接口**：均需 `Api-Key` + `Timestamp` + `Access-Token`
-- **PCI iframe 内部接口**（5.7.2）：使用 `Client-Access-Token`，**替代** `Access-Token`
 
 #### 时间校验
 
@@ -47,7 +47,7 @@ title: 请求头参数
 ```bash
 curl --request GET \
      --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/token \
-     --header 'accept: application/json' \
+     --header 'Content-Type: application/json' \
      --header 'Api-Key: your_api_key' \
      --header 'Timestamp: 1716307200000'
 ```
@@ -57,7 +57,6 @@ curl --request GET \
 ```bash
 curl --request POST \
      --url https://sandbox-openplatform.keysecure.io/open-api/v1/cardholder/apply \
-     --header 'accept: application/json' \
      --header 'content-type: application/json' \
      --header 'Api-Key: your_api_key' \
      --header 'Timestamp: 1716307200000' \
@@ -75,7 +74,7 @@ curl --request POST \
 
 下文各接口 curl 示例中的 `https://api.example.com` 请替换为实际 API 域名：
 
-- **沙箱环境**：`https://sandbox-openplatform.keysecure.io`
+- **沙盒环境**：`https://sandbox-openplatform.keysecure.io`
 - **生产环境**：`https://openplatform.keysecure.io`（请联系商务获取）
 
 ### 错误说明

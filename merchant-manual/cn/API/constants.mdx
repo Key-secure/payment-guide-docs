@@ -2,19 +2,17 @@
 title: 常量表
 ---
 
-以下枚举定义于 `com.chainup.custody.enums.api` 包。开放 API 对外展示值与枚举 **name** 一致（JSON 字段为 snake_case 时由框架序列化，枚举名本身见下表 **code** 列）。
-
-## 8.1 通用状态（ApiCommonStatusEnum）
+## 8.1 通用状态
 
 用于划转流水、消费记录等通用业务状态。
 
-| code | 描述 | 内部状态码 |
-| ---- | ---- | ---------- |
-| Pending | 进行中 | 1000 |
-| Success | 成功 | 2000 |
-| Fail | 失败 | 3000 |
+| code | 描述 | 
+| ---- | ---- | 
+| Pending | 进行中 | 
+| Success | 成功 | 
+| Fail | 失败 | 
 
-## 8.2 卡状态（ApiCardStatusEnum）
+## 8.2 卡状态
 
 用于卡列表、卡详情、修改卡状态等接口的 `status` 字段。
 
@@ -31,14 +29,14 @@ title: 常量表
 修改卡状态接口仅允许传入：`Activated`、`Frozen`、`Delete`。
 </Note>
 
-## 8.3 卡类型（ApiCardTypeEnum）
+## 8.3 卡类型
 
-| code | 描述 | 内部类型 |
-| ---- | ---- | -------- |
-| Virtual | 虚拟卡 | 1 |
-| Physical | 实体卡 | 2 |
+| code | 描述 |
+| ---- | ---- | 
+| Virtual | 虚拟卡 |
+| Physical | 实体卡 |
 
-## 8.4 消费类型（ApiConsumeTypeEnum）
+## 8.4 消费类型
 
 | code | 描述 |
 | ---- | ---- |
@@ -49,7 +47,7 @@ title: 常量表
 | Reversal | 撤销/拒付 |
 | Refund | 退款 |
 
-## 8.5 手续费类型（ApiConsumeFeeTypeEnum）
+## 8.5 手续费类型
 
 | code | 描述 |
 | ---- | ---- |
@@ -63,7 +61,7 @@ title: 常量表
 | Refund_fee | 退款手续费 |
 | Cancel_fee | 交易撤销手续费 |
 
-## 8.6 推送动作（NotifyActionEnum）
+## 8.6 推送动作
 
 回调通知 `action` 字段取值。
 
@@ -73,7 +71,7 @@ title: 常量表
 | Consumption | 消费通知 |
 | Card_update | 卡状态变动 |
 
-## 8.7 免除类型（ApiExcuseTypeEnum）
+## 8.7 免除类型
 
 套餐/费用配置中的小额免除、拒付免除等周期类型。
 
@@ -83,7 +81,7 @@ title: 常量表
 | None | 不免除 |
 | Day | 按天免除 |
 
-## 8.8 持卡人状态（ApiCardHolderStatusEnum）
+## 8.8 持卡人状态
 
 持卡人列表、持卡人详情等接口的 `status` 字段。
 
@@ -94,7 +92,7 @@ title: 常量表
 | Approved | 认证成功 |
 | Rejected | 认证失败 |
 
-## 8.9 划转类型（ApiTransferTypeEnum）
+## 8.9 划转类型
 
 账户划转接口 `type` 字段（不区分大小写）。
 
@@ -103,7 +101,7 @@ title: 常量表
 | In | 转入（公司→持卡人） |
 | Out | 转出（持卡人→公司） |
 
-## 8.10 管理费类型（ApiManageFeeTypeEnum）
+## 8.10 管理费类型
 
 套餐/卡详情 `fee_detail.manage_fee_type` 等字段。
 
@@ -114,7 +112,7 @@ title: 常量表
 | Season | 按季 |
 | Year | 按年 |
 
-## 8.11 管理费免除方式（ApiManageFeeFreeTypeEnum）
+## 8.11 管理费免除方式
 
 套餐/卡详情 `fee_detail.management_fee_free_type` 字段取值。
 

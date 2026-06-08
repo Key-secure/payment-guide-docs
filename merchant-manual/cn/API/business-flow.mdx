@@ -25,7 +25,7 @@ title: 业务流程说明
 | 获取 Token | GET | `/open-api/v1/merchant/token` | 获取 Access-Token，所有后续请求都需要 |
 | **持卡人认证申请** | POST | `/open-api/v1/cardholder/apply` | 通过这个接口完成持卡人创建和认证；持卡人认证失败后，可以通过该接口完成认证信息更新和重新发起认证 |
 | 获取持卡人列表 | POST | `/open-api/v1/cardholder/list` | 获取当前持卡人的列表 |
-| 获取持卡人详细信息 | GET | `/open-api/v1/cardholder/{cardholder_no}/info` | 获取持卡人的卡片列表和资产列表；可用于验证认证状态 |
+| 获取持卡人详细信息 | GET | `/open-api/v1/cardholder/{cardholder_no}/info` | 获取持卡人的卡片列表；可用于验证认证状态 |
 
 ### 典型流程
 

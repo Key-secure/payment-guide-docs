@@ -20,10 +20,6 @@ authMethod: none
   登录标识（除获取 Token 外必填）
 </ParamField>
 
-<ParamField header="accept" type="string" default="application/json">
-  固定为 `application/json`
-</ParamField>
-
 <ParamField header="Content-Type" type="string" default="application/json">
   固定为 `application/json`
 </ParamField>
@@ -46,11 +42,11 @@ authMethod: none
   卡单号
 </ParamField>
 
-<ParamField body="start_time" type="string" required default="2026-01-01">
+<ParamField body="start_time" type="string" required >
   开始时间（`yyyy-MM-dd` 或 `yyyy-MM-dd HH:mm:ss`）
 </ParamField>
 
-<ParamField body="end_time" type="string" required default="2026-03-31">
+<ParamField body="end_time" type="string" required >
   结束时间（同上；间隔 ≤90 天）
 </ParamField>
 
@@ -99,7 +95,6 @@ authMethod: none
 ```bash Request
 curl --request POST \
   --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/consume/list \
-  --header 'accept: application/json' \
   --header 'Content-Type: application/json' \
   --header 'Api-Key: your_api_key' \
   --header 'Timestamp: 1716307200000' \
