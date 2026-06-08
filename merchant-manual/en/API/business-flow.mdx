@@ -69,7 +69,7 @@ Authentication successful ✓ (Status: Approved)
 | Interface | Method | Path | Mode | Description |
 | --- | --- | --- | --- | --- |
 | Get Card Package List | POST | `/open-api/v1/card/package/list` | Credit | Login merchant backend to create card packages; charge based on package when applying |
-| Get Supported Card BIN List | POST | `/open-api/v1/card/support/bins` | Auth | Get supported card BINs for authorization mode; merchant maintains card packages |
+| Get Supported Card BIN List | POST | `/open-api/v1/card/support/bins` | Auth | Get supported card BINs for authorization mode; card pricing needs to be maintained by the merchant |
 | **Apply for Card** | POST | `/open-api/v1/card/apply` | Common | Apply for card (pass `package_no` for credit, `card_bin_no` for auth) |
 | Get Card List | POST | `/open-api/v1/card/list` | Common | Get current card list |
 | Get Card Details | GET | `/open-api/v1/card/{card_no}/detail` | Common | Get card details (including rates, fees, etc.) |
@@ -228,7 +228,7 @@ User consumption request
     ↓
 [Webhook Auth Notification] Platform sends authorization notification
     ↓
-Merchant must confirm within 1 second
+Merchant must confirm within 800 ms
     ↓
 Return response { "code": 0 }
     ↓
@@ -239,7 +239,7 @@ Authorization denied → Transaction fails ✗
 [Webhook Consumption Notification] Final result notification
 ```
 
-**Important**: Authorization mode has high performance requirements. Ensure your system can complete authorization response within 1 second.
+**Important**: Authorization mode has high performance requirements. Ensure your system can complete authorization response within 800 ms.
 
 ---
 
@@ -270,8 +270,8 @@ A: Based on the `integration_mode` confirmed with business before integration:
 - `CREDIT_EXTENSION` = Credit mode
 - `AUTHORIZATION` = Authorization mode
 
-**Q4: Why must authorization mode confirm within 1 second?**  
-A: Authorization mode settles funds in real-time. Merchants must confirm within 1 second whether to allow the transaction to ensure smooth trading.
+**Q4: Why must authorization mode confirm within 800 milliseconds?**  
+A: Authorization mode settles funds in real-time. Merchants must confirm within 800 milliseconds whether to allow the transaction to ensure smooth trading. Timeout will be treated as transaction rejection.
 
 **Q5: How are consumption fees calculated?**  
 A: Fee details are in the card package configuration at application time, including consumption rate, fees, exchange rate, etc. See "Constants" section for details.

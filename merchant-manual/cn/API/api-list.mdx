@@ -2,8 +2,6 @@
 title: 接口清单
 ---
 
-## 接口清单（merchant-api）
-
 所有接口路径前缀均为 `/open-api`。对接模式由商户配置 `integration_mode` 决定，标注 `@IntegrationModeRequired` 的接口会校验 Token 中的模式，不匹配返回 **1012**。
 
 除 **获取 Token** 外，其余接口均需请求头：`Api-Key`、`Timestamp`、`Access-Token`（PCI iframe 内部接口使用 `Client-Access-Token`）。
