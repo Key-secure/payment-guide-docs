@@ -1,0 +1,100 @@
+---
+title: Cardholder Fund Transfer
+api: POST /open-api/v1/account/transfer
+authMethod: none
+---
+
+Performs a cardholder fund transfer (**credit extension mode**). The current transfer currency is fixed to **TUSDT**.
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+## Request Body
+
+<ParamField body="cardholder_no" type="string" required >
+  Cardholder order number.
+</ParamField>
+
+<ParamField body="transfer_unique_no" type="string" required >
+  Merchant-side unique transfer order number (max 64 characters).
+</ParamField>
+
+<ParamField body="type" type="string" required>
+  Transfer type, see Constants (In — credit / Out — debit).
+</ParamField>
+
+<ParamField body="balance" type="string" required>
+  Transfer amount (supports up to 2 decimal places).
+</ParamField>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Response data.
+
+  <Expandable title="data">
+    <ResponseField name="transfer_no" type="string">Transfer order number</ResponseField>
+    <ResponseField name="transfer_unique_no" type="string">Merchant-side unique transfer order number</ResponseField>
+    <ResponseField name="before_balance" type="string">Balance before transfer</ResponseField>
+    <ResponseField name="after_balance" type="string">Balance after transfer</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/account/transfer \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --data '{
+    "cardholder_no": "U202605220001",
+    "transfer_unique_no": "TRANSFER_202605220001",
+    "type": "In",
+    "balance": "100.00"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "transfer_no": "",
+    "transfer_unique_no": "",
+    "before_balance": "",
+    "after_balance": ""
+  }
+}
+```
+
+</ResponseExample>

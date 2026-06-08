@@ -1,0 +1,134 @@
+---
+title: Consumption Order Notification
+playground: none
+---
+
+The platform sends a POST request to the configured merchant callback URL when a consumption transaction is created, its status changes, or when fees and merchant information are supplemented.
+
+<Note>
+- Request body structure: `{ "id": "...", "action": "...", "data": { ... } }`.
+- See [Appendix - Constants] Push Actions for `action` values.
+- The merchant must return `{ "code": 0, "message": "" }`; when `code ≠ 0`, the platform retries according to its retry strategy.
+</Note>
+
+## Trigger Scenarios
+
+- Consumption transaction created, transaction status changed (success / failure / reversal / refund).
+- After fee breakdown and merchant information are supplemented, proactively push to the merchant callback address.
+
+## Push Parameters
+
+<ParamField body="id" type="string" required>
+  Push ID.
+</ParamField>
+
+<ParamField body="action" type="string" required>
+  Push action, see [Appendix - Constants] Push Actions.
+</ParamField>
+
+<ParamField body="data" type="object" required>
+  Push data.
+</ParamField>
+
+### data Fields
+
+<ResponseField name="consume_no" type="string">Consumption order number</ResponseField>
+<ResponseField name="consume_relate_no" type="string">Consumption related order number</ResponseField>
+<ResponseField name="card_no" type="string">Card order number</ResponseField>
+<ResponseField name="cardholder_no" type="string">Cardholder order number</ResponseField>
+<ResponseField name="type" type="string">Consumption type, see [Appendix - Constants] Consumption Type</ResponseField>
+<ResponseField name="amount" type="number">Consumption amount (BigDecimal)</ResponseField>
+<ResponseField name="local_amount" type="number">Original amount</ResponseField>
+<ResponseField name="local_currency" type="string">Original currency</ResponseField>
+<ResponseField name="fee" type="number">Total fee (sum of all `amount` values in `fee_detail`)</ResponseField>
+<ResponseField name="remark" type="string">Remarks (from consumption extension info)</ResponseField>
+<ResponseField name="detail" type="string">Description (from consumption extension info)</ResponseField>
+<ResponseField name="fee_detail" type="array">Fee detail list (field name is `fee_detail`, not `fee_list`)</ResponseField>
+<ResponseField name="merchant_info" type="object">Merchant information</ResponseField>
+<ResponseField name="status" type="string">Status, see [Appendix - Constants] Common Status</ResponseField>
+<ResponseField name="time" type="number">Consumption update time (Unix milliseconds, uses record `mtime`)</ResponseField>
+
+### fee_detail Fields
+
+<ResponseField name="fee_type" type="string">Fee type, see [Appendix - Constants] Fee Types</ResponseField>
+<ResponseField name="amount" type="number">Fee amount</ResponseField>
+
+<Note>
+**Fee details differ by integration mode:**
+- **Credit extension mode**: `Consume_fee`, `Exchange_fee`, `Atm_fee` / `Apple_auth_fee`, `Small_fee`, `Decline_fee` (only pushed when amount > 0).
+- **Authorization mode**: Reserve fund side fees, including `Consume_fee`, `Exchange_fee`, `Apple_auth_fee`, `Atm_fee`, `Small_fee`, `Refund_fee`, `Cancel_fee`.
+</Note>
+
+### merchant_info Fields
+
+<ResponseField name="merchant_name" type="string">Merchant name</ResponseField>
+<ResponseField name="merchant_mcc" type="string">Merchant MCC</ResponseField>
+<ResponseField name="merchant_mcc_category" type="string">MCC category</ResponseField>
+<ResponseField name="city" type="string">Merchant city</ResponseField>
+<ResponseField name="country" type="string">Merchant country</ResponseField>
+<ResponseField name="state" type="string">State/Province</ResponseField>
+<ResponseField name="zipcode" type="string">Zipcode</ResponseField>
+<ResponseField name="mid" type="string">Merchant MID</ResponseField>
+
+<RequestExample>
+
+```json Request
+{
+  "id": "",
+  "action": "",
+  "data": {
+    "consume_no": "",
+    "consume_relate_no": "",
+    "card_no": "",
+    "cardholder_no": "",
+    "type": "",
+    "amount": 0,
+    "local_amount": 0,
+    "local_currency": "",
+    "remark": "",
+    "detail": "",
+    "fee": 0,
+    "fee_detail": [
+      {
+        "fee_type": "",
+        "amount": 0
+      }
+    ],
+    "merchant_info": {
+      "merchant_name": "",
+      "merchant_mcc": "",
+      "merchant_mcc_category": "",
+      "city": "",
+      "country": "",
+      "state": "",
+      "zipcode": "",
+      "mid": ""
+    },
+    "status": "",
+    "time": 0
+  }
+}
+```
+
+</RequestExample>
+
+## Merchant Response
+
+<ResponseField name="code" type="number" required>
+  Response code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Failure reason, required when failing.
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "message": ""
+}
+```
+
+</ResponseExample>

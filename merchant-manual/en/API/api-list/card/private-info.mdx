@@ -1,0 +1,85 @@
+---
+title: Get Card Privacy Information (Encrypted JSON)
+api: GET /open-api/v1/card/{card_no}/private/info
+authMethod: none
+---
+
+Retrieves the card privacy information as an AES-encrypted JSON string (requires PCI enabled).
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="card_no" type="string" required >
+  Card order number.
+</ParamField>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="string">
+  A JSON string encrypted with **AES/ECB/PKCS5Padding + Base64**. Decrypt it using the `apiSecret` from the merchant's current available API credentials to obtain the following JSON structure:
+
+  <Expandable title="Decrypted JSON structure of data">
+    <ResponseField name="card_no" type="string">Card order number</ResponseField>
+    <ResponseField name="card_unique_no" type="string">Merchant-side unique order number</ResponseField>
+    <ResponseField name="cvv" type="string">CVV</ResponseField>
+    <ResponseField name="pan" type="string">Full card number (PAN)</ResponseField>
+    <ResponseField name="exp_year" type="string">Expiration year</ResponseField>
+    <ResponseField name="exp_month" type="string">Expiration month</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<Note>
+**Permission Notes:** PCI must be enabled for the merchant (`pci_flag = 1`) before this endpoint can be called. If not enabled, error code **1013** is returned.
+
+**Decryption Method:** Use the merchant's current available API credential's `apiSecret`, and decrypt `data` with the AES/ECB/PKCS5Padding algorithm after Base64 decoding to obtain the plaintext JSON. See "Code Utilities" for details.
+</Note>
+
+<RequestExample>
+
+```bash Request
+curl --request GET \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/C202605220001/private/info \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": "Base64EncodedEncryptedString..."
+}
+```
+
+</ResponseExample>

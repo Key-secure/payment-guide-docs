@@ -1,0 +1,99 @@
+---
+title: Activate Physical Card
+api: POST /open-api/v1/card/active
+authMethod: none
+---
+
+Activates a physical card. The card status must be `ToActivate`; after successful activation, it becomes `Activated`. The `cvv` must be encrypted with **AES/ECB/PKCS5Padding + Base64** before being passed in. **Transmitting plaintext CVV in the request body is strictly prohibited.**
+
+<Note>
+- Plaintext CVV must be **3 digits only**.
+- `card_last_no` must match the last four digits of the card number recorded on the platform.
+- `cardholder_no` must belong to the cardholder associated with this card.
+- For encryption algorithm details, see the "Code Utilities" section.
+</Note>
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+## Request Body
+
+<ParamField body="cardholder_no" type="string" required >
+  Cardholder order number.
+</ParamField>
+
+<ParamField body="card_no" type="string" required >
+  Card order number.
+</ParamField>
+
+<ParamField body="cvv" type="string" required placeholder="Base64EncodedEncryptedCvv...">
+  Encrypted CVV (Base64 ciphertext).
+</ParamField>
+
+<ParamField body="card_last_no" type="string" required >
+  Last four digits of card number.
+</ParamField>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Response data.
+
+  <Expandable title="data">
+    <ResponseField name="result" type="boolean">Activation result</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/active \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --data '{
+    "cardholder_no": "U202605220001",
+    "card_no": "C202605220001",
+    "cvv": "Base64EncodedEncryptedCvv...",
+    "card_last_no": "1234"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {"result": true}
+}
+```
+
+</ResponseExample>

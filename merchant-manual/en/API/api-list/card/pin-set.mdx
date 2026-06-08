@@ -1,0 +1,94 @@
+---
+title: Set Physical Card PIN
+api: POST /open-api/v1/card/pin/set
+authMethod: none
+---
+
+Sets the physical card PIN. Only **physical cards** (`Physical`) are supported, and the card status must be normal (`Activated`). The `pin` must be encrypted with **AES/ECB/PKCS5Padding + Base64** before being passed in.
+
+<Note>
+- Physical cards only (`card_type = Physical`); virtual cards calling this endpoint will return **4017**.
+- Plaintext PIN must be **6 digits only**, and must not contain three or more consecutive identical or sequential digits (e.g. `111111`, `123456`), otherwise **4016** is returned.
+- Card status must be `Activated`; otherwise **4005** is returned.
+- For encryption algorithm details, see the "Code Utilities" section.
+</Note>
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+## Request Body
+
+<ParamField body="card_no" type="string" required >
+  Card order number.
+</ParamField>
+
+<ParamField body="cardholder_no" type="string" required >
+  Cardholder order number.
+</ParamField>
+
+<ParamField body="pin" type="string" required placeholder="Base64EncodedEncryptedPin...">
+  Encrypted PIN (Base64 ciphertext).
+</ParamField>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Response data.
+
+  <Expandable title="data">
+    <ResponseField name="result" type="boolean">Setting result</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/pin/set \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --data '{
+    "card_no": "C202605220001",
+    "cardholder_no": "U202605220001",
+    "pin": "Base64EncodedEncryptedPin..."
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {"result": true}
+}
+```
+
+</ResponseExample>

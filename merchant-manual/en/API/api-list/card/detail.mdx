@@ -1,0 +1,148 @@
+---
+title: Get Card Details
+api: GET /open-api/v1/card/{card_no}/detail
+authMethod: none
+---
+
+Retrieves detailed information for a single card.
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="card_no" type="string" required>
+  Card order number.
+</ParamField>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Response data.
+
+  <Expandable title="data">
+    <ResponseField name="card_no" type="string">Card order number</ResponseField>
+    <ResponseField name="card_unique_no" type="string">Merchant-side unique order number</ResponseField>
+    <ResponseField name="cardholder_no" type="string">Cardholder order number</ResponseField>
+    <ResponseField name="card_name" type="string">Card alias</ResponseField>
+    <ResponseField name="package_name_en" type="string">Card package English name</ResponseField>
+    <ResponseField name="package_name_cn" type="string">Card package Chinese name</ResponseField>
+    <ResponseField name="card_type" type="string">Card type, see [Appendix - Constants] Card Types</ResponseField>
+    <ResponseField name="organization" type="string">Card organization</ResponseField>
+    <ResponseField name="card_last_no" type="string">Last four digits of card number</ResponseField>
+    <ResponseField name="fee_detail" type="object">
+      Fee details.
+
+      <Expandable title="fee_detail">
+        <ResponseField name="consume_rate" type="string">Consumption fee rate</ResponseField>
+        <ResponseField name="open_cost" type="string">Card issuance cost</ResponseField>
+        <ResponseField name="cross_consume_rate" type="string">Cross-border consumption fee rate</ResponseField>
+        <ResponseField name="small_consume_threshold" type="string">Small transaction threshold</ResponseField>
+        <ResponseField name="small_consume_deduct" type="string">Small transaction extra deduction</ResponseField>
+        <ResponseField name="free_small_consume_count" type="number">Free small transaction count</ResponseField>
+        <ResponseField name="free_small_excuse_type" type="string">Small transaction fee exemption cycle type, see [Appendix - Constants] Exemption Types</ResponseField>
+        <ResponseField name="free_small_excuse_days" type="number">Small transaction fee exemption cycle duration</ResponseField>
+        <ResponseField name="refund_rate" type="string">Refund fee rate</ResponseField>
+        <ResponseField name="consume_cancle_fee" type="string">Transaction cancellation fee</ResponseField>
+        <ResponseField name="consume_cancel_threshold" type="string">Transaction cancellation fee threshold</ResponseField>
+        <ResponseField name="decline_fee" type="string">Decline fee</ResponseField>
+        <ResponseField name="decline_fee_free_count" type="number">Number of decline fee waivers</ResponseField>
+        <ResponseField name="decline_fee_free_type" type="string">Decline fee waiver cycle type, see [Appendix - Constants] Exemption Types</ResponseField>
+        <ResponseField name="decline_fee_free_days" type="number">Decline fee waiver cycle duration</ResponseField>
+        <ResponseField name="atm_rate" type="string">ATM withdrawal fee rate (value present for physical cards)</ResponseField>
+        <ResponseField name="atm_min_fee" type="string">ATM withdrawal minimum fee (value present for physical cards)</ResponseField>
+        <ResponseField name="apple_pay_fee" type="string">Apple Pay fee rate (value present for some card BINs)</ResponseField>
+        <ResponseField name="manage_fee_type" type="string">Management fee type, see [Appendix - Constants] Management Fee Types (value present for some card BINs)</ResponseField>
+        <ResponseField name="manage_fee" type="string">Management fee (value present for some card BINs)</ResponseField>
+        <ResponseField name="management_fee_free_type" type="string">Management fee waiver method, see [Appendix - Constants] Management Fee Waiver Methods (value present for some card BINs)</ResponseField>
+        <ResponseField name="free_management_fee_threshold" type="string">Management fee waiver threshold (Amount → amount threshold; Count → count threshold; value present for some card BINs)</ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="status" type="string">Status, see [Appendix - Constants] Common Status</ResponseField>
+    <ResponseField name="time" type="number">Card creation time (Unix milliseconds)</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request GET \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/C202605220001/detail \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "card_no": "",
+    "card_unique_no": "",
+    "cardholder_no": "",
+    "card_name": "",
+    "package_name_en": "",
+    "package_name_cn": "",
+    "card_type": "",
+    "organization": "",
+    "card_last_no": "",
+    "fee_detail": {
+      "consume_rate": "",
+      "open_cost": "",
+      "cross_consume_rate": "",
+      "small_consume_threshold": "",
+      "small_consume_deduct": "",
+      "free_small_consume_count": 0,
+      "free_small_excuse_type": "",
+      "free_small_excuse_days": 0,
+      "refund_rate": "",
+      "consume_cancle_fee": "",
+      "consume_cancel_threshold": "",
+      "decline_fee": "",
+      "decline_fee_free_count": 0,
+      "decline_fee_free_type": "",
+      "decline_fee_free_days": 0,
+      "atm_rate": "",
+      "atm_min_fee": "",
+      "apple_pay_fee": "",
+      "manage_fee_type": "",
+      "manage_fee": "",
+      "management_fee_free_type": "",
+      "free_management_fee_threshold": ""
+    },
+    "status": "",
+    "time": 0
+  }
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,77 @@
+---
+title: Card Status Change Notification
+playground: none
+---
+
+The platform sends a POST request to the configured merchant callback URL when a card's status changes.
+
+<Note>
+- Request body structure: `{ "id": "...", "action": "...", "data": { ... } }`.
+- See [Appendix - Constants] Push Actions for `action` values.
+- The merchant must return `{ "code": 0, "message": "" }`; when `code ≠ 0`, the platform retries according to its retry strategy.
+</Note>
+
+## Trigger Scenarios
+
+- Card status has changed.
+
+## Push Parameters
+
+<ParamField body="id" type="string" required>
+  Push ID.
+</ParamField>
+
+<ParamField body="action" type="string" required>
+  Push action, see [Appendix - Constants] Push Actions.
+</ParamField>
+
+<ParamField body="data" type="object" required>
+  Push data.
+</ParamField>
+
+### data Fields
+
+<ResponseField name="card_no" type="string">Card order number</ResponseField>
+<ResponseField name="before_status" type="string">Status before change, see [Appendix - Constants] Card Status</ResponseField>
+<ResponseField name="after_status" type="string">Status after change, see [Appendix - Constants] Card Status</ResponseField>
+<ResponseField name="reason" type="string">Reason for change</ResponseField>
+<ResponseField name="time" type="number">Change time (Unix milliseconds)</ResponseField>
+
+<RequestExample>
+
+```json Request
+{
+  "id": "",
+  "action": "",
+  "data": {
+    "card_no": "",
+    "before_status": "",
+    "after_status": "",
+    "reason": "",
+    "time": 0
+  }
+}
+```
+
+</RequestExample>
+
+## Merchant Response
+
+<ResponseField name="code" type="number" required>
+  Response code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Failure reason, required when failing.
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "message": ""
+}
+```
+
+</ResponseExample>

@@ -265,6 +265,68 @@
                 ]
               },
               {
+                "group": "API Documentation",
+                "pages": [
+                  {
+                    "group": "Common Parameters",
+                    "pages": [
+                      "en/API/api-list/common/request-headers",
+                      "en/API/api-list/common/response-params"
+                    ]
+                  },
+                  {
+                    "group": "Authentication",
+                    "pages": ["en/API/api-list/auth/token"]
+                  },
+                  {
+                    "group": "Cardholder",
+                    "pages": [
+                      "en/API/api-list/cardholder/apply",
+                      "en/API/api-list/cardholder/list",
+                      "en/API/api-list/cardholder/info"
+                    ]
+                  },
+                  {
+                    "group": "Account",
+                    "pages": [
+                      "en/API/api-list/account/transfer",
+                      "en/API/api-list/account/info",
+                      "en/API/api-list/account/transfer-list"
+                    ]
+                  },
+                  {
+                    "group": "Card",
+                    "pages": [
+                      "en/API/api-list/card/package-list",
+                      "en/API/api-list/card/support-bins",
+                      "en/API/api-list/card/apply",
+                      "en/API/api-list/card/list",
+                      "en/API/api-list/card/detail",
+                      "en/API/api-list/card/private-info",
+                      "en/API/api-list/card/client-token",
+                      "en/API/api-list/card/active",
+                      "en/API/api-list/card/status-update",
+                      "en/API/api-list/card/pin-set"
+                    ]
+                  },
+                  {
+                    "group": "Card Transactions",
+                    "pages": [
+                      "en/API/api-list/consume/info",
+                      "en/API/api-list/consume/list"
+                    ]
+                  },
+                  {
+                    "group": "Transaction Webhooks",
+                    "pages": [
+                      "en/API/api-list/webhook/card-update",
+                      "en/API/api-list/webhook/consumption",
+                      "en/API/api-list/webhook/auth"
+                    ]
+                  }
+                ]
+              },
+              {
                 "group": "Appendix",
                 "pages": [
                   "en/API/constants",

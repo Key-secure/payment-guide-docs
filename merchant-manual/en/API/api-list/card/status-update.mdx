@@ -1,0 +1,82 @@
+---
+title: Update Card Status
+api: POST /open-api/v1/card/status/update
+authMethod: none
+---
+
+Updates the card status (Frozen / Activated / Delete).
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+## Request Body
+
+<ParamField body="card_no" type="string" required >
+  Card order number.
+</ParamField>
+
+<ParamField body="status" type="string" required >
+  Target status: Frozen — freeze / Activated — activate / Delete — deactivate (see Constants).
+</ParamField>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Response data.
+
+  <Expandable title="data">
+    <ResponseField name="result" type="boolean">Operation result</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/status/update \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --data '{
+    "card_no": "C202605220001",
+    "status": "Frozen"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {"result": true}
+}
+```
+
+</ResponseExample>

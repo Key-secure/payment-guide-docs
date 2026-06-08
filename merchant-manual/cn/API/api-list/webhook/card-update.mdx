@@ -7,7 +7,7 @@ playground: none
 
 <Note>
 - 请求体结构：`{ "id": "...", "action": "...", "data": { ... } }`。
-- `action` 见 8.6 推送动作。
+- `action` 见 【附录-常量表】 推送动作。
 - 商户须返回 `{ "code": 0, "message": "" }`；`code ≠ 0` 时平台按策略重试。
 </Note>
 
@@ -22,7 +22,7 @@ playground: none
 </ParamField>
 
 <ParamField body="action" type="string" required>
-  推送动作，见 8.6 推送动作。
+  推送动作，见 【附录-常量表】 推送动作。
 </ParamField>
 
 <ParamField body="data" type="object" required>
@@ -32,8 +32,8 @@ playground: none
 ### data 字段
 
 <ResponseField name="card_no" type="string">卡单号</ResponseField>
-<ResponseField name="before_status" type="string">变动前状态，见 8.2 卡状态</ResponseField>
-<ResponseField name="after_status" type="string">变动后状态，见 8.2 卡状态</ResponseField>
+<ResponseField name="before_status" type="string">变动前状态，见 【附录-常量表】卡状态</ResponseField>
+<ResponseField name="after_status" type="string">变动后状态，见 【附录-常量表】 卡状态</ResponseField>
 <ResponseField name="reason" type="string">变动原因</ResponseField>
 <ResponseField name="time" type="number">变动时间（时间戳）</ResponseField>
 

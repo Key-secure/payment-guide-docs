@@ -1,99 +1,99 @@
 ---
-title: 获取持卡人列表
+title: Get Cardholder List
 api: POST /open-api/v1/cardholder/list
 authMethod: none
 ---
 
-查询指定时间范围内的持卡人列表，支持按持卡人单号、商户侧唯一单号筛选，并支持分页。
+Queries the cardholder list within a specified time range, supporting filtering by cardholder order number and merchant-side unique number, as well as pagination.
 
-## 请求头
+## Request Headers
 
 <ParamField header="Api-Key" type="string" required placeholder="your_api_key">
-  apiKey（商户凭证，与 IP 白名单绑定）
+  apiKey (merchant credential, bound to IP whitelist)
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
-  登录标识（除获取 Token 外必填）
+  Login token (required for all interfaces except Get Token).
 </ParamField>
 
 <ParamField header="Timezone" type="string" default="UTC+8">
-  时区，影响 `start_time` / `end_time` 的日界计算，默认 UTC+8
+  Timezone, affects the day boundary calculation for `start_time` / `end_time`. Defaults to UTC+8.
 </ParamField>
 
 <ParamField header="Content-Type" type="string" default="application/json">
-  固定为 `application/json`
+  Fixed to `application/json`
 </ParamField>
 
-## 请求体
+## Request Body
 
 <ParamField body="cardholder_no" type="string">
-  持卡人单号
+  Cardholder order number.
 </ParamField>
 
 <ParamField body="cardholder_unique_no" type="string">
-  商户侧持卡人唯一单号
+  Merchant-side unique cardholder number.
 </ParamField>
 
 <ParamField body="start_time" type="string" required >
-  开始时间（格式：`yyyy-MM-dd` 或 `yyyy-MM-dd HH:mm:ss`）
+  Start time (format: `yyyy-MM-dd` or `yyyy-MM-dd HH:mm:ss`).
 </ParamField>
 
 <ParamField body="end_time" type="string" required >
-  结束时间（同上；间隔 ≤90 天）
+  End time (same format as above; interval ≤ 90 days).
 </ParamField>
 
 <ParamField body="page" type="number" default="0">
-  查询页码，默认 `0`
+  Query page number. Defaults to `0`.
 </ParamField>
 
 <ParamField body="size" type="number" default="10">
-  查询条数，默认 `10`（最多查询 100 条）
+  Number of records per page. Defaults to `10` (max 100).
 </ParamField>
 
-## 返回参数
+## Response Parameters
 
 <ResponseField name="code" type="number">
-  响应状态码，`0` 表示成功
+  Response status code. `0` indicates success.
 </ResponseField>
 
 <ResponseField name="msg" type="string">
-  响应消息
+  Response message.
 </ResponseField>
 
 <ResponseField name="data" type="object">
-  返回数据
+  Response data.
 
   <Expandable title="data">
     <ResponseField name="list" type="object[]">
-      持卡人列表
+      Cardholder list.
 
       <Expandable title="list">
         <ResponseField name="cardholder_no" type="string">
-          持卡人单号
+          Cardholder order number.
         </ResponseField>
 
         <ResponseField name="cardholder_unique_no" type="string">
-          商户侧持卡人唯一单号
+          Merchant-side unique cardholder number.
         </ResponseField>
 
         <ResponseField name="email" type="string">
-          邮箱
+          Email.
         </ResponseField>
 
         <ResponseField name="fail_reason" type="string">
-          失败原因（认证失败时有值）
+          Failure reason (has a value when authentication fails).
         </ResponseField>
 
         <ResponseField name="status" type="string">
-          状态，见 【附录-常量表】持卡人状态
+          Status, see [Appendix - Constants] Cardholder Status.
         </ResponseField>
 
         <ResponseField name="time" type="number">
-          创建时间（Unix 毫秒）
+          Creation time (Unix milliseconds).
         </ResponseField>
       </Expandable>
     </ResponseField>

@@ -1,0 +1,86 @@
+---
+title: Request Headers
+---
+
+All API requests must include the following parameters in the HTTP request headers (unless otherwise specified):
+
+| **Field Name** | **Description** | **Required** | **Notes** |
+| --- | --- | --- | --- |
+| Api-Key | apiKey (merchant credential, bound to IP whitelist) | Yes* | Required for all except Get Token; Get Token only needs this field |
+| Timestamp | Unix timestamp in milliseconds | Yes* | Deviation from server time must be within **60 seconds**, and **future timestamps are not accepted** |
+| Access-Token | Login token | Yes* | Required for all except Get Token; returns **1005** when future timestamp is rejected |
+| Signature | Signature value | No | Used for **platform → merchant callbacks** |
+| Sign-Version | Signature algorithm version | No | Defaults to V1 (used in callbacks) |
+| Timezone | Timezone | No | Defaults to UTC+8, affects list query time boundaries |
+| Language | Response `msg` language | No | e.g. `zh_CN` / `en_US`; affects multilingual error messages |
+| Content-Type | Request content type | Yes | Fixed value: `application/json` |
+
+### Usage Notes
+
+#### Authentication Modes
+
+- **Get Token**: Only requires `Api-Key` + `Timestamp`; no `Access-Token` needed.
+- **Other interfaces**: All require `Api-Key` + `Timestamp` + `Access-Token`.
+
+#### Timestamp Validation
+
+- `Timestamp` must be a **Unix millisecond timestamp** (13 digits).
+- Deviation from server time must be within **60 seconds**, otherwise **1005** (timestamp invalid or expired) is returned.
+- **Future timestamps are not accepted**; excessive deviation returns **1005**.
+
+#### IP Whitelist
+
+- The requesting IP must be in the **IP whitelist** associated with the `Api-Key`.
+- Non-whitelisted IPs return **1003** (IP address not allowed).
+
+#### Timezone and List Queries
+
+- List interfaces with `start_time` / `end_time` should include the `Timezone` header (defaults to UTC+8).
+- This affects day boundary calculation; use `Language: zh_CN` or `en_US` to control the language of error messages.
+
+### curl Examples
+
+Basic example (Get Token):
+
+```bash
+curl --request GET \
+     --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/token \
+     --header 'Content-Type: application/json' \
+     --header 'Api-Key: your_api_key' \
+     --header 'Timestamp: 1716307200000'
+```
+
+Full example (with Access-Token):
+
+```bash
+curl --request POST \
+     --url https://sandbox-openplatform.keysecure.io/open-api/v1/cardholder/apply \
+     --header 'content-type: application/json' \
+     --header 'Api-Key: your_api_key' \
+     --header 'Timestamp: 1716307200000' \
+     --header 'Access-Token: your_access_token' \
+     --header 'Timezone: UTC+8' \
+     --header 'Language: zh_CN' \
+     --data '{
+       "cardholder_no": "",
+       "cardholder_unique_no": "MERCHANT_USER_001",
+       "sumsub_share_token": "your_sumsub_share_token"
+     }'
+```
+
+### Domain Replacement
+
+Replace `https://api.example.com` in the curl examples below with the actual API domain:
+
+- **Sandbox environment**: `https://sandbox-openplatform.keysecure.io`
+- **Production environment**: `https://openplatform.keysecure.io` (contact your account manager to obtain)
+
+### Error Codes
+
+| Code | Chinese Description | English Description |
+| --- | --- | --- |
+| 1002 | Api-Key 不能为空 | Api-Key is required |
+| 1003 | IP 地址不正确 | IP address not allowed |
+| 1005 | 时间戳已失效 | Timestamp invalid or expired |
+| 1006 | Access-Token 不能为空 | Access-Token is required |
+| 1007 | Access-Token 已失效 | Access-Token invalid or expired |

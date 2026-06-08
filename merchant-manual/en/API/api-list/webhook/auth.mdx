@@ -1,0 +1,107 @@
+---
+title: Auth Order Notification (Authorization Mode)
+playground: none
+---
+
+In authorization mode, the platform sends a POST request to the configured merchant callback URL when a user initiates a consumption authorization and the merchant needs to verify the amount and fees.
+
+<Note>
+- Only merchants in **authorization mode** (AUTHORIZATION) receive this notification.
+- Request body structure: `{ "id": "...", "action": "...", "data": { ... } }`.
+- The merchant must return a response within the timeout; if timeout occurs or `code ≠ 0`, the platform handles it according to the authorization orchestration strategy.
+</Note>
+
+## Trigger Scenarios
+
+- User initiates a consumption authorization, requiring amount and fee verification.
+
+## Push Parameters
+
+<ParamField body="id" type="string" required>
+  Push ID.
+</ParamField>
+
+<ParamField body="action" type="string" required>
+  Push action, see [Appendix - Constants] Push Actions.
+</ParamField>
+
+<ParamField body="data" type="object" required>
+  Push data.
+</ParamField>
+
+### data Fields
+
+<ResponseField name="consume_no" type="string">Consumption order number</ResponseField>
+<ResponseField name="card_no" type="string">Card order number</ResponseField>
+<ResponseField name="cardholder_no" type="string">Cardholder order number</ResponseField>
+<ResponseField name="type" type="string">Consumption type, see [Appendix - Constants] Consumption Type</ResponseField>
+<ResponseField name="amount" type="number">Authorization amount (BigDecimal)</ResponseField>
+<ResponseField name="local_amount" type="number">Original amount</ResponseField>
+<ResponseField name="local_currency" type="string">Original currency</ResponseField>
+<ResponseField name="merchant_info" type="object">Merchant information</ResponseField>
+<ResponseField name="status" type="string">Fixed to `Pending` (awaiting merchant response)</ResponseField>
+<ResponseField name="time" type="number">Notification time (Unix milliseconds)</ResponseField>
+
+### merchant_info Fields
+
+<ResponseField name="merchant_name" type="string">Merchant name</ResponseField>
+<ResponseField name="merchant_mcc" type="string">Merchant MCC</ResponseField>
+<ResponseField name="merchant_mcc_category" type="string">MCC category (has value for some card issuers)</ResponseField>
+<ResponseField name="city" type="string">Merchant city</ResponseField>
+<ResponseField name="country" type="string">Merchant country</ResponseField>
+<ResponseField name="state" type="string">State/Province (has value for some card issuers)</ResponseField>
+<ResponseField name="zipcode" type="string">Zipcode (has value for some card issuers)</ResponseField>
+<ResponseField name="mid" type="string">Merchant MID (has value for some card issuers)</ResponseField>
+
+<RequestExample>
+
+```json Request
+{
+  "id": "",
+  "action": "",
+  "data": {
+    "consume_no": "",
+    "card_no": "",
+    "cardholder_no": "",
+    "type": "",
+    "amount": 0,
+    "local_amount": 0,
+    "local_currency": "",
+    "merchant_info": {
+      "merchant_name": "",
+      "merchant_mcc": "",
+      "merchant_mcc_category": "",
+      "city": "",
+      "country": "",
+      "state": "",
+      "zipcode": "",
+      "mid": ""
+    },
+    "status": "Pending",
+    "time": 0
+  }
+}
+```
+
+</RequestExample>
+
+## Merchant Response
+
+<ResponseField name="code" type="number" required>
+  Response code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Failure reason, required when failing.
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "message": ""
+}
+```
+
+</ResponseExample>

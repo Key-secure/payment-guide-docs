@@ -1,0 +1,159 @@
+---
+title: Apply for Card
+api: POST /open-api/v1/card/apply
+authMethod: none
+---
+
+Submits a card application. Pass `package_no` in credit extension mode, or `card_bin_no` in authorization mode (one is required).
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+## Request Body
+
+<ParamField body="card_bin_no" type="string">
+  Card BIN order number (required in authorization mode).
+</ParamField>
+
+<ParamField body="cardholder_no" type="string" required >
+  Cardholder order number.
+</ParamField>
+
+<ParamField body="card_unique_no" type="string" required >
+  Merchant-side unique card number (max 64 characters).
+</ParamField>
+
+<ParamField body="package_no" type="string" >
+  Card package order number (required in credit extension mode).
+</ParamField>
+
+<ParamField body="card_type" type="string" required >
+  Card type, see Appendix Constants - Card Types.
+</ParamField>
+
+<ParamField body="address_info" type="object">
+  Address information (required for physical cards and some virtual cards).
+
+  <Expandable title="address_info">
+    <ParamField body="first_name" type="string">
+      First name (in English; required for physical cards).
+    </ParamField>
+    <ParamField body="last_name" type="string">
+      Last name (in English; required for physical cards).
+    </ParamField>
+    <ParamField body="phone_code" type="string">
+      Phone country code (**digits only, no `+` sign**, e.g. `86` for mainland China; must be a valid country code supported by the platform; required for physical cards).
+    </ParamField>
+    <ParamField body="phone" type="string">
+      Phone number (without country code; validated together with `phone_code`; required for physical cards).
+    </ParamField>
+    <ParamField body="postal_code" type="string" required>
+      Postal code (must match `country` / `state` / `city`).
+    </ParamField>
+    <ParamField body="country" type="string" required>
+      Country ISO 3166-1 alpha-2 code (e.g. `CN`, `US`).
+    </ParamField>
+    <ParamField body="state" type="string" required>
+      State/Province (in English).
+    </ParamField>
+    <ParamField body="city" type="string" required>
+      City (in English).
+    </ParamField>
+    <ParamField body="address_line1" type="string" required>
+      Address line 1 (letters, numbers, spaces, or common address symbols).
+    </ParamField>
+    <ParamField body="address_line2" type="string">
+      Address line 2 (same as above; optional).
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<Note>
+**Important Notes:**
+- Either `card_bin_no` or `package_no` must be provided; if both are empty, error code **1004** is returned.
+- For **physical cards** (`card_type = Physical`), the entire `address_info` object cannot be empty, and all fields including `first_name`, `last_name`, `phone_code`, `phone`, and all address fields are required.
+- For **virtual cards**, `address_info` may be omitted based on business needs; if provided, `postal_code`, `country`, `state`, `city`, and `address_line1` must be included and will be validated.
+- `phone_code` must contain digits only and must not include a `+` sign.
+- Address fields must be in English and conform to the address format of the relevant country.
+</Note>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Response data.
+
+  <Expandable title="data">
+    <ResponseField name="card_no" type="string">Card order number</ResponseField>
+    <ResponseField name="card_unique_no" type="string">Merchant-side unique card number</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/apply \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --data '{
+    "card_bin_no": "",
+    "cardholder_no": "",
+    "package_no": "",
+    "card_type": "Virtual",
+    "card_unique_no": "",
+    "address_info": {
+      "first_name": "",
+      "last_name": "",
+      "phone_code": "86",
+      "phone": "",
+      "postal_code": "",
+      "country": "CN",
+      "state": "",
+      "city": "",
+      "address_line1": "",
+      "address_line2": ""
+    }
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "card_no": "",
+    "card_unique_no": ""
+  }
+}
+```
+
+</ResponseExample>

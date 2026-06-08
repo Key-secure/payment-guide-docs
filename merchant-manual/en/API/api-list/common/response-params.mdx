@@ -1,0 +1,164 @@
+---
+title: Response Parameters
+---
+
+All API responses use a unified JSON structure. The HTTP status code is generally **200**; use the response body's `code` to determine success or failure.
+
+### Response Structure
+
+| **Field Name** | **Type** | **Description** |
+| --- | --- | --- |
+| code | number | Status code. 0 = success; non-0 = failure |
+| msg | string | Description message (multilingual, see notes below) |
+| data | object/array/string | Response data (only returned on success; some interfaces may return an encrypted string) |
+
+### Basic Examples
+
+Success response:
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "access_token": "your_token",
+    "expired_time": 1716393600000
+  }
+}
+```
+
+Failure response:
+
+```json
+{
+  "code": 1003,
+  "msg": "IP address not allowed"
+}
+```
+
+### Multilingual Support
+
+The `msg` field supports multilingual responses, controlled via the `Language` request header:
+
+| **Header Value** | **Response Language** | **Notes** |
+| --- | --- | --- |
+| `zh_CN` | Chinese (Simplified) | Chinese Simplified |
+| `en_US` | English | English |
+| Not provided or other | English (default) | Default English |
+
+Example:
+
+```bash
+curl --request GET \
+     --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/token \
+     --header 'Api-Key: your_api_key' \
+     --header 'Timestamp: 1716307200000' \
+     --header 'Language: zh_CN'
+```
+
+### Special Cases
+
+#### 1. List Interfaces
+
+The `data` of list interfaces is an object containing a `list` array:
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "list": [
+      { "id": "1", "name": "item1" },
+      { "id": "2", "name": "item2" }
+    ]
+  }
+}
+```
+
+#### 2. Card Privacy Information Interface
+
+The response `data` is an encrypted string, which the merchant must decrypt using **MerchantEncryptUtil**:
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": "Base64EncodedEncryptedString..."
+}
+```
+
+After decryption, the following JSON structure is obtained:
+
+```json
+{
+  "card_no": "C202605220001",
+  "card_unique_no": "MERCHANT_CARD_001",
+  "cvv": "123",
+  "pan": "4111111111111111",
+  "exp_year": "2028",
+  "exp_month": "12"
+}
+```
+
+#### 3. Parameter Validation Failure
+
+When parameter validation fails, `msg` is prefixed with the **snake_case field name** in the format `field_name validation message`.
+
+Examples:
+
+- `cardholder_no invalid parameter` — Required field validation failed.
+- `phone_code invalid parameter` — Country code format error or contains a `+` sign.
+- `city only supports English input` — Address field English validation failed.
+- `address_info.city invalid parameter` — Nested object field validation failed.
+
+### HTTP Status Codes
+
+| **HTTP Status Code** | **Description** |
+| --- | --- |
+| 200 | Request succeeded (check `code` field to determine business outcome) |
+| 400 | Request format error or invalid parameters |
+| 401 | Authentication failed (Api-Key / Access-Token invalid) |
+| 403 | Access forbidden (IP not in whitelist, etc.) |
+| 404 | Resource not found |
+| 500 | Server error |
+
+### Error Code Ranges
+
+| **Range** | **Description** |
+| --- | --- |
+| 1xxx | Common exceptions, permission exceptions, authentication exceptions, PCI-related |
+| 2xxx | Member/cardholder-related exceptions |
+| 3xxx | Account and transfer-related exceptions |
+| 4xxx | Card, card transaction, and card privacy-related exceptions |
+
+See "Appendix" → "Error Codes".
+
+### Field Name Conventions
+
+All JSON field names are in **snake_case** (consistent with interface parameters).
+
+Examples:
+
+- `cardholder_no` — Cardholder order number
+- `card_last_no` — Last four digits of card number
+- `total_balance` — Total account balance
+- `consume_no` — Consumption order number
+
+### Timestamp Format
+
+All time fields in responses are **Unix millisecond timestamps** (13 digits). Example:
+
+```json
+{
+  "time": 1716307200000,
+  "expired_time": 1716393600000
+}
+```
+
+Conversion example (JavaScript):
+
+```javascript
+const timestamp = 1716307200000; // milliseconds
+const date = new Date(timestamp);
+console.log(date.toISOString()); // 2024-05-21T12:00:00.000Z
+```

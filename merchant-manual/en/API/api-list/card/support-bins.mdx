@@ -1,0 +1,124 @@
+---
+title: Get Supported Card BINs
+api: POST /open-api/v1/card/support/bins
+authMethod: none
+---
+
+Retrieves the list of supported card BINs (**authorization mode**).
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+## Request Body
+
+<ParamField body="card_bin_no" type="string">
+  Card BIN order number.
+</ParamField>
+
+<ParamField body="page" type="number" default="0">
+  Query page number. Defaults to `0`.
+</ParamField>
+
+<ParamField body="size" type="number" default="10">
+  Number of records per page. Defaults to `10` (max 100).
+</ParamField>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Response data.
+
+  <Expandable title="data">
+    <ResponseField name="list" type="object[]">
+      BIN list.
+
+      <Expandable title="list">
+        <ResponseField name="card_bin_no" type="string">Card BIN order number</ResponseField>
+        <ResponseField name="card_bin" type="string">Card BIN</ResponseField>
+        <ResponseField name="organization" type="string">Card organization</ResponseField>
+        <ResponseField name="support_physical" type="boolean">Whether physical cards are supported (true — supported, false — not supported)</ResponseField>
+        <ResponseField name="support_virtual" type="boolean">Whether virtual cards are supported (true — supported, false — not supported)</ResponseField>
+        <ResponseField name="currencies" type="string[]">Card base currencies</ResponseField>
+
+        <ResponseField name="balance_limit" type="object">
+          Card BIN limit information.
+
+          <Expandable title="balance_limit">
+            <ResponseField name="limit_balance" type="string">Lifetime limit</ResponseField>
+            <ResponseField name="limit_week_balance" type="string">Weekly limit</ResponseField>
+            <ResponseField name="limit_atm_day_balance" type="string">ATM daily limit</ResponseField>
+            <ResponseField name="limit_atm_month_balance" type="string">ATM monthly limit</ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/card/support/bins \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --data '{
+    "card_bin_no": "",
+    "page": 0,
+    "size": 10
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "list": [{
+      "card_bin_no": "",
+      "card_bin": "",
+      "organization": "",
+      "support_physical": true,
+      "support_virtual": true,
+      "currencies": ["USD"],
+      "balance_limit": {
+        "limit_balance": "",
+        "limit_week_balance": "",
+        "limit_atm_day_balance": "",
+        "limit_atm_month_balance": ""
+      }
+    }]
+  }
+}
+```
+
+</ResponseExample>
