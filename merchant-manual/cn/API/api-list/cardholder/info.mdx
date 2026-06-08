@@ -12,7 +12,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required>
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 
@@ -50,8 +50,22 @@ authMethod: none
     <ResponseField name="status" type="string">持卡人状态，见 8.8 持卡人状态</ResponseField>
     <ResponseField name="total_balance" type="string">账户总资产（USD）</ResponseField>
     <ResponseField name="time" type="number">持卡人创建时间（Unix 毫秒）</ResponseField>
-    <ResponseField name="card_list" type="object[]">成功卡列表</ResponseField>
-    <ResponseField name="account_list" type="object[]">账户列表</ResponseField>
+    <ResponseField name="card_list" type="object[]">
+      成功卡列表
+      <Expandable title="card_list">
+        <ResponseField name="card_no" type="string">卡单号</ResponseField>
+        <ResponseField name="card_last_no" type="string">卡号后四位</ResponseField>
+        <ResponseField name="card_type" type="string">卡类型，见 8.3 卡类型</ResponseField>
+        <ResponseField name="time" type="number">建卡时间（Unix 毫秒）</ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="account_list" type="object[]">
+      账户列表
+      <Expandable title="account_list">
+        <ResponseField name="balance" type="string">币种金额</ResponseField>
+        <ResponseField name="usd_balance" type="string">USD 金额</ResponseField>
+      </Expandable>
+    </ResponseField>
   </Expandable>
 </ResponseField>
 
@@ -82,7 +96,7 @@ curl --request GET \
     "total_balance": "1000.00",
     "time": 1716307200000,
     "card_list": [{"card_no": "", "card_last_no": "", "card_type": "Virtual", "time": 1716307200000}],
-    "account_list": [{"symbol": "TUSDT", "symbol_chain": "", "balance": "500.00", "usd_balance": "500.00"}]
+    "account_list": [{"balance": "500.00", "usd_balance": "500.00"}]
   }
 }
 ```

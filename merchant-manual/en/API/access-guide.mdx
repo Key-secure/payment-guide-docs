@@ -2,81 +2,65 @@
 title: Access Guide
 ---
 
-## Integration Mode Guide
+## Integration Mode Overview
 
 ### Credit Extension Mode (CREDIT_EXTENSION)
 
-Cardholder assets, including deposits and withdrawals, complete closed-loop management on the merchant's side. All cardholder funds are managed by the merchant.
+Cardholder's actual assets, including deposits and withdrawals, are managed in a closed loop on the merchant's side. All cardholder funds are managed by the merchant themselves.
 
-Merchants perform fund transfers to complete credit extension and need to recharge reserve funds. When cardholders consume, funds are deducted from the reserve.
+Merchants complete credit extension through fund transfers and need to recharge reserve funds. When cardholders consume, funds are deducted from the reserve.
 
 **Applicable Scenarios:**
 - Merchant manages cardholder funds independently
 - Requires complete account system and transfer functionality
-- Lower real-time requirements
+- Relatively low real-time requirements
 
 ### Authorization Mode (AUTHORIZATION)
 
-Cardholder assets, including deposits and withdrawals, complete closed-loop management on the merchant's side. All cardholder funds are managed by the merchant.
+Cardholder's actual assets, including deposits and withdrawals, are managed in a closed loop on the merchant's side. All cardholder funds are managed by the merchant themselves.
 
-When cardholders consume, KeySecure sends authorization confirmation to the merchant. Merchants must complete authorization confirmation **within one second**, otherwise the transaction fails.
+When cardholders make purchases, KeySecure sends authorization confirmation to the merchant, which must be completed **within 800 milliseconds**, otherwise the transaction fails.
 
 **Applicable Scenarios:**
 - Requires real-time authorization confirmation for transactions
 - High performance requirements
 - Supports multiple card BIN combinations
 
-**Important Note**: High performance requirements for interfaces. Ensure your system can complete authorization response within 1 second.
+**Important Note:** High interface response requirements - ensure your system can complete authorization response within 800 milliseconds.
 
-### Mode Selection Guide
+### Mode Selection Guidelines
 
-| Dimension | Credit Mode | Authorization Mode |
+| Dimension | Credit Extension Mode | Authorization Mode |
 | --- | --- | --- |
 | Fund Management | Merchant managed | Merchant managed |
-| Transaction Confirmation | Asynchronous processing | Real-time auth (≤1 second) |
+| Transaction Confirmation | Fund flow synchronization | Real-time authorization (≤800ms) |
 | System Complexity | Medium (requires account system) | High (requires real-time response) |
 | Package Management | Platform provided | Merchant maintained |
-| Supported Card Types | Specified packages | Multiple BIN support |
 
 ---
 
 ## Pre-Integration Preparation
 
-Complete the following preparation to ensure smooth API integration:
+Complete the following preparations to ensure smooth API integration:
 
 | Item | Description | Responsible Party |
 | --- | --- | --- |
-| **Select Integration Mode** | Confirm credit extension or authorization mode | Merchant |
-| **Apply for Merchant Account** | Contact business team for test environment `Api-Key` and `apiSecret` | Business Team |
-| **Configure IP Whitelist** | Provide server egress IP for configuration in backend | Merchant Backend |
-| **Configure Callback URL** | Configure URL to receive transaction notifications (card changes, consumption orders, authorization notifications, etc.) | Merchant Backend |
-| **Integrate SumSub KYC** | Frontend integrates KYC authentication component for user completion | Merchant Frontend |
-| **Manage Secrets** | Securely manage `apiSecret` for sensitive data encryption/decryption (CVV/PIN) and signature verification | Merchant Backend |
-| **Test Integration** | Complete end-to-end testing in sandbox environment (user authentication → card application → consumption) | Merchant |
+| **Select Integration Mode** | Confirm whether to adopt credit extension or authorization mode | Merchant |
+| **Apply for Merchant Account** | Contact business team for test account and corresponding `Api-Key` and `apiSecret` | Business Team |
+| **IP Whitelist Configuration** | Provide server egress IP, configure to Api-Key corresponding whitelist in backend | Merchant Backend |
+| **Callback URL Configuration** | Configure URL to receive transaction notifications (for card changes, consumption orders, authorization notifications, etc.) | Merchant Backend |
+| **Integrate SumSub KYC** | Frontend integrates KYC authentication component, users complete KYC authentication through Sumsub | Merchant Frontend |
+| **Key Management** | Securely store `apiSecret` for encrypting/decrypting sensitive information (CVV/PIN) and signature verification | Merchant Backend |
+| **Test Integration** | Complete full process testing in sandbox environment (user authentication → card application → consumption, etc.) | Merchant |
 
-### Get API Credentials
+### Complete API Basic Configuration
 
-Contact the business team to obtain:
-
-```
-Api-Key: your_api_key         # For request header authentication
-apiSecret: your_api_secret    # For signature verification and data encryption (keep confidential)
-Webhook Secret: webhook_secret # For callback signature verification
-```
-
-### Configure Callback URL
-
-Configure to receive the following notification types in merchant backend:
-
-- **Card Status Change Notification** — Card status changes (issuance, freeze, delete, etc.)
-- **Consumption Order Notification** — Consumption transaction status (success, failure, refund, etc.)
-- **Authorization Notification (Authorization Mode)** — Real-time authorization confirmation request
 
 ### Environment Information
 
 | Environment | Domain | Description |
 | --- | --- | --- |
 | Sandbox | `https://sandbox-openplatform.keysecure.io` | Test environment for development and integration testing |
-| Production | `https://openplatform.keysecure.io` | Production environment, requires configuration before go-live |
+| Production | `https://openplatform.keysecure.io` | Production environment, requires configuration before merchant goes live |
 
-All examples and curl requests use sandbox domain by default. Replace with production domain for production environment.
+All examples and curl requests default to using sandbox domain. Replace with production domain for production environment.

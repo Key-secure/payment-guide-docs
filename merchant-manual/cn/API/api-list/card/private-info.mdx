@@ -12,7 +12,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required >
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 
@@ -41,8 +41,23 @@ authMethod: none
 </ResponseField>
 
 <ResponseField name="data" type="string">
-  MerchantEncryptUtil 加密后的 JSON 字符串（AES/CBC），解密后含 pan、cvv、exp_year、exp_month 等
+  **AES/ECB/PKCS5Padding + Base64** 加密后的 JSON 字符串。使用商户当前可用 API 凭证的 `apiSecret` 解密后得到以下 JSON 结构：
+
+  <Expandable title="data 解密后的 JSON 结构">
+    <ResponseField name="card_no" type="string">卡单号</ResponseField>
+    <ResponseField name="card_unique_no" type="string">商户侧唯一单号</ResponseField>
+    <ResponseField name="cvv" type="string">CVV</ResponseField>
+    <ResponseField name="pan" type="string">完整卡号（PAN）</ResponseField>
+    <ResponseField name="exp_year" type="string">失效年</ResponseField>
+    <ResponseField name="exp_month" type="string">失效月</ResponseField>
+  </Expandable>
 </ResponseField>
+
+<Note>
+**权限说明：** 需商户开通 PCI（`pci_flag = 1`）方可调用，未开通返回错误码 **1013**。
+
+**解密方式：** 使用商户当前可用 API 凭证的 `apiSecret`，通过 AES/ECB/PKCS5Padding 算法对 `data` 进行 Base64 解码后解密，得到明文 JSON。详见「代码工具类」。
+</Note>
 
 <RequestExample>
 

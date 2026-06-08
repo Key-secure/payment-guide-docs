@@ -4,7 +4,7 @@ title: Business Flow Guide
 
 ## Core Integration Flow
 
-Complete payment card service integration consists of four stages, from user authentication to consumption reconciliation. The following details each stage and corresponding interfaces:
+Complete payment card service integration is divided into four stages, from user authentication to consumption reconciliation. The following details each stage and corresponding interfaces:
 
 ---
 
@@ -15,7 +15,7 @@ Complete payment card service integration consists of four stages, from user aut
 ### Flow Steps
 
 1. **Frontend Integration of SumSub KYC Component** — User completes identity verification
-2. **Initiate Cardholder Authentication** — Call interface to create cardholder and initiate authentication
+2. **Backend Initiates Cardholder Authentication** — Call interface to create cardholder and initiate authentication
 3. **Query Authentication Status** — Get cardholder list or details to confirm authentication passes
 
 ### Related Interfaces
@@ -23,14 +23,14 @@ Complete payment card service integration consists of four stages, from user aut
 | Interface | Method | Path | Description |
 | --- | --- | --- | --- |
 | Get Token | GET | `/open-api/v1/merchant/token` | Get Access-Token, required for all subsequent requests |
-| **Cardholder Authentication Application** | POST | `/open-api/v1/cardholder/apply` | Create cardholder and initiate authentication; after authentication failure, can update authentication info and re-initiate |
+| **Cardholder Authentication Application** | POST | `/open-api/v1/cardholder/apply` | Create cardholder and initiate authentication through this interface; after authentication failure, can update authentication info and re-initiate |
 | Get Cardholder List | POST | `/open-api/v1/cardholder/list` | Get current cardholder list |
-| Get Cardholder Details | GET | `/open-api/v1/cardholder/{cardholder_no}/info` | Get cardholder's card list and assets; can verify authentication status |
+| Get Cardholder Details | GET | `/open-api/v1/cardholder/{cardholder_no}/info` | Get cardholder's card list; can verify authentication status |
 
 ### Typical Flow
 
 ```
-Frontend KYC Authentication 
+Frontend KYC Authentication
     ↓
 [POST /cardholder/apply] Initiate cardholder application
     ↓
@@ -54,7 +54,7 @@ Authentication successful ✓ (Status: Approved)
 
 ## Stage 2: Select Package, Apply for Card, Card Management
 
-**Scenario**: After cardholder authentication passes, user selects card type (virtual/physical) and applies for card.
+**Scenario**: After cardholder authentication passes, user selects card type (virtual/physical) and applies for card, along with card management.
 
 ### Flow Steps
 
@@ -68,16 +68,16 @@ Authentication successful ✓ (Status: Approved)
 
 | Interface | Method | Path | Mode | Description |
 | --- | --- | --- | --- | --- |
-| Get Card Package List | POST | `/open-api/v1/card/package/list` | Credit | Login merchant backend to create card packages; charge based on package when applying |
-| Get Supported Card BIN List | POST | `/open-api/v1/card/support/bins` | Auth | Get supported card BINs for authorization mode; card pricing needs to be maintained by the merchant |
+| Get Card Package List | POST | `/open-api/v1/card/package/list` | Credit | Login merchant backend to create card packages; charge based on corresponding package when applying |
+| Supported Card BIN List | POST | `/open-api/v1/card/support/bins` | Auth | Get supported card BINs for authorization mode; card pricing needs to be maintained by the merchant |
 | **Apply for Card** | POST | `/open-api/v1/card/apply` | Common | Apply for card (pass `package_no` for credit, `card_bin_no` for auth) |
 | Get Card List | POST | `/open-api/v1/card/list` | Common | Get current card list |
 | Get Card Details | GET | `/open-api/v1/card/{card_no}/detail` | Common | Get card details (including rates, fees, etc.) |
-| Get Card Privacy Info | GET | `/open-api/v1/card/{card_no}/private/info` | Common | Get card's CVV, expiry, card number (requires PCI permission) |
+| Get Card Privacy Info | GET | `/open-api/v1/card/{card_no}/private/info` | Common | Get card's CVV, expiry, card number (requires contacting business to enable PCI permission) |
 | **Activate Physical Card** | POST | `/open-api/v1/card/active` | Common | Physical card needs activation after receipt (requires encrypted CVV) |
-| Update Card Status | POST | `/open-api/v1/card/status/update` | Common | Update card usage status (Frozen-freeze / Activated-enable / Delete-delete) |
+| Update Card Status | POST | `/open-api/v1/card/status/update` | Common | Update card usage status (Frozen / Activated / Delete) |
 | Set PIN | POST | `/open-api/v1/card/pin/set` | Common | Set physical card PIN (requires encrypted PIN) |
-| Card Status Change Notification | — | Webhook | Common | Notification when card status changes; also notified for risk control changes |
+| Card Status Change Notification | — | Webhook | Common | Notification when card status changes after applying; also notified for risk control changes |
 
 ### Typical Flow
 
@@ -144,9 +144,9 @@ Physical card: Mailing → User receives card → [POST /card/active] Activate
 | Interface | Method | Path | Description |
 | --- | --- | --- | --- |
 | Reserve Recharge | — | — | Currently no interface available, must manually recharge in merchant backend |
-| **Cardholder Fund Transfer** | POST | `/open-api/v1/account/transfer` | Perform fund transfer when cardholder funds change (top-up or withdrawal); fixed currency TUSDT |
-| Get Cardholder Account Info List | GET | `/open-api/v1/account/{cardholder_no}/info` | Get available assets in cardholder's credit account |
-| Get Account Transfer Flow List | POST | `/open-api/v1/account/transfer/list` | Get cardholder's transfer history |
+| **Cardholder Fund Transfer** | POST | `/open-api/v1/account/transfer` | Perform fund transfer when cardholder funds change (top-up or withdrawal); keep both sides in sync; fixed currency TUSDT |
+| Get Cardholder Account Info List | GET | `/open-api/v1/account/{cardholder_no}/info` | Available assets in cardholder's credit mode account |
+| Get Account Transfer Flow List | POST | `/open-api/v1/account/transfer/list` | Cardholder fund transfer history |
 
 ### Typical Flow
 
@@ -166,8 +166,8 @@ Transfer successful ✓ (returns transfer reference)
 
 | Type | Direction | Description |
 | --- | --- | --- |
-| In | Company → Cardholder | User top-up (merchant account can be negative) |
-| Out | Cardholder → Company | User withdrawal (requires sufficient balance) |
+| In | Company → Cardholder | User top-up (merchant account can go negative) |
+| Out | Cardholder → Company | User withdrawal (requires sufficient balance, otherwise fails) |
 
 ---
 
@@ -211,11 +211,11 @@ Generate billing and reconciliation statement
 | Type | Description |
 | --- | --- |
 | Consumption | Transaction |
-| Atm | ATM withdrawal |
-| Manage_fee | Management fee |
+| Atm | ATM Withdrawal |
+| Manage_fee | Management Fee |
 | Refund | Refund |
-| Reversal | Chargeback/Cancellation |
-| Open_card | Card issuance fee |
+| Reversal | Chargeback/Reversal |
+| Open_card | Card Issuance Fee |
 
 ---
 
@@ -239,7 +239,7 @@ Authorization denied → Transaction fails ✗
 [Webhook Consumption Notification] Final result notification
 ```
 
-**Important**: Authorization mode has high performance requirements. Ensure your system can complete authorization response within 800 ms.
+**Important**: Authorization mode has very high performance requirements. Ensure your system can complete authorization response within 800 ms.
 
 ---
 
@@ -271,7 +271,7 @@ A: Based on the `integration_mode` confirmed with business before integration:
 - `AUTHORIZATION` = Authorization mode
 
 **Q4: Why must authorization mode confirm within 800 milliseconds?**  
-A: Authorization mode settles funds in real-time. Merchants must confirm within 800 milliseconds whether to allow the transaction to ensure smooth trading. Timeout will be treated as transaction rejection.
+A: Authorization mode settles funds in real-time. Merchants must confirm within 800 milliseconds whether to allow the transaction. Timeout defaults to transaction rejection.
 
 **Q5: How are consumption fees calculated?**  
-A: Fee details are in the card package configuration at application time, including consumption rate, fees, exchange rate, etc. See "Constants" section for details.
+A: Fee details are in the card package configuration at application time, including consumption rate, fees, exchange rate, etc. See the "Constants" section for details.

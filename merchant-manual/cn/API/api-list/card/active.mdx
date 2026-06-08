@@ -4,7 +4,14 @@ api: POST /open-api/v1/card/active
 authMethod: none
 ---
 
-实体卡激活。`cvv` 须 AES 加密后传入。
+实体卡激活。卡状态须为 `ToActivate`，激活成功后变为 `Activated`。`cvv` 须使用 **AES/ECB/PKCS5Padding + Base64** 加密后传入，**禁止**在请求体中传输明文 CVV。
+
+<Note>
+- 明文 CVV 须为 **3 位纯数字**
+- `card_last_no` 须与平台记录的卡号后四位一致
+- `cardholder_no` 须与该卡的归属持卡人一致
+- 加密算法详见「代码工具类」章节
+</Note>
 
 ## 请求头
 
@@ -12,7 +19,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required >
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 

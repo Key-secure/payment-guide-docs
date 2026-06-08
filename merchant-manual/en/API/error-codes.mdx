@@ -2,117 +2,98 @@
 title: Error Codes
 ---
 
-Defined in `com.chainup.custody.result.MerchantOpenApiResultCode` (1xxx～4xxx), isolated from internal `ApiResultCode` (6 digits).
-
 <Note>
 - HTTP status code is generally **200**. Judge business success/failure through response body `code`; `code = 0` means success, non-zero means failure.
-- **Multi-language**: `msg` prioritizes `config_language` corresponding `languageKey`; request header `Language` controls Chinese/English (e.g., `zh_CN` / `en_US`).
-- **Field placeholder**: Text containing `%s` is injected with field names by `MerchantResultUtil`; multiple fields concatenated with `, ` (e.g., `card_bin_no, package_no Invalid request parameter`).
-- Parameter error codes **1004, 2007～2010, 4010**, etc. include **snake_case field name** before/after description.
+- **Multi-language**: Request header `Language` controls Chinese/English (e.g., `zh_CN` / `en_US`).
+- Parameter error codes **1004, 2007–2010, 4010**, etc. include **snake_case field name** before/after description.
 </Note>
 
 ## Error Code Ranges
 
-| code | Description (English) | Description (Chinese) |
-| ---- | -------- | -------- |
-| 0 | Success | 成功 |
-| 1xxx | Common, auth, and PCI errors | 公共异常、权限异常、鉴权异常、PCI 相关 |
-| 2xxx | Cardholder errors | 会员/持卡人相关异常 |
-| 3xxx | Account and transfer errors | 账户、划转相关异常 |
-| 4xxx | Card, transaction, and privacy errors | 卡、卡交易、卡隐私相关异常 |
+| code | Description |
+| ---- | -------- |
+| 0 | Success |
+| 1xxx | Common, auth, and PCI errors |
+| 2xxx | Cardholder errors |
+| 3xxx | Account and transfer errors |
+| 4xxx | Card, transaction, and privacy errors |
 
 ## 9.1 Common / Auth / PCI (1xxx)
 
-| code | Description | 中文描述 |
-| ---- | -------- | -------- |
-| 1001 | System error, please try again later | 系统开小差了 |
-| 1002 | Api-Key is required | Api-Key 不能为空 |
-| 1003 | IP address not allowed | IP 地址不正确 |
-| 1004 | {field} Invalid request parameter | {field} 请求参数不合法 |
-| 1005 | Timestamp invalid or expired | 时间戳已失效 |
-| 1006 | Access-Token is required | Access-Token 不能为空 |
-| 1007 | Access-Token invalid or expired | Access-Token 已失效 |
-| 1008 | Api-Key does not exist | Api-Key 不存在 |
-| 1009 | Operation too frequent, please try again later | 操作频繁，请稍后重试 |
-| 1010 | Api-Key is not enabled | Api-Key 未启用 |
-| 1011 | Api-Key has expired | Api-Key 已过期 |
-| 1012 | Merchant integration mode not supported | 商户对接模式不支持 |
-| 1013 | PCI sensitive card display is not enabled | 未开通 PCI 敏感卡展示能力 |
-| 1014 | Client-Access-Token invalid or already used | Client-Access-Token 无效或已使用 |
-| 1015 | Parent page Origin not in whitelist | 父页 Origin 不在报备白名单 |
-| 1016 | Request Origin does not match hosted configuration | 请求 Origin 与托管配置不一致 |
-| 1017 | Request replay or nonce already used | 请求重放或 nonce 已使用 |
-| 1018 | Sec-Fetch validation failed | Sec-Fetch 校验未通过 |
-| 1019 | Query end time must be after start time | 结束时间不能小于开始时间 |
-| 1020 | Query time range exceeds the allowed limit | 查询时间间隔超过限制阈值 |
-| 1021 | Merchant does not exist | 商户不存在 |
-| 1022 | Merchant status is abnormal, please contact administrator | 商户状态异常，请联系管理员 |
+| code | Description |
+| ---- | -------- |
+| 1001 | System error, please try again later |
+| 1002 | Api-Key is required |
+| 1003 | IP address not allowed |
+| 1004 | Invalid request parameter |
+| 1005 | Timestamp invalid or expired |
+| 1006 | Access-Token is required |
+| 1007 | Access-Token invalid or expired |
+| 1008 | Api-Key does not exist |
+| 1009 | Operation too frequent, please try again later |
+| 1010 | Api-Key is not enabled |
+| 1011 | Api-Key has expired |
+| 1012 | Merchant integration mode not supported |
+| 1013 | PCI sensitive card display is not enabled |
+| 1014 | Client-Access-Token invalid or already used |
+| 1015 | Parent page Origin not in whitelist |
+| 1016 | Request Origin does not match hosted configuration |
+| 1017 | Request replay or nonce already used |
+| 1018 | Sec-Fetch validation failed |
+| 1019 | Query end time must be after start time |
+| 1020 | Query time range exceeds the allowed limit |
+| 1021 | Merchant does not exist |
+| 1022 | Merchant status is abnormal, please contact administrator |
 
 ## 9.2 Cardholder (2xxx)
 
-| code | Description | 中文描述 |
-| ---- | -------- | -------- |
-| 2001 | Cardholder already exists | 持卡人已存在 |
-| 2002 | Cardholder does not exist | 持卡人不存在 |
-| 2003 | Cardholder already verified | 持卡人已认证成功 |
-| 2004 | Cardholder has a pending verification | 持卡人存在进行中的认证 |
-| 2005 | Cardholder verification failed | 持卡人认证信息未通过 |
-| 2006 | Failed to retrieve cardholder KYC information | 持卡人 KYC 信息获取失败 |
-| 2007 | {field} Please use English letters, numbers, spaces, or common address symbols (e.g. - / #). | {field} 请使用英文字母、数字、空格或常用地址符号填写 |
-| 2008 | {field} Only English is supported | {field} 仅支持使用英文填写 |
-| 2009 | {field} Country is not supported | {field} 国家不支持 |
-| 2010 | {field} The postal code does not match the selected address (state/province, city) | {field} 您填写的邮编与所选地址不匹配 |
-| 2011 | Cardholder unique number mismatch | 持卡人对应唯一编码不一致 |
+| code | Description |
+| ---- | -------- |
+| 2001 | Cardholder already exists |
+| 2002 | Cardholder does not exist |
+| 2003 | Cardholder already verified |
+| 2004 | Cardholder has a pending verification |
+| 2005 | Cardholder verification failed |
+| 2006 | Failed to retrieve cardholder KYC information |
+| 2007 | Please use English letters, numbers, spaces, or common address symbols (e.g. - / #). |
+| 2008 | Only English is supported |
+| 2009 | Country is not supported |
+| 2010 | The postal code does not match the selected address (state/province, city) |
+| 2011 | Cardholder unique number mismatch |
 
 ## 9.3 Account / Transfer (3xxx)
 
-| code | Description | 中文描述 |
-| ---- | -------- | -------- |
-| 3001 | Currency not supported by merchant | 商户不支持该币种 |
-| 3002 | Insufficient cardholder account balance | 持卡人账户余额不足 |
-| 3003 | Currency chain mismatch | 币种主链不匹配 |
-| 3004 | Transfer reference number already exists | 划转流水号已存在 |
-| 3005 | Invalid transfer amount format or precision | 划转金额格式或精度不合法 |
-| 3006 | Invalid transfer type | 划转类型不合法 |
-| 3007 | Insufficient merchant account balance | 商户账户余额不足 |
-| 3008 | Insufficient account balance | 账户余额不足 |
+| code | Description |
+| ---- | -------- |
+| 3001 | Currency not supported by merchant |
+| 3002 | Insufficient cardholder account balance |
+| 3003 | Currency chain mismatch |
+| 3004 | Transfer reference number already exists |
+| 3005 | Invalid transfer amount format or precision |
+| 3006 | Invalid transfer type |
+| 3007 | Insufficient merchant account balance |
+| 3008 | Insufficient account balance |
 
 ## 9.4 Card / Consumption / PIN / Privacy (4xxx)
 
-| code | Description | 中文描述 |
-| ---- | -------- | -------- |
-| 4001 | Card BIN not available | 卡 Bin 不可用 |
-| 4002 | Card package not found | 卡套餐不存在 |
-| 4003 | Merchant card unique number already exists | 商户卡唯一号已存在 |
-| 4004 | Card does not exist | 卡不存在 |
-| 4005 | Card status does not allow this operation | 当前卡状态不允许此操作 |
-| 4006 | Card issuance limit reached | 开卡数量已达上限 |
-| 4007 | Card provider operation failed | 卡商操作失败 |
-| 4008 | Physical card activation must be completed in merchant app | 实体卡激活请使用商户 App 完成 |
-| 4009 | Card transaction record not found | 卡消费记录不存在 |
-| 4010 | {field} Physical card billing address cannot be empty | {field} 实体卡账单地址信息不能为空 |
-| 4011 | Country not supported for this card application | 当前申请卡不支持此国家 |
-| 4012 | Card information not found | 卡信息不存在 |
-| 4013 | Card status not supported | 卡信息状态不支持 |
-| 4014 | Card activation not supported | 当前卡不支持激活 |
-| 4015 | PIN decryption failed, check encryption method and key | PIN 码解密失败，请检查加密方式与密钥 |
-| 4016 | Invalid PIN format. Must be 6 digits without three identical or consecutive digits (e.g. 111111, 123456, 654321). | PIN 码格式不正确，须为 6 位数字，且不可含三位相同或连续数字 |
-| 4017 | Not a physical card, PIN setting not supported | 该卡不是实体卡，不支持设置 PIN 码 |
-| 4018 | No available API credential found | 未找到可用的 API 凭证 |
-| 4019 | CVV decryption failed, check encryption method and key | CVV 解密失败，请检查加密方式与密钥 |
-
-## 9.5 Error Code and LanguageKey Reference (Excerpt)
-
-See source code `MerchantOpenApiResultCode` for complete list; table below shows items with `%s` placeholders or recent i18n updates.
-
-| code | languageKey | Description (English) |
-| ---- | ----------- | ---------------------------------- |
-| 1004 | result.open.merchant.param.invalid | %s Invalid request parameter |
-| 2007 | result.open.merchant.card.address.error | %s Please use English letters, numbers, spaces, or common address symbols |
-| 2008 | result.open.merchant.card.name.error | %s Only English is supported |
-| 2009 | result.open.merchant.card.country.not.support | %s Country is not supported |
-| 2010 | result.open.merchant.card.postal.code.not.match | %s The postal code does not match the selected address |
-| 4010 | result.open.merchant.card.apply.address.not.empty | %s Physical card billing address cannot be empty |
-| 4015 | result.open.merchant.card.pin.decrypt.error | PIN decryption failed, check encryption method and key |
-| 4016 | result.open.merchant.card.pin.format.error | Invalid PIN format. Must be 6 digits… (see 9.4) |
-| 4019 | result.open.merchant.card.cvv.decrypt.error | CVV decryption failed, check encryption method and key |
+| code | Description |
+| ---- | -------- |
+| 4001 | Card BIN not available |
+| 4002 | Card package not found |
+| 4003 | Merchant card unique number already exists |
+| 4004 | Card does not exist |
+| 4005 | Card status does not allow this operation |
+| 4006 | Card issuance limit reached |
+| 4007 | Card provider operation failed |
+| 4008 | Physical card activation must be completed in merchant app |
+| 4009 | Card transaction record not found |
+| 4010 | Physical card billing address cannot be empty |
+| 4011 | Country not supported for this card application |
+| 4012 | Card information not found |
+| 4013 | Card status not supported |
+| 4014 | Card activation not supported |
+| 4015 | PIN decryption failed, check encryption method and key |
+| 4016 | Invalid PIN format. Must be 6 digits without three identical or consecutive digits (e.g. 111111, 123456, 654321). |
+| 4017 | Not a physical card, PIN setting not supported |
+| 4018 | No available API credential found |
+| 4019 | CVV decryption failed, check encryption method and key |

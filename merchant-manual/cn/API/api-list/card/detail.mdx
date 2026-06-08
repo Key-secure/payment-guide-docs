@@ -12,7 +12,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required >
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 
@@ -50,11 +50,38 @@ authMethod: none
     <ResponseField name="card_name" type="string">卡别名</ResponseField>
     <ResponseField name="package_name_en" type="string">卡套餐英文名称</ResponseField>
     <ResponseField name="package_name_cn" type="string">卡套餐中文名称</ResponseField>
-    <ResponseField name="card_type" type="string">卡类型，见 8.3 卡类型</ResponseField>
+    <ResponseField name="card_type" type="string">卡类型，见 【附录-常量表】卡类型</ResponseField>
     <ResponseField name="organization" type="string">卡组织</ResponseField>
     <ResponseField name="card_last_no" type="string">卡号后四位</ResponseField>
-    <ResponseField name="fee_detail" type="object">费用详情（开卡时快照，不含 open_cost）</ResponseField>
-    <ResponseField name="status" type="string">状态，见 8.2 卡状态</ResponseField>
+    <ResponseField name="fee_detail" type="object">
+      费用详情
+
+      <Expandable title="fee_detail">
+        <ResponseField name="consume_rate" type="string">消费费率</ResponseField>
+        <ResponseField name="open_cost" type="string">开卡成本</ResponseField>
+        <ResponseField name="cross_consume_rate" type="string">跨境消费费率</ResponseField>
+        <ResponseField name="small_consume_threshold" type="string">小额消费阈值</ResponseField>
+        <ResponseField name="small_consume_deduct" type="string">小额消费额外扣除</ResponseField>
+        <ResponseField name="free_small_consume_count" type="number">免小额次数</ResponseField>
+        <ResponseField name="free_small_excuse_type" type="string">小额消费免除周期类型，见【附录-常量表】免除类型</ResponseField>
+        <ResponseField name="free_small_excuse_days" type="number">小额消费免除周期时长</ResponseField>
+        <ResponseField name="refund_rate" type="string">退款费率</ResponseField>
+        <ResponseField name="consume_cancle_fee" type="string">交易取消费用</ResponseField>
+        <ResponseField name="consume_cancel_threshold" type="string">交易取消费用阈值</ResponseField>
+        <ResponseField name="decline_fee" type="string">拒付费</ResponseField>
+        <ResponseField name="decline_fee_free_count" type="number">免除拒付手续费次数</ResponseField>
+        <ResponseField name="decline_fee_free_type" type="string">免除拒付手续费周期类型，见【附录-常量表】免除类型</ResponseField>
+        <ResponseField name="decline_fee_free_days" type="number">免除拒付手续费周期时长</ResponseField>
+        <ResponseField name="atm_rate" type="string">ATM 提现手续费费率（实体卡有值）</ResponseField>
+        <ResponseField name="atm_min_fee" type="string">ATM 提现最小手续费（实体卡有值）</ResponseField>
+        <ResponseField name="apple_pay_fee" type="string">Apple Pay 费率（部分卡 BIN 有值）</ResponseField>
+        <ResponseField name="manage_fee_type" type="string">管理费类型，见 【附录-常量表】管理费类型（部分卡 BIN 有值）</ResponseField>
+        <ResponseField name="manage_fee" type="string">管理费用（部分卡 BIN 有值）</ResponseField>
+        <ResponseField name="management_fee_free_type" type="string">管理费免除收取方式，见 【附录-常量表】管理费免除方式（部分卡 BIN 有值）</ResponseField>
+        <ResponseField name="free_management_fee_threshold" type="string">管理费免除阈值（Amount→金额阈值；Count→笔数阈值；部分卡 BIN 有值）</ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="status" type="string">状态，见【附录-常量表】通用状态</ResponseField>
     <ResponseField name="time" type="number">开卡时间（Unix 毫秒）</ResponseField>
   </Expandable>
 </ResponseField>
@@ -83,9 +110,37 @@ curl --request GET \
     "card_unique_no": "",
     "cardholder_no": "",
     "card_name": "",
-    "card_type": "Virtual",
-    "status": "Activated",
-    "time": 1716307200000
+    "package_name_en": "",
+    "package_name_cn": "",
+    "card_type": "",
+    "organization": "",
+    "card_last_no": "",
+    "fee_detail": {
+      "consume_rate": "",
+      "open_cost": "",
+      "cross_consume_rate": "",
+      "small_consume_threshold": "",
+      "small_consume_deduct": "",
+      "free_small_consume_count": 0,
+      "free_small_excuse_type": "",
+      "free_small_excuse_days": 0,
+      "refund_rate": "",
+      "consume_cancle_fee": "",
+      "consume_cancel_threshold": "",
+      "decline_fee": "",
+      "decline_fee_free_count": 0,
+      "decline_fee_free_type": "",
+      "decline_fee_free_days": 0,
+      "atm_rate": "",
+      "atm_min_fee": "",
+      "apple_pay_fee": "",
+      "manage_fee_type": "",
+      "manage_fee": "",
+      "management_fee_free_type": "",
+      "free_management_fee_threshold": ""
+    },
+    "status": "",
+    "time": 0
   }
 }
 ```

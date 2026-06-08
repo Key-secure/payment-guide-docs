@@ -3,82 +3,124 @@ title: 消费订单通知
 playground: none
 ---
 
-消费交易创建、状态变更时平台主动推送至商户回调地址。
+平台在消费交易创建、状态变更，或手续费与商户信息补全后，会 POST 至合作方配置的回调 URL。
 
 <Note>
 - 请求体结构：`{ "id": "...", "action": "...", "data": { ... } }`。
-- `fee_detail` 字段名与查询接口的 `fee_list` 不同，且 `fee_type` 为 8.5 枚举。
+- `action` 见 【附录-常量表】 推送动作。
+- 商户须返回 `{ "code": 0, "message": "" }`；`code ≠ 0` 时平台按策略重试。
 </Note>
 
 ## 触发场景
 
-- 消费交易创建、状态变更（成功 / 失败 / 撤销 / 退款）
-- 手续费拆分、商户信息补全后推送
-
-## 请求头
-
-<ParamField header="Timestamp" type="string" required>
-  Unix 时间戳（毫秒）
-</ParamField>
-
-<ParamField header="Signature" type="string" required>
-  签名值，对 `data` 对象签名，见接入指引
-</ParamField>
-
-<ParamField header="Sign-Version" type="string" default="V1">
-  签名算法版本，默认 V1
-</ParamField>
-
-<ParamField header="Timezone" type="string" default="UTC+8">
-  时区，默认 UTC+8
-</ParamField>
-
-<ParamField header="Content-Type" type="string" default="application/json">
-  固定为 `application/json`
-</ParamField>
+- 消费交易创建、交易状态变更（成功 / 失败 / 撤销 / 退款）。
+- 手续费拆分、商户信息补全后，主动推送至合作方回调地址。
 
 ## 推送参数
 
 <ParamField body="id" type="string" required>
-  推送 ID
+  推送 ID。
 </ParamField>
 
 <ParamField body="action" type="string" required>
-  推送动作，见 8.6（Consumption）
+  推送动作，见【附录-常量表】 推送动作。
 </ParamField>
 
 <ParamField body="data" type="object" required>
-  推送数据（含 consume_no、fee_detail、merchant_info 等）
+  推送数据。
 </ParamField>
 
-## 商户应答
+### data 字段
 
-<ResponseField name="code" type="number" required>
-  状态码，`0` 表示成功
-</ResponseField>
+<ResponseField name="consume_no" type="string">消费单号</ResponseField>
+<ResponseField name="consume_relate_no" type="string">消费关联单号</ResponseField>
+<ResponseField name="card_no" type="string">卡单号</ResponseField>
+<ResponseField name="cardholder_no" type="string">持卡人单号</ResponseField>
+<ResponseField name="type" type="string">消费类型，见 【附录-常量表】 消费类型</ResponseField>
+<ResponseField name="amount" type="number">消费金额（BigDecimal）</ResponseField>
+<ResponseField name="local_amount" type="number">原始金额</ResponseField>
+<ResponseField name="local_currency" type="string">原始币种</ResponseField>
+<ResponseField name="fee" type="number">费用合计（`fee_detail` 各 `amount` 之和）</ResponseField>
+<ResponseField name="remark" type="string">备注（来自消费扩展信息）</ResponseField>
+<ResponseField name="detail" type="string">描述（来自消费扩展信息）</ResponseField>
+<ResponseField name="fee_detail" type="array">费用详情列表（字段名为 `fee_detail`，非 `fee_list`）</ResponseField>
+<ResponseField name="merchant_info" type="object">商户信息</ResponseField>
+<ResponseField name="status" type="string">状态，见【附录-常量表】 通用状态</ResponseField>
+<ResponseField name="time" type="number">消费更新时间（Unix 毫秒，取记录 `mtime`）</ResponseField>
 
-<ResponseField name="message" type="string">
-  失败原因，失败时必填
-</ResponseField>
+### fee_detail 字段
+
+<ResponseField name="fee_type" type="string">费用类型，见 【附录-常量表】 手续费类型</ResponseField>
+<ResponseField name="amount" type="number">费用金额</ResponseField>
+
+<Note>
+**费用明细按对接模式区分：**
+- **授信模式**：`Consume_fee`、`Exchange_fee`、`Atm_fee` / `Apple_auth_fee`、`Small_fee`、`Decline_fee`（金额大于 0 才推送）。
+- **授权模式**：备付金侧费用，含 `Consume_fee`、`Exchange_fee`、`Apple_auth_fee`、`Atm_fee`、`Small_fee`、`Refund_fee`、`Cancel_fee`。
+</Note>
+
+### merchant_info 字段
+
+<ResponseField name="merchant_name" type="string">商户名称</ResponseField>
+<ResponseField name="merchant_mcc" type="string">商户 MCC</ResponseField>
+<ResponseField name="merchant_mcc_category" type="string">MCC 分类</ResponseField>
+<ResponseField name="city" type="string">商户城市</ResponseField>
+<ResponseField name="country" type="string">商户国家</ResponseField>
+<ResponseField name="state" type="string">州/省</ResponseField>
+<ResponseField name="zipcode" type="string">邮编</ResponseField>
+<ResponseField name="mid" type="string">商户 MID</ResponseField>
 
 <RequestExample>
 
 ```json Request
 {
   "id": "",
-  "action": "Consumption",
+  "action": "",
   "data": {
     "consume_no": "",
+    "consume_relate_no": "",
     "card_no": "",
-    "type": "Consumption",
-    "amount": 100.00,
-    "status": "Success",
-    "time": 1716307200000
+    "cardholder_no": "",
+    "type": "",
+    "amount": 0,
+    "local_amount": 0,
+    "local_currency": "",
+    "remark": "",
+    "detail": "",
+    "fee": 0,
+    "fee_detail": [
+      {
+        "fee_type": "",
+        "amount": 0
+      }
+    ],
+    "merchant_info": {
+      "merchant_name": "",
+      "merchant_mcc": "",
+      "merchant_mcc_category": "",
+      "city": "",
+      "country": "",
+      "state": "",
+      "zipcode": "",
+      "mid": ""
+    },
+    "status": "",
+    "time": 0
   }
 }
 ```
 
 </RequestExample>
+
+## 商户应答
+
+<ResponseField name="code" type="number" required>
+  code 码，`0` 表示成功。
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  失败原因，失败时必填。
+</ResponseField>
 
 <ResponseExample>
 

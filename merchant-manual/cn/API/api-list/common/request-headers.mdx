@@ -2,8 +2,6 @@
 title: 请求头参数
 ---
 
-## 请求头参数
-
 所有 API 请求均需在 HTTP 请求头中携带以下参数（除特殊说明外）：
 
 | **字段名** | **描述** | **必填** | **说明** |
@@ -11,7 +9,7 @@ title: 请求头参数
 | Api-Key | apiKey（商户凭证，与 IP 白名单绑定） | 是* | 除获取 Token 外必填；获取 Token 仅需此项 |
 | Timestamp | Unix 时间戳（毫秒） | 是* | 与服务器时间差须在 **60 秒**内，且**不接受未来时间戳** |
 | Access-Token | 登录标识 | 是* | 除获取 Token 外必填；**不接受未来时间戳**时返回 **1005** |
-| Signature | 签名值 | 否 | **平台→商户回调**时使用，见第 10 章 |
+| Signature | 签名值 | 否 | **平台→商户回调**时使用 |
 | Sign-Version | 签名算法版本 | 否 | 默认 V1（回调时使用） |
 | Timezone | 时区 | 否 | 默认 UTC+8，影响列表查询时间边界 |
 | Language | 响应 `msg` 语言 | 否 | 如 `zh_CN` / `en_US`；影响错误码多语言 |
@@ -21,7 +19,7 @@ title: 请求头参数
 
 #### 认证模式
 
-- **获取 Token**（2.1）：仅需 `Api-Key` + `Timestamp`，无需 `Access-Token`
+- **获取 Token**：仅需 `Api-Key` + `Timestamp`，无需 `Access-Token`
 - **其他接口**：均需 `Api-Key` + `Timestamp` + `Access-Token`
 
 #### 时间校验

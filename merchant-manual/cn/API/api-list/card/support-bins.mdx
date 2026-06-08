@@ -12,7 +12,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required >
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 
@@ -53,7 +53,27 @@ authMethod: none
 
   <Expandable title="data">
     <ResponseField name="list" type="object[]">
-      BIN 列表（含 balance_limit 等字段）
+      BIN 列表
+
+      <Expandable title="list">
+        <ResponseField name="card_bin_no" type="string">卡 BIN 单号</ResponseField>
+        <ResponseField name="card_bin" type="string">卡 BIN</ResponseField>
+        <ResponseField name="organization" type="string">卡组织</ResponseField>
+        <ResponseField name="support_physical" type="boolean">是否支持实体卡（true-支持，false-不支持）</ResponseField>
+        <ResponseField name="support_virtual" type="boolean">是否支持虚拟卡（true-支持，false-不支持）</ResponseField>
+        <ResponseField name="currencies" type="string[]">卡基础币种</ResponseField>
+
+        <ResponseField name="balance_limit" type="object">
+          卡 BIN 限额信息
+
+          <Expandable title="balance_limit">
+            <ResponseField name="limit_balance" type="string">终身限额</ResponseField>
+            <ResponseField name="limit_week_balance" type="string">每周限额</ResponseField>
+            <ResponseField name="limit_atm_day_balance" type="string">ATM 每天限额</ResponseField>
+            <ResponseField name="limit_atm_month_balance" type="string">ATM 每月限额</ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
     </ResponseField>
   </Expandable>
 </ResponseField>
@@ -89,7 +109,13 @@ curl --request POST \
       "organization": "",
       "support_physical": true,
       "support_virtual": true,
-      "currencies": ["USD"]
+      "currencies": ["USD"],
+      "balance_limit": {
+        "limit_balance": "",
+        "limit_week_balance": "",
+        "limit_atm_day_balance": "",
+        "limit_atm_month_balance": ""
+      }
     }]
   }
 }

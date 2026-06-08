@@ -12,7 +12,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required >
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 
@@ -48,14 +48,30 @@ authMethod: none
     <ResponseField name="consume_relate_no" type="string">消费关联单号</ResponseField>
     <ResponseField name="card_no" type="string">卡单号</ResponseField>
     <ResponseField name="cardholder_no" type="string">持卡人单号</ResponseField>
-    <ResponseField name="type" type="string">消费类型，见 8.4 消费类型</ResponseField>
+    <ResponseField name="type" type="string">消费类型，见【附录-常量表】</ResponseField>
     <ResponseField name="amount" type="string">金额</ResponseField>
     <ResponseField name="local_amount" type="string">原始金额</ResponseField>
     <ResponseField name="local_currency" type="string">原始币种</ResponseField>
-    <ResponseField name="fee" type="string">用户侧费用合计</ResponseField>
-    <ResponseField name="fee_list" type="object[]">费用明细（固定 3 项）</ResponseField>
-    <ResponseField name="merchant_info" type="object">商户信息</ResponseField>
-    <ResponseField name="status" type="string">状态，见 8.1 通用状态</ResponseField>
+    <ResponseField name="fee" type="string">费用（fee_list 之和）</ResponseField>
+    <ResponseField name="fee_list" type="object[]">
+      费用详情列表
+
+      <Expandable title="fee_list">
+        <ResponseField name="fee_type" type="string">费用类型，见【附录-常量表】</ResponseField>
+        <ResponseField name="amount" type="string">费用金额</ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="merchant_info" type="object">
+      商户信息
+
+      <Expandable title="merchant_info">
+        <ResponseField name="merchant_name" type="string">商户名称</ResponseField>
+        <ResponseField name="merchant_mcc" type="string">商户 MCC</ResponseField>
+        <ResponseField name="city" type="string">商户城市</ResponseField>
+        <ResponseField name="country" type="string">商户国家</ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="status" type="string">状态，见 【附录-常量表】通用状态</ResponseField>
     <ResponseField name="time" type="number">消费时间（Unix 毫秒）</ResponseField>
   </Expandable>
 </ResponseField>

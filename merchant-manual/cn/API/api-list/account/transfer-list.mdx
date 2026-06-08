@@ -12,7 +12,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required >
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 
@@ -83,7 +83,7 @@ authMethod: none
         <ResponseField name="before_balance" type="string">划转前金额</ResponseField>
         <ResponseField name="after_balance" type="string">划转后金额</ResponseField>
         <ResponseField name="balance" type="string">划转金额</ResponseField>
-        <ResponseField name="status" type="string">划转状态，见 8.1 通用状态</ResponseField>
+        <ResponseField name="status" type="string">划转状态，见 [常量表]通用状态</ResponseField>
         <ResponseField name="time" type="number">划转时间（Unix 毫秒）</ResponseField>
       </Expandable>
     </ResponseField>

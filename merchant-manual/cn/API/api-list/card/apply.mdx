@@ -12,7 +12,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required >
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 
@@ -48,7 +48,49 @@ authMethod: none
 
 <ParamField body="address_info" type="object">
   地址信息（实体卡、部分虚拟卡必填）
+
+  <Expandable title="address_info">
+    <ParamField body="first_name" type="string">
+      名（英文，实体卡必填）
+    </ParamField>
+    <ParamField body="last_name" type="string">
+      姓（英文，实体卡必填）
+    </ParamField>
+    <ParamField body="phone_code" type="string">
+      手机号国别码（**纯数字，不含 `+` 号**，如 `86` 表示中国大陆；须为平台支持的有效国别码，实体卡必填）
+    </ParamField>
+    <ParamField body="phone" type="string">
+      手机号（不含国别码，与 `phone_code` 组合校验，实体卡必填）
+    </ParamField>
+    <ParamField body="postal_code" type="string" required>
+      邮编（须与 `country` / `state` / `city` 匹配）
+    </ParamField>
+    <ParamField body="country" type="string" required>
+      国家 ISO 3166-1 alpha-2（如 `CN`、`US`）
+    </ParamField>
+    <ParamField body="state" type="string" required>
+      省/州（英文）
+    </ParamField>
+    <ParamField body="city" type="string" required>
+      城市（英文）
+    </ParamField>
+    <ParamField body="address_line1" type="string" required>
+      地址1（英文字母、数字、空格或常用地址符号）
+    </ParamField>
+    <ParamField body="address_line2" type="string">
+      地址2（同上，可空）
+    </ParamField>
+  </Expandable>
 </ParamField>
+
+<Note>
+**重要说明：**
+- `card_bin_no` 与 `package_no` 至少传一个；两者均为空时返回错误码 **1004**
+- **实体卡**（`card_type = Physical`）时 `address_info` 整体不能为空，且 `first_name`、`last_name`、`phone_code`、`phone` 及所有地址字段均必填
+- **虚拟卡**可按业务需要省略 `address_info`，若传入则必须包含 `postal_code`、`country`、`state`、`city`、`address_line1` 并参与校验
+- `phone_code` 为纯数字，不得含 `+` 号
+- 地址字段须使用英文填写，并符合所在国家的地址格式
+</Note>
 
 ## 返回参数
 
@@ -80,10 +122,22 @@ curl --request POST \
   --header 'Access-Token: your_access_token' \
   --data '{
     "card_bin_no": "",
-    "cardholder_no": "U202605220001",
-    "package_no": "PKG202605220001",
+    "cardholder_no": "",
+    "package_no": "",
     "card_type": "Virtual",
-    "card_unique_no": "MERCHANT_CARD_001"
+    "card_unique_no": "",
+    "address_info": {
+      "first_name": "",
+      "last_name": "",
+      "phone_code": "86",
+      "phone": "",
+      "postal_code": "",
+      "country": "CN",
+      "state": "",
+      "city": "",
+      "address_line1": "",
+      "address_line2": ""
+    }
   }'
 ```
 

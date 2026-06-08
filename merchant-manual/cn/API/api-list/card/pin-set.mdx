@@ -4,7 +4,14 @@ api: POST /open-api/v1/card/pin/set
 authMethod: none
 ---
 
-设置实体卡 PIN。`pin` 须 AES 加密后传入。
+设置实体卡 PIN 码。仅支持**实体卡**（Physical），卡状态须为正常（`Activated`）。`pin` 须使用 **AES/ECB/PKCS5Padding + Base64** 加密后传入。
+
+<Note>
+- 仅支持实体卡（`card_type = Physical`），虚拟卡调用返回 **4017**
+- 明文 PIN 须为 **6 位纯数字**，且不可含三位及以上相同或连续数字（如 `111111`、`123456`），否则返回 **4016**
+- 卡状态须为 `Activated`，否则返回 **4005**
+- 加密算法详见「代码工具类」章节
+</Note>
 
 ## 请求头
 
@@ -12,7 +19,7 @@ authMethod: none
   apiKey（商户凭证，与 IP 白名单绑定）
 </ParamField>
 
-<ParamField header="Timestamp" type="string" required default="1716307200000">
+<ParamField header="Timestamp" type="string" required >
   Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
 </ParamField>
 

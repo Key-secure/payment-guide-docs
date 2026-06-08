@@ -2,19 +2,17 @@
 title: Constants
 ---
 
-Enumerations defined in `com.chainup.custody.enums.api` package. Values displayed in open API match enumeration **name** (JSON fields are snake_case via framework serialization; enumeration names in **code** column below).
-
-## 8.1 Common Status (ApiCommonStatusEnum)
+## 8.1 Common Status
 
 Used for transfer flow, consumption records, and other common business statuses.
 
-| code | Description | Internal Status Code |
-| ---- | ---- | ---------- |
-| Pending | In progress | 1000 |
-| Success | Successful | 2000 |
-| Fail | Failed | 3000 |
+| code | Description |
+| ---- | ---- |
+| Pending | In progress |
+| Success | Successful |
+| Fail | Failed |
 
-## 8.2 Card Status (ApiCardStatusEnum)
+## 8.2 Card Status
 
 Used in card list, card details, and update card status interfaces' `status` field.
 
@@ -31,14 +29,14 @@ Used in card list, card details, and update card status interfaces' `status` fie
 Update card status interface only allows passing: `Activated`, `Frozen`, `Delete`.
 </Note>
 
-## 8.3 Card Type (ApiCardTypeEnum)
+## 8.3 Card Type
 
-| code | Description | Internal Type |
-| ---- | ---- | -------- |
-| Virtual | Virtual Card | 1 |
-| Physical | Physical Card | 2 |
+| code | Description |
+| ---- | ---- |
+| Virtual | Virtual Card |
+| Physical | Physical Card |
 
-## 8.4 Consumption Type (ApiConsumeTypeEnum)
+## 8.4 Consumption Type
 
 | code | Description |
 | ---- | ---- |
@@ -49,7 +47,7 @@ Update card status interface only allows passing: `Activated`, `Frozen`, `Delete
 | Reversal | Chargeback/Reversal |
 | Refund | Refund |
 
-## 8.5 Fee Type (ApiConsumeFeeTypeEnum)
+## 8.5 Fee Type
 
 | code | Description |
 | ---- | ---- |
@@ -58,12 +56,12 @@ Update card status interface only allows passing: `Activated`, `Frozen`, `Delete
 | Auth_fee | Auth Fee |
 | Atm_fee | ATM Withdrawal Fee |
 | Exchange_fee | Exchange Fee |
-| Decline_fee | Chargeback Fee |
+| Decline_fee | Decline Fee |
 | Small_fee | Small Amount Fee |
 | Refund_fee | Refund Fee |
 | Cancel_fee | Transaction Cancellation Fee |
 
-## 8.6 Notification Action (NotifyActionEnum)
+## 8.6 Notification Action
 
 Values for `action` field in callback notifications.
 
@@ -73,9 +71,9 @@ Values for `action` field in callback notifications.
 | Consumption | Consumption Notification |
 | Card_update | Card Status Change |
 
-## 8.7 Exemption Type (ApiExcuseTypeEnum)
+## 8.7 Exemption Type
 
-Period type for small amount exemption, chargeback exemption, and similar in package/fee configuration.
+Period type for small amount exemption, decline fee exemption, and similar in package/fee configuration.
 
 | code | Description |
 | ---- | ---- |
@@ -83,7 +81,7 @@ Period type for small amount exemption, chargeback exemption, and similar in pac
 | None | No Exemption |
 | Day | Daily Exemption |
 
-## 8.8 Cardholder Status (ApiCardHolderStatusEnum)
+## 8.8 Cardholder Status
 
 Used in cardholder list, cardholder details, and similar interfaces' `status` field.
 
@@ -94,7 +92,7 @@ Used in cardholder list, cardholder details, and similar interfaces' `status` fi
 | Approved | Authentication Successful |
 | Rejected | Authentication Failed |
 
-## 8.9 Transfer Type (ApiTransferTypeEnum)
+## 8.9 Transfer Type
 
 Values for `type` field in account transfer interface (case-insensitive).
 
@@ -103,7 +101,7 @@ Values for `type` field in account transfer interface (case-insensitive).
 | In | Transfer In (Company → Cardholder) |
 | Out | Transfer Out (Cardholder → Company) |
 
-## 8.10 Management Fee Type (ApiManageFeeTypeEnum)
+## 8.10 Management Fee Type
 
 Used in package/card details `fee_detail.manage_fee_type` and similar fields.
 
@@ -114,12 +112,12 @@ Used in package/card details `fee_detail.manage_fee_type` and similar fields.
 | Season | Quarterly |
 | Year | Yearly |
 
-## 8.11 Management Fee Exemption Type (ApiManageFeeFreeTypeEnum)
+## 8.11 Management Fee Exemption Type
 
 Values for `fee_detail.management_fee_free_type` field in package/card details.
 
 | code | Description |
 | ---- | ---- |
 | None | No Management Fee Exemption |
-| Amount | Exemption Based on Transaction Amount |
-| Count | Exemption Based on Transaction Count |
+| Amount | Exemption Based on Successful Transaction Amount |
+| Count | Exemption Based on Successful Transaction Count |
