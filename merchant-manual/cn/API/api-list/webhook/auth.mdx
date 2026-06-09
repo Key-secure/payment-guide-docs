@@ -29,7 +29,7 @@ playground: none
   推送数据。
 </ParamField>
 
-### data 字段
+### data
 
 <ResponseField name="consume_no" type="string">消费单号</ResponseField>
 <ResponseField name="card_no" type="string">卡单号</ResponseField>
@@ -42,16 +42,12 @@ playground: none
 <ResponseField name="status" type="string">固定为 `Pending`（待商户应答）</ResponseField>
 <ResponseField name="time" type="number">通知时间（Unix 毫秒）</ResponseField>
 
-### merchant_info 字段
+### merchant_info
 
 <ResponseField name="merchant_name" type="string">商户名称</ResponseField>
 <ResponseField name="merchant_mcc" type="string">商户 MCC</ResponseField>
-<ResponseField name="merchant_mcc_category" type="string">MCC 分类（部分卡商有值）</ResponseField>
 <ResponseField name="city" type="string">商户城市</ResponseField>
 <ResponseField name="country" type="string">商户国家</ResponseField>
-<ResponseField name="state" type="string">州/省（部分卡商有值）</ResponseField>
-<ResponseField name="zipcode" type="string">邮编（部分卡商有值）</ResponseField>
-<ResponseField name="mid" type="string">商户 MID（部分卡商有值）</ResponseField>
 
 <RequestExample>
 
@@ -70,12 +66,8 @@ playground: none
     "merchant_info": {
       "merchant_name": "",
       "merchant_mcc": "",
-      "merchant_mcc_category": "",
       "city": "",
-      "country": "",
-      "state": "",
-      "zipcode": "",
-      "mid": ""
+      "country": ""
     },
     "status": "Pending",
     "time": 0

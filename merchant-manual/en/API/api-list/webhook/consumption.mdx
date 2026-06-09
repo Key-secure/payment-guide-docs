@@ -5,12 +5,6 @@ playground: none
 
 The platform sends a POST request to the configured merchant callback URL when a consumption transaction is created, its status changes, or when fees and merchant information are supplemented.
 
-<Note>
-- Request body structure: `{ "id": "...", "action": "...", "data": { ... } }`.
-- See [Appendix - Constants] Push Actions for `action` values.
-- The merchant must return `{ "code": 0, "message": "" }`; when `code ≠ 0`, the platform retries according to its retry strategy.
-</Note>
-
 ## Trigger Scenarios
 
 - Consumption transaction created, transaction status changed (success / failure / reversal / refund).
@@ -30,7 +24,7 @@ The platform sends a POST request to the configured merchant callback URL when a
   Push data.
 </ParamField>
 
-### data Fields
+### data
 
 <ResponseField name="consume_no" type="string">Consumption order number</ResponseField>
 <ResponseField name="consume_relate_no" type="string">Consumption related order number</ResponseField>
@@ -59,16 +53,12 @@ The platform sends a POST request to the configured merchant callback URL when a
 - **Authorization mode**: Reserve fund side fees, including `Consume_fee`, `Exchange_fee`, `Apple_auth_fee`, `Atm_fee`, `Small_fee`, `Refund_fee`, `Cancel_fee`.
 </Note>
 
-### merchant_info Fields
+### merchant_info
 
 <ResponseField name="merchant_name" type="string">Merchant name</ResponseField>
 <ResponseField name="merchant_mcc" type="string">Merchant MCC</ResponseField>
-<ResponseField name="merchant_mcc_category" type="string">MCC category</ResponseField>
 <ResponseField name="city" type="string">Merchant city</ResponseField>
 <ResponseField name="country" type="string">Merchant country</ResponseField>
-<ResponseField name="state" type="string">State/Province</ResponseField>
-<ResponseField name="zipcode" type="string">Zipcode</ResponseField>
-<ResponseField name="mid" type="string">Merchant MID</ResponseField>
 
 <RequestExample>
 
@@ -97,12 +87,8 @@ The platform sends a POST request to the configured merchant callback URL when a
     "merchant_info": {
       "merchant_name": "",
       "merchant_mcc": "",
-      "merchant_mcc_category": "",
       "city": "",
-      "country": "",
-      "state": "",
-      "zipcode": "",
-      "mid": ""
+      "country": ""
     },
     "status": "",
     "time": 0

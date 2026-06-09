@@ -7,10 +7,10 @@ authMethod: none
 Sets the physical card PIN. Only **physical cards** (`Physical`) are supported, and the card status must be normal (`Activated`). The `pin` must be encrypted with **AES/ECB/PKCS5Padding + Base64** before being passed in.
 
 <Note>
-- Physical cards only (`card_type = Physical`); virtual cards calling this endpoint will return **4017**.
-- Plaintext PIN must be **6 digits only**, and must not contain three or more consecutive identical or sequential digits (e.g. `111111`, `123456`), otherwise **4016** is returned.
-- Card status must be `Activated`; otherwise **4005** is returned.
-- For encryption algorithm details, see the "Code Utilities" section.
+- Only physical cards are supported; calling this endpoint for a virtual card returns **4017**.
+- The plaintext PIN must be **exactly 6 digits**, and must not contain three or more identical or sequential digits (for example, `111111` or `123456`); otherwise **4016** is returned.
+- The card status must be `Activated`; otherwise **4005** is returned.
+- See the "Code Utilities" section for encryption algorithm details.
 </Note>
 
 ## Request Headers

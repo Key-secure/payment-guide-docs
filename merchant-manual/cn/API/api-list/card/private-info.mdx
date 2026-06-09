@@ -54,7 +54,7 @@ authMethod: none
 </ResponseField>
 
 <Note>
-**权限说明：** 需商户开通 PCI（`pci_flag = 1`）方可调用，未开通返回错误码 **1013**。
+**权限说明：** 需商户开通 PCI方可调用，未开通返回错误码 **1013**。
 
 **解密方式：** 使用商户当前可用 API 凭证的 `apiSecret`，通过 AES/ECB/PKCS5Padding 算法对 `data` 进行 Base64 解码后解密，得到明文 JSON。详见「代码工具类」。
 </Note>

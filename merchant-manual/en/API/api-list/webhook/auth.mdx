@@ -29,7 +29,7 @@ In authorization mode, the platform sends a POST request to the configured merch
   Push data.
 </ParamField>
 
-### data Fields
+### data
 
 <ResponseField name="consume_no" type="string">Consumption order number</ResponseField>
 <ResponseField name="card_no" type="string">Card order number</ResponseField>
@@ -42,16 +42,12 @@ In authorization mode, the platform sends a POST request to the configured merch
 <ResponseField name="status" type="string">Fixed to `Pending` (awaiting merchant response)</ResponseField>
 <ResponseField name="time" type="number">Notification time (Unix milliseconds)</ResponseField>
 
-### merchant_info Fields
+### merchant_info
 
 <ResponseField name="merchant_name" type="string">Merchant name</ResponseField>
 <ResponseField name="merchant_mcc" type="string">Merchant MCC</ResponseField>
-<ResponseField name="merchant_mcc_category" type="string">MCC category (has value for some card issuers)</ResponseField>
 <ResponseField name="city" type="string">Merchant city</ResponseField>
 <ResponseField name="country" type="string">Merchant country</ResponseField>
-<ResponseField name="state" type="string">State/Province (has value for some card issuers)</ResponseField>
-<ResponseField name="zipcode" type="string">Zipcode (has value for some card issuers)</ResponseField>
-<ResponseField name="mid" type="string">Merchant MID (has value for some card issuers)</ResponseField>
 
 <RequestExample>
 
@@ -70,12 +66,8 @@ In authorization mode, the platform sends a POST request to the configured merch
     "merchant_info": {
       "merchant_name": "",
       "merchant_mcc": "",
-      "merchant_mcc_category": "",
       "city": "",
-      "country": "",
-      "state": "",
-      "zipcode": "",
-      "mid": ""
+      "country": ""
     },
     "status": "Pending",
     "time": 0

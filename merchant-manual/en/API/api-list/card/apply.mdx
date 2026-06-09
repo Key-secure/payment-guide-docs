@@ -4,7 +4,7 @@ api: POST /open-api/v1/card/apply
 authMethod: none
 ---
 
-Submits a card application. Pass `package_no` in credit extension mode, or `card_bin_no` in authorization mode (one is required).
+Submits a card application. Pass `package_no` in credit extension mode, or `card_bin_no` in authorization mode (provide one of the two).
 
 ## Request Headers
 
@@ -85,11 +85,11 @@ Submits a card application. Pass `package_no` in credit extension mode, or `card
 
 <Note>
 **Important Notes:**
-- Either `card_bin_no` or `package_no` must be provided; if both are empty, error code **1004** is returned.
-- For **physical cards** (`card_type = Physical`), the entire `address_info` object cannot be empty, and all fields including `first_name`, `last_name`, `phone_code`, `phone`, and all address fields are required.
-- For **virtual cards**, `address_info` may be omitted based on business needs; if provided, `postal_code`, `country`, `state`, `city`, and `address_line1` must be included and will be validated.
+- At least one of `card_bin_no` or `package_no` must be provided; if both are empty, error code **1004** is returned.
+- For **physical cards** (`card_type = Physical`), the entire `address_info` object cannot be empty, and `first_name`, `last_name`, `phone_code`, `phone`, and all address fields are required.
+- For **virtual cards**, `address_info` may be omitted based on business needs; if provided, it must include `postal_code`, `country`, `state`, `city`, and `address_line1`, and these fields will be validated.
 - `phone_code` must contain digits only and must not include a `+` sign.
-- Address fields must be in English and conform to the address format of the relevant country.
+- Address fields must be filled in English and conform to the address format of the relevant country.
 </Note>
 
 ## Response Parameters

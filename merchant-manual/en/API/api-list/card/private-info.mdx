@@ -4,7 +4,7 @@ api: GET /open-api/v1/card/{card_no}/private/info
 authMethod: none
 ---
 
-Retrieves the card privacy information as an AES-encrypted JSON string (requires PCI enabled).
+Retrieves the card privacy JSON encrypted information (PCI must be enabled).
 
 ## Request Headers
 
@@ -41,7 +41,7 @@ Retrieves the card privacy information as an AES-encrypted JSON string (requires
 </ResponseField>
 
 <ResponseField name="data" type="string">
-  A JSON string encrypted with **AES/ECB/PKCS5Padding + Base64**. Decrypt it using the `apiSecret` from the merchant's current available API credentials to obtain the following JSON structure:
+  A JSON string encrypted with **AES/ECB/PKCS5Padding + Base64**. After decrypting it with the `apiSecret` from the merchant's current available API credentials, you will get the following JSON structure:
 
   <Expandable title="Decrypted JSON structure of data">
     <ResponseField name="card_no" type="string">Card order number</ResponseField>
@@ -54,9 +54,9 @@ Retrieves the card privacy information as an AES-encrypted JSON string (requires
 </ResponseField>
 
 <Note>
-**Permission Notes:** PCI must be enabled for the merchant (`pci_flag = 1`) before this endpoint can be called. If not enabled, error code **1013** is returned.
+**Permission Notes:** PCI must be enabled for the merchant before this endpoint can be called. If not enabled, error code **1013** is returned.
 
-**Decryption Method:** Use the merchant's current available API credential's `apiSecret`, and decrypt `data` with the AES/ECB/PKCS5Padding algorithm after Base64 decoding to obtain the plaintext JSON. See "Code Utilities" for details.
+**Decryption Method:** Use the merchant's current available API credential's `apiSecret`, Base64-decode `data`, and then decrypt it with the AES/ECB/PKCS5Padding algorithm to obtain the plaintext JSON. See "Code Utilities" for details.
 </Note>
 
 <RequestExample>

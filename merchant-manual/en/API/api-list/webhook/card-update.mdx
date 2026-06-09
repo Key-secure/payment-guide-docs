@@ -5,12 +5,6 @@ playground: none
 
 The platform sends a POST request to the configured merchant callback URL when a card's status changes.
 
-<Note>
-- Request body structure: `{ "id": "...", "action": "...", "data": { ... } }`.
-- See [Appendix - Constants] Push Actions for `action` values.
-- The merchant must return `{ "code": 0, "message": "" }`; when `code ≠ 0`, the platform retries according to its retry strategy.
-</Note>
-
 ## Trigger Scenarios
 
 - Card status has changed.

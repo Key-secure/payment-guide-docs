@@ -5,12 +5,6 @@ playground: none
 
 平台在消费交易创建、状态变更，或手续费与商户信息补全后，会 POST 至合作方配置的回调 URL。
 
-<Note>
-- 请求体结构：`{ "id": "...", "action": "...", "data": { ... } }`。
-- `action` 见 【附录-常量表】 推送动作。
-- 商户须返回 `{ "code": 0, "message": "" }`；`code ≠ 0` 时平台按策略重试。
-</Note>
-
 ## 触发场景
 
 - 消费交易创建、交易状态变更（成功 / 失败 / 撤销 / 退款）。
@@ -63,12 +57,8 @@ playground: none
 
 <ResponseField name="merchant_name" type="string">商户名称</ResponseField>
 <ResponseField name="merchant_mcc" type="string">商户 MCC</ResponseField>
-<ResponseField name="merchant_mcc_category" type="string">MCC 分类</ResponseField>
 <ResponseField name="city" type="string">商户城市</ResponseField>
 <ResponseField name="country" type="string">商户国家</ResponseField>
-<ResponseField name="state" type="string">州/省</ResponseField>
-<ResponseField name="zipcode" type="string">邮编</ResponseField>
-<ResponseField name="mid" type="string">商户 MID</ResponseField>
 
 <RequestExample>
 
@@ -97,12 +87,8 @@ playground: none
     "merchant_info": {
       "merchant_name": "",
       "merchant_mcc": "",
-      "merchant_mcc_category": "",
       "city": "",
-      "country": "",
-      "state": "",
-      "zipcode": "",
-      "mid": ""
+      "country": ""
     },
     "status": "",
     "time": 0
