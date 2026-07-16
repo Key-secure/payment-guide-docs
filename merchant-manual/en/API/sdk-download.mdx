@@ -1,0 +1,55 @@
+---
+title: SDK Download and Integration
+description: Download the SDK and integrate it into your frontend for production or sandbox use.
+---
+
+## SDK URLs
+
+Select the SDK URL that matches your environment.
+
+| Environment | SDK URL |
+| --- | --- |
+| Production | [https://paysdk.keysecure.io/SDK/prod/index.min.js](https://paysdk.keysecure.io/SDK/prod/index.min.js) |
+| Sandbox | [https://paysdk.keysecure.io/Sbox/index.min.js](https://paysdk.keysecure.io/Sbox/index.min.js) |
+
+<Note>
+  Use the sandbox SDK during development and integration testing. Replace it with the production SDK before going live.
+</Note>
+
+## Get the `integrity` Hash
+
+Retrieve the sandbox SDK `integrity` hash from the following URL:
+
+[https://paysdk.keysecure.io/Sbox/integrity.json](https://paysdk.keysecure.io/Sbox/integrity.json)
+
+Example response:
+
+```json
+{
+  "version": "0.0.1",
+  "profile": "sandbox",
+  "files": {
+    "index.min.js": "sha384-/oyM6l1HEDlDCAqArfoAQ+9L00j7o+iTktXxlyZuE4MP5uwvMiXxcpiR18S0sc/h"
+  },
+  "generatedAt": "2026-06-03T06:40:52.946Z"
+}
+```
+
+Copy the complete value of `files["index.min.js"]` into the `integrity` attribute of the `<script>` tag.
+
+<Warning>
+  The `integrity` hash changes whenever the SDK file is updated. Retrieve `integrity.json` again before every SDK update or application release. Do not rely on the fixed hash shown in this example; always use the latest value returned by the URL above.
+</Warning>
+
+## Integrate the SDK
+
+Add the following `<script>` tag to your HTML page to load the sandbox SDK:
+
+```html
+<script
+  id="sdk-script"
+  src="https://paysdk.keysecure.io/Sbox/index.min.js"
+  integrity="sha384-/oyM6l1HEDlDCAqArfoAQ+9L00j7o+iTktXxlyZuE4MP5uwvMiXxcpiR18S0sc/h"
+  crossorigin="anonymous"
+></script>
+```

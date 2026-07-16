@@ -146,7 +146,8 @@
                 "pages": [
                   "cn/API/constants",
                   "cn/API/error-codes",
-                  "cn/API/code-utils"
+                  "cn/API/code-utils",
+                  "cn/API/sdk-download"
                 ]
               }
             ]
@@ -331,7 +332,8 @@
                 "pages": [
                   "en/API/constants",
                   "en/API/error-codes",
-                  "en/API/code-utils"
+                  "en/API/code-utils",
+                  "en/API/sdk-download"
                 ]
               }
             ]

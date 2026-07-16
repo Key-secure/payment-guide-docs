@@ -1,0 +1,55 @@
+---
+title: SDK 下载与引入
+description: 获取SDK，并在生产或沙盒环境中完成前端引入。
+---
+
+## SDK 地址
+
+请根据当前使用的环境选择对应的 SDK 地址。
+
+| 环境 | SDK 地址 |
+| --- | --- |
+| 生产环境 | [https://paysdk.keysecure.io/SDK/prod/index.min.js](https://paysdk.keysecure.io/SDK/prod/index.min.js) |
+| 沙盒环境 | [https://paysdk.keysecure.io/Sbox/index.min.js](https://paysdk.keysecure.io/Sbox/index.min.js) |
+
+<Note>
+  开发和联调阶段请使用沙盒环境 SDK；正式上线时，请将 SDK 地址替换为生产环境地址。
+</Note>
+
+## 获取 integrity 校验值
+
+沙盒 SDK 的 `integrity` 哈希需要从以下地址获取：
+
+[https://paysdk.keysecure.io/Sbox/integrity.json](https://paysdk.keysecure.io/Sbox/integrity.json)
+
+返回格式示例：
+
+```json
+{
+  "version": "0.0.1",
+  "profile": "sandbox",
+  "files": {
+    "index.min.js": "sha384-/oyM6l1HEDlDCAqArfoAQ+9L00j7o+iTktXxlyZuE4MP5uwvMiXxcpiR18S0sc/h"
+  },
+  "generatedAt": "2026-06-03T06:40:52.946Z"
+}
+```
+
+将 `files["index.min.js"]` 的完整值复制到 `<script>` 标签的 `integrity` 属性中。
+
+<Warning>
+  SDK 文件更新后，`integrity` 哈希也会发生变化。请在每次更新 SDK 或发布应用前重新获取 `integrity.json`，不要长期使用本文示例中的固定哈希；实际值始终以该地址的最新返回结果为准。
+</Warning>
+
+## 引入 SDK
+
+在 HTML 页面中加入以下 `<script>` 标签，即可引入沙盒环境 SDK：
+
+```html
+<script
+  id="sdk-script"
+  src="https://paysdk.keysecure.io/Sbox/index.min.js"
+  integrity="sha384-/oyM6l1HEDlDCAqArfoAQ+9L00j7o+iTktXxlyZuE4MP5uwvMiXxcpiR18S0sc/h"
+  crossorigin="anonymous"
+></script>
+```
