@@ -1,0 +1,38 @@
+
+# 功能指南
+
+## 操作指南
+
+### 卡片管理
+
+商户卡BIN：feature-guide/card/card-bin
+卡套餐：feature-guide/card/card-package
+开卡记录：feature-guide/card/open-card
+
+### 内容管理
+
+轮播图：feature-guide/context/carousel
+公告：feature-guide/context/notification
+协议和客服：feature-guide/context/other-settings
+
+### 财务管理
+
+消费记录：feature-guide/finance/transaction
+充值：feature-guide/finance/deposit
+提现：feature-guide/finance/withdraw
+备付金：feature-guide/finance/reserve
+
+### 运营管理
+
+邀请管理：feature-guide/operation/benefit
+商户币种管理：feature-guide/operation/coin-manage
+
+### 系统管理
+
+角色管理：feature-guide/system/role-manage
+管理员管理：feature-guide/system/admin-manage
+
+### 会员管理
+
+KYC：feature-guide/user/kyc
+会员列表：feature-guide/user/user-list
