@@ -1,7 +1,18 @@
 ---
-title: SDK Download and Integration
-description: Download the SDK and integrate it into your frontend for production or sandbox use.
+title: Iframe SDK Download and Integration
+description: Download the SDK and implement secure card information display, copy, and lifecycle management.
 ---
+
+## Capabilities
+
+The payment card SDK uses secure iframes to display the following information on a merchant page:
+
+- Primary account number (PAN)
+- Expiration date (EXP)
+- CVV
+- Card information copy buttons
+
+Plaintext card data never enters the merchant page's DOM or JavaScript. The merchant page only provides a one-time Client Access Token, configures display styles, and receives loading and copy callbacks.
 
 ## SDK URLs
 
@@ -16,7 +27,7 @@ Select the SDK URL that matches your environment.
   Use the sandbox SDK during development and integration testing. Replace it with the production SDK before going live.
 </Note>
 
-## Get the `integrity` Hash
+### Get the `integrity` Hash
 
 Retrieve the sandbox SDK `integrity` hash from the following URL:
 
@@ -41,7 +52,7 @@ Copy the complete value of `files["index.min.js"]` into the `integrity` attribut
   The `integrity` hash changes whenever the SDK file is updated. Retrieve `integrity.json` again before every SDK update or application release. Do not rely on the fixed hash shown in this example; always use the latest value returned by the URL above.
 </Warning>
 
-## Integrate the SDK
+### Load the SDK
 
 Add the following `<script>` tag to your HTML page to load the sandbox SDK:
 
@@ -53,3 +64,256 @@ Add the following `<script>` tag to your HTML page to load the sandbox SDK:
   crossorigin="anonymous"
 ></script>
 ```
+
+## Prerequisites
+
+### Register Page Origins
+
+Register the origin of every page that embeds the SDK in the merchant portal, for example:
+
+```text
+https://app.merchant.com
+https://checkout.merchant.com
+```
+
+- HTTPS is required.
+- Register the exact origin. Wildcards such as `*.merchant.com` are not supported.
+- Contact KeySecure technical support if the origin registration option is not available in the merchant portal.
+- Content Security Policy (CSP) may block the SDK on unregistered pages.
+
+### Obtain a Client Access Token on the Backend
+
+The Client Access Token must be obtained by the merchant backend. Never expose `Api-Key`, `Access-Token`, or other server-side credentials in the browser.
+
+```bash
+curl --request GET \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/client/C202605220001/token \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token'
+```
+
+Example response:
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "client_access_token": "eyJ...",
+    "expires_in": 300
+  }
+}
+```
+
+The backend only needs to pass `data.client_access_token` to the frontend. See [Issue PCI Client Access Token](/en/API/api-list/card/client-token) for complete parameter details.
+
+<Warning>
+  A Client Access Token is a short-lived, one-time credential. Use it before it expires, and never store it in a database or cookie or write it to logs. Request a new token after a page refresh or before reinitializing the SDK.
+</Warning>
+
+## Frontend Integration
+
+### Prepare the Containers
+
+```html
+<div id="pan-box"></div>
+<div id="exp-box"></div>
+<div id="cvv-box"></div>
+
+<!-- The copy component overlays the button area. Set position: relative and explicit dimensions. -->
+<div id="copy-pan-box" style="position: relative; width: 96px; height: 32px;">
+  <button type="button">Copy card number</button>
+</div>
+<div id="copy-exp-box" style="position: relative; width: 112px; height: 32px;">
+  <button type="button">Copy expiration</button>
+</div>
+<div id="copy-cvv-box" style="position: relative; width: 96px; height: 32px;">
+  <button type="button">Copy CVV</button>
+</div>
+```
+
+### Initialize the SDK
+
+```js
+window.widget.bootstrap({
+  clientAccessToken: 'eyJ...', // Obtained from the merchant backend
+  component: {
+    showPan: {
+      cardPan: {
+        domId: 'pan-box',
+        format: true, // Group as 4-4-4-4
+        styles: { span: { color: '#222', fontSize: '18px' } },
+      },
+      cardExp: {
+        domId: 'exp-box',
+        format: true, // MM/YY
+        styles: { span: { color: '#666' } },
+      },
+      cardCvv: {
+        domId: 'cvv-box',
+        styles: { span: { color: '#666' } },
+      },
+      copyCardPan: {
+        domId: 'copy-pan-box',
+        onCopySuccess: () => toast('Card number copied'),
+        onCopyFailure: (error) => toast(`Copy failed: ${error.message}`),
+      },
+      copyCardExp: {
+        domId: 'copy-exp-box',
+        onCopySuccess: () => toast('Expiration date copied'),
+      },
+      copyCardCvv: {
+        domId: 'copy-cvv-box',
+        onCopySuccess: () => toast('CVV copied'),
+      },
+    },
+  },
+  callbackEvents: {
+    onSuccess: () => console.log('Card information components loaded'),
+    onFailure: (error) => console.error('Loading failed', error.code, error.message),
+  },
+});
+```
+
+### Destroy and Resize
+
+| API | Purpose |
+| --- | --- |
+| `widget.destroy()` | Destroy all secure iframes on the page. Call it when leaving or unmounting a sensitive view. |
+| `widget.destroy(token)` | Destroy only the iframes associated with a specific token. |
+| `widget.resetViewport(token?)` | Resize iframes after a parent container size change. The SDK observes `ResizeObserver`, so manual calls are rarely needed. |
+
+When `bootstrap` is called repeatedly with the same token, the SDK destroys the associated components before rebuilding them. Because the token is a one-time credential, the application should still avoid duplicate initialization and request a new token before reloading the components.
+
+## API Configuration Reference
+
+```ts
+interface BootstrapConfig {
+  clientAccessToken: string;
+  component: {
+    showPan: {
+      cardPan?: FieldOptions;
+      cardExp?: FieldOptions;
+      cardCvv?: FieldOptions;
+      copyCardPan?: CopyOptions;
+      copyCardExp?: CopyOptions;
+      copyCardCvv?: CopyOptions;
+    };
+  };
+  callbackEvents?: {
+    onSuccess?: () => void;
+    onFailure?: (error: { code: string; message: string }) => void;
+  };
+}
+
+interface FieldOptions {
+  domId: string;
+  format?: boolean;
+  styles?: {
+    span?: Partial<CSSStyleDeclaration>;
+    div?: Partial<CSSStyleDeclaration>;
+  };
+}
+
+interface CopyOptions {
+  domId: string;
+  onCopySuccess?: () => void;
+  onCopyFailure?: (error: Error & { code?: string }) => void;
+}
+```
+
+## Error Handling
+
+### Initialization Errors
+
+Read `error.code` in `callbackEvents.onFailure(error)`:
+
+| code | Meaning | Troubleshooting |
+| --- | --- | --- |
+| `TOKEN_EXPIRED` | The token has expired. | Request a new token from the backend. |
+| `TOKEN_INVALID` | Token validation failed or the token was already used. | Confirm that the same token is not reused. |
+| `PARENT_ORIGIN_NOT_ALLOWED` | The current page origin is not registered. | Register the origin and request a new token. |
+| `PARENT_ORIGIN_UNRESOLVED` | The parent page origin cannot be determined reliably. | Check the embedding method and Referrer Policy. |
+| `PARENT_ORIGIN_CONFLICT` | Browser-derived parent origins do not match. | Check nested iframes and reverse proxy configuration. |
+| `PARENT_ORIGIN_FALLBACK_FORBIDDEN` | A development fallback origin was used in production. | Ensure the browser can verify the real parent origin. |
+| `PARENT_ORIGIN_INSECURE` | The production parent page does not use HTTPS. | Switch to HTTPS and update the registered origin. |
+| `PARENT_ORIGIN_MISMATCH` | The token-bound origin differs from the current page. | Check the registered and actual embedding origins. |
+| `JWE_EXPIRED` | The encrypted payload has expired. | Request a new token and check the client clock. |
+| `NETWORK` | A network request failed. | Check the user's connection and service status. |
+| `RENDER` | iframe rendering failed. | Check the `domId`, container size, and visibility. |
+| `DECRYPT_FAILED` | Data decryption failed. | Request a new token and verify the page origin. |
+| `NONCE_REPLAY` | Replay protection was triggered. | Do not reuse a token across pages or devices. |
+
+### Copy Errors
+
+Read `error.code` in `onCopyFailure(error)`:
+
+| code | Meaning | Recommended Action |
+| --- | --- | --- |
+| `COPY_DENIED` | The user denied clipboard access, or the browser rejected the gesture chain. | Ask the user to grant permission and retry. |
+| `COPY_UNAVAILABLE` | The browser does not support the Clipboard API. | Ask the user to upgrade their browser. |
+| `COPY_BLOCKED_BY_PERMISSION_POLICY` | The page policy blocks `clipboard-write`. | Check the iframe `allow` attribute and Permissions Policy. |
+| `COPY_DATA_TIMEOUT` | The copy component timed out while waiting for data. | Check whether display components loaded or were rebuilt. |
+| `COPY_FAILED` | Another copy error occurred. | Ask the user to retry and record the error code. |
+
+## Style Customization
+
+For security, `styles` only supports the following CSS properties. Unsupported properties are ignored:
+
+```text
+color, fontSize, fontWeight, fontFamily, lineHeight, letterSpacing,
+textAlign, textDecoration, background, backgroundColor, padding, margin,
+display, width, height, borderRadius, border, opacity, cursor
+```
+
+## Integration Checklist
+
+- [ ] The page origin is registered and exactly matches the actual HTTPS page.
+- [ ] The SDK URL matches the current environment.
+- [ ] `integrity` contains the latest SRI hash for the selected SDK file.
+- [ ] The backend obtains the Client Access Token, and the frontend never receives server credentials.
+- [ ] The token is not logged, persisted, or reused.
+- [ ] Copy button containers have `position: relative` and explicit dimensions.
+- [ ] Sensitive page responses include `Cache-Control: no-store, no-cache`.
+- [ ] `widget.destroy()` is called when leaving or unmounting a sensitive view.
+- [ ] Initialization and copy failure callbacks are handled.
+
+## Security Requirements
+
+1. Do not attempt to extract plaintext card data from the DOM, network requests, or internal SDK messages.
+2. Do not write the Client Access Token to databases, cookies, logs, or analytics events.
+3. Avoid placing the card information page inside nested iframes, which may break parent origin validation.
+4. Do not run screen recording, session replay, or unnecessary third-party analytics scripts on sensitive pages.
+5. Do not listen to, construct, or reuse internal SDK communication channels.
+
+## Browser Compatibility
+
+| Browser | Minimum Version | Notes |
+| --- | --- | --- |
+| Chrome / Edge | 90+ | Fully supported |
+| Safari | 14+ | Fully supported |
+| Firefox | 90+ | Fully supported |
+| Mobile WebView | iOS 14+ / Android Chromium 90+ | Test on physical devices before release |
+| Internet Explorer 11 | Not supported | The SDK requires modern Web Crypto capabilities |
+
+## Troubleshooting
+
+**The page reports a `frame-ancestors` CSP violation**
+
+Confirm that the current page origin is registered. Request a new Client Access Token after registration, then initialize the SDK again.
+
+**The SDK repeatedly returns `TOKEN_INVALID`**
+
+The token is a one-time credential. Check whether React Strict Mode, SPA route transitions, or repeated rendering triggers initialization twice, and call `widget.destroy()` when unmounting the component.
+
+**Nothing happens when a copy button is clicked**
+
+Confirm that the copy container uses `position: relative` and has non-zero dimensions. The Clipboard API requires a user gesture; do not simulate the click with a timer.
+
+**The iframe is blank**
+
+Inspect the browser Network and Console panels. Confirm that requests do not return 403, the container is visible, and CSP or Permissions Policy is not blocking the iframe.
+
+If the issue persists, provide the browser, SDK URL, error code, and reproduction steps to KeySecure technical support. Never include a Client Access Token, full card number, or CVV in a support ticket or chat.

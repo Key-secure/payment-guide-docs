@@ -1,11 +1,22 @@
 ---
-title: SDK 下载与引入
-description: 获取SDK，并在生产或沙盒环境中完成前端引入。
+title: Iframe-SDK下载与接入
+description: 获取SDK，并完成安全卡信息展示、复制及生命周期管理。
 ---
+
+## 能力说明
+
+接入 SDK 通过安全 iframe 在商户页面中展示以下信息：
+
+- 卡号（PAN）
+- 有效期（EXP）
+- CVV
+- 卡信息复制按钮
+
+明文卡数据不会进入商户页面的 DOM 或 JavaScript。商户页面只负责传入一次性 Client Access Token、配置展示样式，并接收加载状态与复制结果回调。
 
 ## SDK 地址
 
-请根据当前使用的环境选择对应的 SDK 地址。
+请根据当前环境选择对应的 SDK 地址。
 
 | 环境 | SDK 地址 |
 | --- | --- |
@@ -13,10 +24,10 @@ description: 获取SDK，并在生产或沙盒环境中完成前端引入。
 | 沙盒环境 | [https://paysdk.keysecure.io/Sbox/index.min.js](https://paysdk.keysecure.io/Sbox/index.min.js) |
 
 <Note>
-  开发和联调阶段请使用沙盒环境 SDK；正式上线时，请将 SDK 地址替换为生产环境地址。
+  开发和联调阶段请使用沙盒环境 SDK；正式上线时，请替换为生产环境 SDK。
 </Note>
 
-## 获取 integrity 校验值
+### 获取 `integrity` 校验值
 
 沙盒 SDK 的 `integrity` 哈希需要从以下地址获取：
 
@@ -38,10 +49,10 @@ description: 获取SDK，并在生产或沙盒环境中完成前端引入。
 将 `files["index.min.js"]` 的完整值复制到 `<script>` 标签的 `integrity` 属性中。
 
 <Warning>
-  SDK 文件更新后，`integrity` 哈希也会发生变化。请在每次更新 SDK 或发布应用前重新获取 `integrity.json`，不要长期使用本文示例中的固定哈希；实际值始终以该地址的最新返回结果为准。
+  SDK 文件更新后，`integrity` 哈希也会变化。请在每次更新 SDK 或发布应用前重新获取 `integrity.json`。不要长期使用本文示例中的固定哈希，实际值始终以该地址的最新返回结果为准。
 </Warning>
 
-## 引入 SDK
+### 引入 SDK
 
 在 HTML 页面中加入以下 `<script>` 标签，即可引入沙盒环境 SDK：
 
@@ -53,3 +64,256 @@ description: 获取SDK，并在生产或沙盒环境中完成前端引入。
   crossorigin="anonymous"
 ></script>
 ```
+
+## 接入前准备
+
+### 报备页面来源
+
+在商户后台报备所有会嵌入 SDK 的页面 origin，例如：
+
+```text
+https://app.merchant.com
+https://checkout.merchant.com
+```
+
+- 必须使用 HTTPS。
+- 必须填写精确 origin，不支持 `*.merchant.com` 通配符。
+- 如果商户后台未显示报备入口，请联系 KeySecure 技术支持。
+- 未报备的页面可能被 Content Security Policy（CSP）阻止加载。
+
+### 后端获取 Client Access Token
+
+Client Access Token 必须由商户后端获取。请勿在浏览器中暴露 `Api-Key`、`Access-Token` 或其他服务端凭据。
+
+```bash
+curl --request GET \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/merchant/client/C202605220001/token \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token'
+```
+
+返回示例：
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "client_access_token": "eyJ...",
+    "expires_in": 300
+  }
+}
+```
+
+后端只需将 `data.client_access_token` 透传给前端。详细参数见[颁发 PCI Client Access Token](/cn/API/api-list/card/client-token)。
+
+<Warning>
+  Client Access Token 为短期一次性凭据。请在有效期内使用，不要落库、写入 Cookie 或输出到日志；刷新页面或重复初始化时应重新申请。
+</Warning>
+
+## 前端接入
+
+### 准备容器
+
+```html
+<div id="pan-box"></div>
+<div id="exp-box"></div>
+<div id="cvv-box"></div>
+
+<!-- 复制组件会覆盖在按钮区域上，容器必须设置 position: relative 并具有明确尺寸。 -->
+<div id="copy-pan-box" style="position: relative; width: 96px; height: 32px;">
+  <button type="button">复制卡号</button>
+</div>
+<div id="copy-exp-box" style="position: relative; width: 112px; height: 32px;">
+  <button type="button">复制有效期</button>
+</div>
+<div id="copy-cvv-box" style="position: relative; width: 96px; height: 32px;">
+  <button type="button">复制 CVV</button>
+</div>
+```
+
+### 初始化 SDK
+
+```js
+window.widget.bootstrap({
+  clientAccessToken: 'eyJ...', // 从商户后端获取
+  component: {
+    showPan: {
+      cardPan: {
+        domId: 'pan-box',
+        format: true, // 按 4-4-4-4 分组
+        styles: { span: { color: '#222', fontSize: '18px' } },
+      },
+      cardExp: {
+        domId: 'exp-box',
+        format: true, // MM/YY
+        styles: { span: { color: '#666' } },
+      },
+      cardCvv: {
+        domId: 'cvv-box',
+        styles: { span: { color: '#666' } },
+      },
+      copyCardPan: {
+        domId: 'copy-pan-box',
+        onCopySuccess: () => toast('已复制卡号'),
+        onCopyFailure: (error) => toast(`复制失败：${error.message}`),
+      },
+      copyCardExp: {
+        domId: 'copy-exp-box',
+        onCopySuccess: () => toast('已复制有效期'),
+      },
+      copyCardCvv: {
+        domId: 'copy-cvv-box',
+        onCopySuccess: () => toast('已复制 CVV'),
+      },
+    },
+  },
+  callbackEvents: {
+    onSuccess: () => console.log('卡信息组件加载成功'),
+    onFailure: (error) => console.error('加载失败', error.code, error.message),
+  },
+});
+```
+
+### 销毁和重排
+
+| API | 用途 |
+| --- | --- |
+| `widget.destroy()` | 销毁当前页面中的全部安全 iframe，页面卸载或退出敏感视图时调用 |
+| `widget.destroy(token)` | 只销毁指定 token 对应的 iframe |
+| `widget.resetViewport(token?)` | 父容器尺寸变化后重新适配 iframe；SDK 已监听 `ResizeObserver`，通常无需手动调用 |
+
+同一个 token 重复调用 `bootstrap` 时，SDK 会先执行对应的销毁操作再重建组件。由于 token 为一次性凭据，业务侧仍应避免重复初始化，并在需要重新加载时申请新 token。
+
+## API 配置参考
+
+```ts
+interface BootstrapConfig {
+  clientAccessToken: string;
+  component: {
+    showPan: {
+      cardPan?: FieldOptions;
+      cardExp?: FieldOptions;
+      cardCvv?: FieldOptions;
+      copyCardPan?: CopyOptions;
+      copyCardExp?: CopyOptions;
+      copyCardCvv?: CopyOptions;
+    };
+  };
+  callbackEvents?: {
+    onSuccess?: () => void;
+    onFailure?: (error: { code: string; message: string }) => void;
+  };
+}
+
+interface FieldOptions {
+  domId: string;
+  format?: boolean;
+  styles?: {
+    span?: Partial<CSSStyleDeclaration>;
+    div?: Partial<CSSStyleDeclaration>;
+  };
+}
+
+interface CopyOptions {
+  domId: string;
+  onCopySuccess?: () => void;
+  onCopyFailure?: (error: Error & { code?: string }) => void;
+}
+```
+
+## 错误处理
+
+### 初始化错误
+
+`callbackEvents.onFailure(error)` 中可读取 `error.code`：
+
+| code | 含义 | 排查建议 |
+| --- | --- | --- |
+| `TOKEN_EXPIRED` | token 已过期 | 后端重新获取 token |
+| `TOKEN_INVALID` | token 校验失败或已使用 | 确认未重复使用同一 token |
+| `PARENT_ORIGIN_NOT_ALLOWED` | 当前页面 origin 未报备 | 在商户后台补充报备并重新获取 token |
+| `PARENT_ORIGIN_UNRESOLVED` | 无法可靠识别父页面 origin | 检查嵌入方式与 Referrer Policy |
+| `PARENT_ORIGIN_CONFLICT` | 浏览器解析出的父来源不一致 | 检查多层 iframe 或反向代理配置 |
+| `PARENT_ORIGIN_FALLBACK_FORBIDDEN` | 生产环境使用了开发兜底来源 | 确保浏览器可以验证真实父来源 |
+| `PARENT_ORIGIN_INSECURE` | 生产环境父页面不是 HTTPS | 切换为 HTTPS 并更新报备 |
+| `PARENT_ORIGIN_MISMATCH` | token 绑定的 origin 与当前页面不一致 | 检查报备与实际嵌入页面 |
+| `JWE_EXPIRED` | 加密数据已过期 | 重新获取 token，并检查客户端时间 |
+| `NETWORK` | 网络请求失败 | 检查用户网络和服务状态 |
+| `RENDER` | iframe 渲染失败 | 检查 `domId`、容器尺寸和可见状态 |
+| `DECRYPT_FAILED` | 数据解密失败 | 重新获取 token，并检查页面 origin |
+| `NONCE_REPLAY` | 命中重放保护 | 不要在多个页面或设备复用 token |
+
+### 复制错误
+
+`onCopyFailure(error)` 中可读取 `error.code`：
+
+| code | 含义 | 处理建议 |
+| --- | --- | --- |
+| `COPY_DENIED` | 用户拒绝剪贴板权限，或浏览器不接受当前手势链路 | 引导用户允许权限后重试 |
+| `COPY_UNAVAILABLE` | 浏览器不支持 Clipboard API | 提示升级浏览器 |
+| `COPY_BLOCKED_BY_PERMISSION_POLICY` | 页面策略禁止 `clipboard-write` | 检查 iframe `allow` 与 Permissions Policy |
+| `COPY_DATA_TIMEOUT` | 复制组件等待数据超时 | 检查展示组件是否加载成功或被销毁重建 |
+| `COPY_FAILED` | 其他复制失败 | 提示稍后重试并记录错误码 |
+
+## 样式自定义
+
+出于安全考虑，`styles` 仅支持以下 CSS 属性，其他属性会被忽略：
+
+```text
+color, fontSize, fontWeight, fontFamily, lineHeight, letterSpacing,
+textAlign, textDecoration, background, backgroundColor, padding, margin,
+display, width, height, borderRadius, border, opacity, cursor
+```
+
+## 接入自检清单
+
+- [ ] 页面 origin 已完成报备，并且与实际 HTTPS 页面完全一致
+- [ ] SDK 地址与当前环境一致
+- [ ] `integrity` 使用对应 SDK 文件的最新 SRI 哈希
+- [ ] Client Access Token 由后端获取，前端不持有服务端凭据
+- [ ] token 未被记录、持久化或重复使用
+- [ ] 复制按钮容器设置了 `position: relative` 和明确尺寸
+- [ ] 敏感页面响应设置了 `Cache-Control: no-store, no-cache`
+- [ ] 页面卸载或退出敏感视图时调用了 `widget.destroy()`
+- [ ] 已处理初始化和复制失败回调
+
+## 安全约束
+
+1. 不要尝试从 DOM、网络请求或 SDK 内部消息中读取明文卡数据。
+2. 不要将 Client Access Token 写入数据库、Cookie、日志或分析事件。
+3. 避免将卡信息页面放入多层 iframe，以免父来源校验失败。
+4. 不要在敏感页面运行录屏、会话回放或不必要的第三方分析脚本。
+5. 不要监听、构造或复用 SDK 内部通信通道。
+
+## 浏览器兼容性
+
+| 浏览器 | 最低版本 | 说明 |
+| --- | --- | --- |
+| Chrome / Edge | 90+ | 完整支持 |
+| Safari | 14+ | 完整支持 |
+| Firefox | 90+ | 完整支持 |
+| 移动 WebView | iOS 14+ / Android Chromium 90+ | 建议完成真机测试 |
+| Internet Explorer 11 | 不支持 | SDK 依赖现代 Web Crypto 能力 |
+
+## 常见问题
+
+**页面提示违反 `frame-ancestors` CSP 策略**
+
+确认当前页面 origin 已完成报备。报备后重新获取 Client Access Token，再重新初始化 SDK。
+
+**一直收到 `TOKEN_INVALID`**
+
+token 为一次性凭据。检查 React Strict Mode、SPA 路由切换或重复渲染是否触发了两次初始化，并在组件卸载时调用 `widget.destroy()`。
+
+**点击复制按钮没有反应**
+
+确认复制容器设置了 `position: relative`，并且宽高不为 0。Clipboard API 需要用户手势触发，不要通过定时器模拟点击。
+
+**iframe 显示空白**
+
+检查浏览器 Network 和 Console 面板，确认请求未返回 403、容器处于可见状态，并排查 CSP 或 Permissions Policy 拦截。
+
+如仍无法解决，请将浏览器、SDK 地址、错误码及复现步骤提供给 KeySecure 技术支持。不要在工单或聊天中提供 Client Access Token、完整卡号或 CVV。
