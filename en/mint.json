@@ -27,7 +27,7 @@
   },
   "topbarCtaButton": {
     "name": "Official website",
-    "url": "https://keysecure.io/zh-CN"
+    "url": "https://www.payfun.com/"
   },
   "tabs": [
     {
@@ -63,12 +63,7 @@
       ]
     }
   ],
-  "api": {
-    "baseUrl": "https://openapi.keysecure.io/",
-    "playground": {
-      "mode": "simple"
-    }
-  },
+  
   "feedback": {
     "suggestEdit": true,
     "raiseIssue": true,
