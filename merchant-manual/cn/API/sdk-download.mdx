@@ -14,14 +14,17 @@ description: 获取SDK，并完成安全卡信息展示、复制及生命周期�
 
 明文卡数据不会进入商户页面的 DOM 或 JavaScript。商户页面只负责传入一次性 Client Access Token、配置展示样式，并接收加载状态与复制结果回调。
 
+Demo地址：
+[https://paysdk.keysecure.io/Sbox/demo.sandbox.html](https://paysdk.keysecure.io/Sbox/demo.sandbox.html)
+
 ## SDK 地址
 
 请根据当前环境选择对应的 SDK 地址。
 
 | 环境 | SDK 地址 |
 | --- | --- |
-| 生产环境 | [https://paysdk.keysecure.io/SDK/prod/index.min.js](https://paysdk.keysecure.io/SDK/prod/index.min.js) |
-| 沙盒环境 | [https://paysdk.keysecure.io/Sbox/index.min.js](https://paysdk.keysecure.io/Sbox/index.min.js) |
+| 生产环境 | [https://paysdk.keysecure.io/SDK/prod/0.0.1/index.min.js](https://paysdk.keysecure.io/SDK/prod/0.0.1/index.min.js) |
+| 沙盒环境 | [https://paysdk.keysecure.io/Sbox/0.0.1/index.min.js](https://paysdk.keysecure.io/Sbox/0.0.1/index.min.js) |
 
 <Note>
   开发和联调阶段请使用沙盒环境 SDK；正式上线时，请替换为生产环境 SDK。
@@ -31,10 +34,10 @@ description: 获取SDK，并完成安全卡信息展示、复制及生命周期�
 
 沙盒 SDK 的 `integrity` 哈希需要从以下地址获取：
 
-[https://paysdk.keysecure.io/Sbox/integrity.json](https://paysdk.keysecure.io/Sbox/integrity.json)
+[https://paysdk.keysecure.io/Sbox/0.0.1/integrity.json](https://paysdk.keysecure.io/Sbox/0.0.1/integrity.json)
 
 正式 SDK 的 `integrity` 哈希需要从以下地址获取：
-[https://paysdk.keysecure.io/SDK/prod/integrity.json](https://paysdk.keysecure.io/SDK/prod/integrity.json)
+[https://paysdk.keysecure.io/SDK/prod/0.0.1/integrity.json](https://paysdk.keysecure.io/SDK/prod/0.0.1/integrity.json)
 
 返回格式示例：
 
