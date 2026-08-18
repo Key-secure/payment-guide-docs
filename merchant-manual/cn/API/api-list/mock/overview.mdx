@@ -1,0 +1,97 @@
+---
+title: 交易模拟说明
+---
+
+在沙盒环境调用交易模拟接口，可模拟卡片授权、清算、失败、冲正和退款，并向商户配置的回调地址推送 Webhook，用于联调测试。
+
+<Note>
+- 仅支持 **POST**，`Content-Type` 为 `application/json`
+- 请求体须为合法 JSON
+- **不使用** 请求头中的 `Api-Key` / `Access-Token`
+- 响应仅表示本次模拟是否成功，**不返回业务数据**（无 `data` 字段）
+</Note>
+
+## 环境说明
+
+| 环境 | 域名 | 说明 |
+| --- | --- | --- |
+| 沙盒 | `https://sandbox-openplatform.keysecure.io` | 测试环境，用于开发和联调 |
+
+交易模拟接口路径前缀为 `/open-api/v1/simulate`。所有示例和 curl 请求默认使用沙盒域名。
+
+## 通用响应
+
+所有模拟接口采用统一 JSON 结构，仅表示成功或失败。
+
+### 成功响应
+
+HTTP 状态码：**200**
+
+```json
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+表示本次模拟已执行。若已配置回调地址，商户将收到对应 Webhook。
+
+### 失败响应
+
+| HTTP 状态码 | `code` | 说明 |
+| --- | --- | --- |
+| 400 | 400 | 参数错误，如缺少 `card_no`、卡号不存在 |
+| 404 | 404 | 接口不存在 |
+| 500 | 500 | 模拟未完成，请稍后重试 |
+
+```json
+{
+  "code": 400,
+  "msg": "card_no is required"
+}
+```
+
+## `pay_type` 参数说明 {#pay-type}
+
+`pay_type` 用于指定模拟的支付方式。
+
+| 传参值 | 含义 |
+| --- | --- |
+| `""` 或不传 | 默认 |
+| `apple` | Apple Pay |
+| `atm` | 实体卡提现 |
+| `unknown` | 其他 |
+
+<p style={{ color: '#E11D48', fontSize: '13px' }}>提示：apple、unknown 不支持新加坡卡 BIN；atm 用于实体卡提现。</p>
+
+传入 `consume_no` 时，可省略 `pay_type`。
+
+## 推荐调用顺序
+
+```text
+1. auth                    # 模拟授权
+2. consumption_clear       # 模拟清算成功（需 consume_no）
+   或 consumption_fail     # 模拟消费失败（consume_no 可选）
+3. reversal / refund       # 模拟冲正或退款（reversal 需 consume_no；refund 可选）
+```
+
+## 接口一览
+
+| 序号 | 方法 | 路径 | 说明 |
+| --- | --- | --- | --- |
+| 1 | POST | `/open-api/v1/simulate/auth` | 模拟授权 |
+| 2 | POST | `/open-api/v1/simulate/consumption_clear` | 模拟消费清算成功 |
+| 3 | POST | `/open-api/v1/simulate/consumption_fail` | 模拟消费失败 |
+| 4 | POST | `/open-api/v1/simulate/reversal` | 模拟冲正/撤销 |
+| 5 | POST | `/open-api/v1/simulate/refund` | 模拟退款 |
+
+## 常见错误
+
+| `msg`（示例） | 说明 |
+| --- | --- |
+| `请求体不能为空` | 未传请求体 |
+| `请求体必须是合法 JSON` | JSON 格式错误 |
+| `card_no is required` | 缺少卡号 |
+| `Card not found` | 卡号不存在 |
+| `consume_no is required` | 缺少消费单号 |
+| `Downstream service call failed, please try again later` | 模拟未完成，请稍后重试 |

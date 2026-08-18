@@ -48,9 +48,9 @@ title: 接口清单
 | ---- | ---- | ---- | ---- |
 | 卡 | POST | /open-api/v1/card/support/bins | 支持的卡 BIN 列表 |
 
-### 4. 交易模拟接口（Webhook 造数）
+### 4. 交易模拟接口
 
-联调/测试用接口，查库组包后向业务系统模拟 Webhook 回调。**不使用** 请求头参数中的 `Api-Key` / `Access-Token` 鉴权。
+沙盒联调用接口：模拟卡片交易并向商户回调地址推送 Webhook。**不使用** 请求头中的 `Api-Key` / `Access-Token`。详见 [交易模拟说明](/cn/API/api-list/mock/overview)。
 
 路径前缀：
 - 沙盒：`https://sandbox-openplatform.keysecure.io/open-api/v1/simulate`
@@ -87,6 +87,11 @@ title: 接口清单
 1. 查询账户信息 → `GET /account/{cardholder_no}/info`
 2. 执行划转 → `POST /account/transfer`
 3. 查询划转流水 → `POST /account/transfer/list`
+
+**交易模拟流程：**
+1. 模拟授权 → `POST /simulate/auth`
+2. 模拟清算成功 / 失败 → `POST /simulate/consumption_clear` 或 `POST /simulate/consumption_fail`
+3. 模拟冲正 / 退款 → `POST /simulate/reversal` 或 `POST /simulate/refund`
 
 ### 按HTTP方法
 

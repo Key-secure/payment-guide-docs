@@ -1,0 +1,64 @@
+---
+title: 模拟 KYC 审核（ByCard）
+api: POST /open-api/v1/simulate/external_api/simulate_tevau_kyc
+authMethod: none
+hidden: true
+---
+
+转发 ByCard 沙箱 KYC 审核通知。上游：`POST https://api-sandbox.bycard.io/api/v1/simulate/notify/tevau`（Railone 签名由服务内部处理）。
+
+<Note>
+- 路径后缀：`/external_api/simulate_tevau_kyc`
+- **不使用** `Api-Key` / `Access-Token` 鉴权
+</Note>
+
+## 请求头
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  固定为 `application/json; charset=utf-8`
+</ParamField>
+
+## 请求体
+
+<ParamField body="doc_no" type="string" required>
+  证件/单据号
+</ParamField>
+
+<ParamField body="audit_flag" type="string" required>
+  审核结果（如 `PASS`）
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功；失败时与 HTTP 状态码一致（如 `400` / `500`）
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息。成功为 `Success`，失败为具体原因（无 `data` 字段）
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/external_api/simulate_tevau_kyc \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "doc_no": "DOC001",
+    "audit_flag": "PASS"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

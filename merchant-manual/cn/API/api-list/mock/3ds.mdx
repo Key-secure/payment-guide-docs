@@ -1,0 +1,68 @@
+---
+title: 模拟 3DS 确认
+api: POST /open-api/v1/simulate/3ds
+authMethod: none
+hidden: true
+---
+
+模拟 **3DS 授权确认**回调。
+
+<Note>
+- **不使用** `Api-Key` / `Access-Token` 鉴权
+</Note>
+
+## 请求头
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  固定为 `application/json; charset=utf-8`
+</ParamField>
+
+## 请求体
+
+<ParamField body="card_no" type="string" required>
+  卡号
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  金额
+</ParamField>
+
+<ParamField body="txn_id" type="string" required>
+  3DS 交易 ID
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功；失败时与 HTTP 状态码一致（如 `400` / `500`）
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息。成功为 `Success`，失败为具体原因（无 `data` 字段）
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/3ds \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "6220012345678901",
+    "amount": 10,
+    "txn_id": "3ds-txn-uuid-001"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

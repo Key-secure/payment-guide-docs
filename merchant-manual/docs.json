@@ -138,6 +138,17 @@
                       "cn/API/api-list/webhook/consumption",
                       "cn/API/api-list/webhook/auth"
                     ]
+                  },
+                  {
+                    "group": "交易模拟",
+                    "pages": [
+                      "cn/API/api-list/mock/overview",
+                      "cn/API/api-list/mock/auth",
+                      "cn/API/api-list/mock/consumption-clear",
+                      "cn/API/api-list/mock/consumption-fail",
+                      "cn/API/api-list/mock/reversal",
+                      "cn/API/api-list/mock/refund"
+                    ]
                   }
                 ]
               },
@@ -323,6 +334,17 @@
                       "en/API/api-list/webhook/card-update",
                       "en/API/api-list/webhook/consumption",
                       "en/API/api-list/webhook/auth"
+                    ]
+                  },
+                  {
+                    "group": "Transaction Simulation",
+                    "pages": [
+                      "en/API/api-list/mock/overview",
+                      "en/API/api-list/mock/auth",
+                      "en/API/api-list/mock/consumption-clear",
+                      "en/API/api-list/mock/consumption-fail",
+                      "en/API/api-list/mock/reversal",
+                      "en/API/api-list/mock/refund"
                     ]
                   }
                 ]

@@ -1,0 +1,70 @@
+---
+title: 模拟清算（ByCard）
+api: POST /open-api/v1/simulate/external_api/simulate_tevau_clearing
+authMethod: none
+hidden: true
+---
+
+转发 ByCard 沙箱清算通知。`card_no` 会查库转换为 `out_card_no` 再请求沙箱。
+
+<Note>
+- 路径后缀：`/external_api/simulate_tevau_clearing`
+- 上游固定 `currency: HKD`
+- **不使用** `Api-Key` / `Access-Token` 鉴权
+</Note>
+
+## 请求头
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  固定为 `application/json; charset=utf-8`
+</ParamField>
+
+## 请求体
+
+<ParamField body="card_no" type="string" required>
+  卡号（内部转换为 `out_card_no`）
+</ParamField>
+
+<ParamField body="txn_id" type="string" required>
+  原交易 ID
+</ParamField>
+
+<ParamField body="amount" type="string">
+  金额
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功；失败时与 HTTP 状态码一致（如 `400` / `500`）
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息。成功为 `Success`，失败为具体原因（无 `data` 字段）
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/external_api/simulate_tevau_clearing \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "6220012345678901",
+    "txn_id": "TXN001",
+    "amount": "10"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,96 @@
+---
+title: 模拟授权
+api: POST /open-api/v1/simulate/auth
+authMethod: none
+---
+
+模拟一笔**授权**交易，用于测试授权通知。
+
+<Note>
+- 仅支持 **POST**，请求体为 JSON 对象
+- **不使用** `Api-Key` / `Access-Token`
+</Note>
+
+## 请求头
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  固定为 `application/json; charset=utf-8`
+</ParamField>
+
+## 请求体
+
+<ParamField body="card_no" type="string" required>
+  卡号
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  交易金额
+</ParamField>
+
+<ParamField body="transaction_currency" type="string" default="USD">
+  交易币种，默认 `USD`
+</ParamField>
+
+<ParamField body="pay_type" type="string" default="">
+  见 [交易模拟说明](/cn/API/api-list/mock/overview#pay-type)
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功；失败时与 HTTP 状态码一致（如 `400` / `500`）
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息。成功为 `Success`，失败为具体原因（无 `data` 字段）
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/auth \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 1,
+    "transaction_currency": "USD"
+  }'
+```
+
+```bash Apple Pay
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/auth \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 10,
+    "transaction_currency": "USD",
+    "pay_type": "apple"
+  }'
+```
+
+```bash ATM
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/auth \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 10,
+    "transaction_currency": "USD",
+    "pay_type": "atm"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

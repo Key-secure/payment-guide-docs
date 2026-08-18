@@ -1,0 +1,70 @@
+---
+title: 模拟授权交易（ByCard）
+api: POST /open-api/v1/simulate/external_api/simulate_tevau_auth
+authMethod: none
+hidden: true
+---
+
+转发 ByCard 沙箱授权交易通知。`card_no` 会查库转换为 `out_card_no` 再请求沙箱。
+
+<Note>
+- 路径后缀：`/external_api/simulate_tevau_auth`
+- 上游固定走 Railone 签名，由服务内部处理
+- **不使用** `Api-Key` / `Access-Token` 鉴权
+</Note>
+
+## 请求头
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  固定为 `application/json; charset=utf-8`
+</ParamField>
+
+## 请求体
+
+<ParamField body="card_no" type="string" required>
+  卡号（内部转换为 `out_card_no`）
+</ParamField>
+
+<ParamField body="amount" type="string" default="3">
+  金额，默认 `3`
+</ParamField>
+
+<ParamField body="currency" type="string" default="HKD">
+  币种，默认 `HKD`
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功；失败时与 HTTP 状态码一致（如 `400` / `500`）
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息。成功为 `Success`，失败为具体原因（无 `data` 字段）
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/external_api/simulate_tevau_auth \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "6220012345678901",
+    "amount": "10",
+    "currency": "HKD"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

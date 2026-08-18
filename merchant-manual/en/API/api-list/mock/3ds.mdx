@@ -1,0 +1,68 @@
+---
+title: Simulate 3DS Confirmation
+api: POST /open-api/v1/simulate/3ds
+authMethod: none
+hidden: true
+---
+
+Simulates a **3DS authorization confirmation** callback.
+
+<Note>
+- These APIs **do not use** `Api-Key` / `Access-Token` authentication
+</Note>
+
+## Request Headers
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  Fixed to `application/json; charset=utf-8`
+</ParamField>
+
+## Request Body
+
+<ParamField body="card_no" type="string" required>
+  Card number
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  Amount
+</ParamField>
+
+<ParamField body="txn_id" type="string" required>
+  3DS transaction ID
+</ParamField>
+
+## Response
+
+<ResponseField name="code" type="number">
+  Status code. `0` means success. On failure it matches the HTTP status (e.g. `400` / `500`)
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message. `Success` on success, or a specific error reason. No `data` field
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/3ds \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "6220012345678901",
+    "amount": 10,
+    "txn_id": "3ds-txn-uuid-001"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

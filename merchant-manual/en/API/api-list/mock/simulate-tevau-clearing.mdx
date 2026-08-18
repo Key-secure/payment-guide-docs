@@ -1,0 +1,70 @@
+---
+title: Simulate Clearing (ByCard)
+api: POST /open-api/v1/simulate/external_api/simulate_tevau_clearing
+authMethod: none
+hidden: true
+---
+
+Forwards a ByCard sandbox clearing notification. `card_no` is looked up and converted to `out_card_no` before calling the sandbox.
+
+<Note>
+- Path suffix: `/external_api/simulate_tevau_clearing`
+- Upstream currency is fixed to `HKD`
+- These APIs **do not use** `Api-Key` / `Access-Token` authentication
+</Note>
+
+## Request Headers
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  Fixed to `application/json; charset=utf-8`
+</ParamField>
+
+## Request Body
+
+<ParamField body="card_no" type="string" required>
+  Card number (converted internally to `out_card_no`)
+</ParamField>
+
+<ParamField body="txn_id" type="string" required>
+  Original transaction ID
+</ParamField>
+
+<ParamField body="amount" type="string">
+  Amount
+</ParamField>
+
+## Response
+
+<ResponseField name="code" type="number">
+  Status code. `0` means success. On failure it matches the HTTP status (e.g. `400` / `500`)
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message. `Success` on success, or a specific error reason. No `data` field
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/external_api/simulate_tevau_clearing \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "6220012345678901",
+    "txn_id": "TXN001",
+    "amount": "10"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,96 @@
+---
+title: Simulate Authorization
+api: POST /open-api/v1/simulate/auth
+authMethod: none
+---
+
+Simulates an **authorization** transaction so you can test the authorization notification.
+
+<Note>
+- Only **POST** is supported. The request body is a JSON object
+- These APIs **do not use** `Api-Key` / `Access-Token`
+</Note>
+
+## Request Headers
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  Fixed to `application/json; charset=utf-8`
+</ParamField>
+
+## Request Body
+
+<ParamField body="card_no" type="string" required>
+  Card number
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  Transaction amount
+</ParamField>
+
+<ParamField body="transaction_currency" type="string" default="USD">
+  Transaction currency. Default `USD`
+</ParamField>
+
+<ParamField body="pay_type" type="string" default="">
+  See [Transaction Simulation Overview](/en/API/api-list/mock/overview#pay-type)
+</ParamField>
+
+## Response
+
+<ResponseField name="code" type="number">
+  Status code. `0` means success. On failure it matches the HTTP status (e.g. `400` / `500`)
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message. `Success` on success, or a specific error reason. No `data` field
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/auth \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 1,
+    "transaction_currency": "USD"
+  }'
+```
+
+```bash Apple Pay
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/auth \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 10,
+    "transaction_currency": "USD",
+    "pay_type": "apple"
+  }'
+```
+
+```bash ATM
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/auth \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 10,
+    "transaction_currency": "USD",
+    "pay_type": "atm"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,97 @@
+---
+title: Transaction Simulation Overview
+---
+
+In the sandbox, you can call transaction simulation APIs to simulate card authorization, clearance, failure, reversal, and refund, and push Webhooks to the callback URL you configured. Use these APIs for integration testing.
+
+<Note>
+- Only **POST** is supported. `Content-Type` must be `application/json`
+- The request body must be valid JSON
+- These APIs **do not use** the `Api-Key` / `Access-Token` headers
+- The response only indicates whether this simulation succeeded. It **does not return business data** (no `data` field)
+</Note>
+
+## Environment Information
+
+| Environment | Domain | Description |
+| --- | --- | --- |
+| Sandbox | `https://sandbox-openplatform.keysecure.io` | Test environment for development and integration testing |
+
+The path prefix for transaction simulation APIs is `/open-api/v1/simulate`. All examples and curl requests default to the sandbox domain.
+
+## Common Response
+
+All simulation APIs use the same JSON structure and only indicate success or failure.
+
+### Success
+
+HTTP status: **200**
+
+```json
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+The simulation has been executed. If a callback URL is configured, you will receive the corresponding Webhook.
+
+### Failure
+
+| HTTP status | `code` | Description |
+| --- | --- | --- |
+| 400 | 400 | Invalid parameters, e.g. missing `card_no` or card not found |
+| 404 | 404 | API not found |
+| 500 | 500 | Simulation did not complete. Please try again later |
+
+```json
+{
+  "code": 400,
+  "msg": "card_no is required"
+}
+```
+
+## `pay_type` {#pay-type}
+
+`pay_type` specifies the payment method to simulate.
+
+| Value | Meaning |
+| --- | --- |
+| `""` or omitted | Default |
+| `apple` | Apple Pay |
+| `atm` | Physical card cash withdrawal |
+| `unknown` | Other |
+
+<p style={{ color: '#E11D48', fontSize: '13px' }}>Note: apple and unknown are not supported for Singapore card BINs; atm is for physical card cash withdrawal.</p>
+
+If you pass `consume_no`, you can omit `pay_type`.
+
+## Recommended Call Sequence
+
+```text
+1. auth                    # Simulate authorization
+2. consumption_clear       # Simulate clearance success (requires consume_no)
+   or consumption_fail     # Simulate consumption failure (consume_no optional)
+3. reversal / refund       # Simulate reversal or refund (reversal requires consume_no; refund is optional)
+```
+
+## API Index
+
+| # | Method | Path | Description |
+| --- | --- | --- | --- |
+| 1 | POST | `/open-api/v1/simulate/auth` | Simulate authorization |
+| 2 | POST | `/open-api/v1/simulate/consumption_clear` | Simulate consumption clearance success |
+| 3 | POST | `/open-api/v1/simulate/consumption_fail` | Simulate consumption failure |
+| 4 | POST | `/open-api/v1/simulate/reversal` | Simulate reversal |
+| 5 | POST | `/open-api/v1/simulate/refund` | Simulate refund |
+
+## Common Errors
+
+| `msg` (example) | Description |
+| --- | --- |
+| `请求体不能为空` | Missing request body |
+| `请求体必须是合法 JSON` | Invalid JSON |
+| `card_no is required` | Card number is required |
+| `Card not found` | Card not found |
+| `consume_no is required` | Consumption order number is required |
+| `Downstream service call failed, please try again later` | Simulation did not complete. Please try again later |

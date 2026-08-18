@@ -1,0 +1,64 @@
+---
+title: 模拟 Token 验证（ByCard）
+api: POST /open-api/v1/simulate/external_api/simulate_tevau_token
+authMethod: none
+hidden: true
+---
+
+转发 ByCard 沙箱 Token 验证通知。`card_no` 会查库转换为 `out_card_no` 再请求沙箱。`case_type` 映射为上游 `app_type`。
+
+<Note>
+- 路径后缀：`/external_api/simulate_tevau_token`
+- **不使用** `Api-Key` / `Access-Token` 鉴权
+</Note>
+
+## 请求头
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  固定为 `application/json; charset=utf-8`
+</ParamField>
+
+## 请求体
+
+<ParamField body="card_no" type="string" required>
+  卡号（内部转换为 `out_card_no`）
+</ParamField>
+
+<ParamField body="case_type" type="string">
+  场景类型（映射为上游 `app_type`，如 `BIND`）
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功；失败时与 HTTP 状态码一致（如 `400` / `500`）
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息。成功为 `Success`，失败为具体原因（无 `data` 字段）
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/external_api/simulate_tevau_token \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "6220012345678901",
+    "case_type": "BIND"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

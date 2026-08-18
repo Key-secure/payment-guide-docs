@@ -48,14 +48,14 @@ Only merchants with **authorization** integration mode can call these.
 | ---- | ---- | ---- | ---- |
 | Card | POST | /open-api/v1/card/support/bins | Supported card BIN list |
 
-### 4. Transaction Simulation Interfaces (Webhook Testing)
+### 4. Transaction Simulation Interfaces
 
-Integration/testing interfaces. After querying and assembling data, simulate Webhook callbacks to the business system. **Do not use** the standard `Api-Key` / `Access-Token` authentication headers for these interfaces.
+Sandbox integration APIs: simulate card transactions and push Webhooks to your callback URL. **Do not use** the `Api-Key` / `Access-Token` headers. See [Transaction Simulation Overview](/en/API/api-list/mock/overview).
 
 Path prefix:
 - Sandbox: `https://sandbox-openplatform.keysecure.io/open-api/v1/simulate`
 
-| Module | Method | Path | Description |
+| Module | Method | Path suffix | Description |
 | ---- | ---- | ---- | ---- |
 | Simulation | POST | /auth | Simulate authorization |
 | Simulation | POST | /consumption_clear | Simulate consumption clearance success |
@@ -87,6 +87,11 @@ Path prefix:
 1. Query account info → `GET /account/{cardholder_no}/info`
 2. Execute transfer → `POST /account/transfer`
 3. Query transfer flow → `POST /account/transfer/list`
+
+**Transaction Simulation Flow:**
+1. Simulate authorization → `POST /simulate/auth`
+2. Simulate clearance success / failure → `POST /simulate/consumption_clear` or `POST /simulate/consumption_fail`
+3. Simulate reversal / refund → `POST /simulate/reversal` or `POST /simulate/refund`
 
 ### By HTTP Method
 

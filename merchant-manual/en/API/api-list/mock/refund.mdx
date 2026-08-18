@@ -1,0 +1,89 @@
+---
+title: Simulate Refund
+api: POST /open-api/v1/simulate/refund
+authMethod: none
+---
+
+Simulates a refund so you can test the refund notification. `consume_no` is optional.
+
+<Note>
+- Pass `consume_no` to associate the authorization transaction number; omit it to simulate a refund directly
+- If you omit `consume_no`, you can pass `transaction_currency` and `pay_type`
+- These APIs **do not use** `Api-Key` / `Access-Token`
+</Note>
+
+## Request Headers
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  Fixed to `application/json; charset=utf-8`
+</ParamField>
+
+## Request Body
+
+<ParamField body="card_no" type="string" required>
+  Card number
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  Amount
+</ParamField>
+
+<ParamField body="consume_no" type="string">
+  Consumption order number. Associates the authorization transaction number. If omitted, not associated.
+</ParamField>
+
+<ParamField body="transaction_currency" type="string" default="USD">
+  Transaction currency. Takes effect only when `consume_no` is omitted
+</ParamField>
+
+<ParamField body="pay_type" type="string" default="">
+  See [Transaction Simulation Overview](/en/API/api-list/mock/overview#pay-type). Takes effect only when `consume_no` is omitted.
+</ParamField>
+
+## Response
+
+<ResponseField name="code" type="number">
+  Status code. `0` means success. On failure it matches the HTTP status (e.g. `400` / `500`)
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message. `Success` on success, or a specific error reason. No `data` field
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/refund \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 10,
+    "consume_no": "YOUR_CONSUME_NO"
+  }'
+```
+
+```bash Without consume_no
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/refund \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 10,
+    "transaction_currency": "USD",
+    "pay_type": "atm"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

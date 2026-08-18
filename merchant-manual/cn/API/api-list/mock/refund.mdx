@@ -1,0 +1,89 @@
+---
+title: 模拟退款
+api: POST /open-api/v1/simulate/refund
+authMethod: none
+---
+
+模拟退款，用于测试退款通知。`consume_no` 可选。
+
+<Note>
+- 传入 `consume_no` 则关联授权交易单号；不传则直接模拟一笔退款
+- 不传 `consume_no` 时，可传 `transaction_currency`、`pay_type`
+- **不使用** `Api-Key` / `Access-Token`
+</Note>
+
+## 请求头
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  固定为 `application/json; charset=utf-8`
+</ParamField>
+
+## 请求体
+
+<ParamField body="card_no" type="string" required>
+  卡号
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  金额
+</ParamField>
+
+<ParamField body="consume_no" type="string">
+  消费单号，关联授权交易单号；不传则不关联
+</ParamField>
+
+<ParamField body="transaction_currency" type="string" default="USD">
+  交易币种；仅在不传 `consume_no` 时生效
+</ParamField>
+
+<ParamField body="pay_type" type="string" default="">
+  见 [交易模拟说明](/cn/API/api-list/mock/overview#pay-type)。仅在不传 `consume_no` 时生效。
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功；失败时与 HTTP 状态码一致（如 `400` / `500`）
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息。成功为 `Success`，失败为具体原因（无 `data` 字段）
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/refund \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 10,
+    "consume_no": "YOUR_CONSUME_NO"
+  }'
+```
+
+```bash Without consume_no
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/refund \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "card_no": "C02606050CI1Y0HS",
+    "amount": 10,
+    "transaction_currency": "USD",
+    "pay_type": "atm"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>

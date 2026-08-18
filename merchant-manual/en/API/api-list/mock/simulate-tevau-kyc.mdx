@@ -1,0 +1,64 @@
+---
+title: Simulate KYC Review (ByCard)
+api: POST /open-api/v1/simulate/external_api/simulate_tevau_kyc
+authMethod: none
+hidden: true
+---
+
+Forwards a ByCard sandbox KYC review notification. Upstream: `POST https://api-sandbox.bycard.io/api/v1/simulate/notify/tevau` (Railone signing is handled internally).
+
+<Note>
+- Path suffix: `/external_api/simulate_tevau_kyc`
+- These APIs **do not use** `Api-Key` / `Access-Token` authentication
+</Note>
+
+## Request Headers
+
+<ParamField header="Content-Type" type="string" required default="application/json">
+  Fixed to `application/json; charset=utf-8`
+</ParamField>
+
+## Request Body
+
+<ParamField body="doc_no" type="string" required>
+  Document / application number
+</ParamField>
+
+<ParamField body="audit_flag" type="string" required>
+  Review result (e.g. `PASS`)
+</ParamField>
+
+## Response
+
+<ResponseField name="code" type="number">
+  Status code. `0` means success. On failure it matches the HTTP status (e.g. `400` / `500`)
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message. `Success` on success, or a specific error reason. No `data` field
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/external_api/simulate_tevau_kyc \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "doc_no": "DOC001",
+    "audit_flag": "PASS"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success"
+}
+```
+
+</ResponseExample>
