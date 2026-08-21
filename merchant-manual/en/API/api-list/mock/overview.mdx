@@ -2,7 +2,7 @@
 title: Transaction Simulation Overview
 ---
 
-In the sandbox, you can call transaction simulation APIs to simulate card authorization, clearance, failure, reversal, and refund, and push Webhooks to the callback URL you configured. Use these APIs for integration testing.
+In the sandbox, you can call transaction simulation APIs to simulate card authorization, clearance, failure, reversal, refund, and KYC review, and push Webhooks to the callback URL you configured. Use these APIs for integration testing.
 
 <Note>
 - Only **POST** is supported. `Content-Type` must be `application/json`
@@ -84,6 +84,7 @@ If you pass `consume_no`, you can omit `pay_type`.
 | 3 | POST | `/open-api/v1/simulate/consumption_fail` | Simulate consumption failure |
 | 4 | POST | `/open-api/v1/simulate/reversal` | Simulate reversal |
 | 5 | POST | `/open-api/v1/simulate/refund` | Simulate refund |
+| 6 | POST | `/open-api/v1/simulate/external_api/simulate_tevau_kyc` | Simulate KYC review (Hong Kong card BINs only) |
 
 ## Common Errors
 

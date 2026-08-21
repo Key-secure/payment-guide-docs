@@ -2,7 +2,7 @@
 title: 交易模拟说明
 ---
 
-在沙盒环境调用交易模拟接口，可模拟卡片授权、清算、失败、冲正和退款，并向商户配置的回调地址推送 Webhook，用于联调测试。
+在沙盒环境调用交易模拟接口，可模拟卡片授权、清算、失败、冲正、退款和 KYC 审核，并向商户配置的回调地址推送 Webhook，用于联调测试。
 
 <Note>
 - 仅支持 **POST**，`Content-Type` 为 `application/json`
@@ -84,6 +84,7 @@ HTTP 状态码：**200**
 | 3 | POST | `/open-api/v1/simulate/consumption_fail` | 模拟消费失败 |
 | 4 | POST | `/open-api/v1/simulate/reversal` | 模拟冲正/撤销 |
 | 5 | POST | `/open-api/v1/simulate/refund` | 模拟退款 |
+| 6 | POST | `/open-api/v1/simulate/external_api/simulate_tevau_kyc` | 模拟 KYC 审核（仅支持香港卡 BIN） |
 
 ## 常见错误
 

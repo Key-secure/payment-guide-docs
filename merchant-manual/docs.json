@@ -147,7 +147,8 @@
                       "cn/API/api-list/mock/consumption-clear",
                       "cn/API/api-list/mock/consumption-fail",
                       "cn/API/api-list/mock/reversal",
-                      "cn/API/api-list/mock/refund"
+                      "cn/API/api-list/mock/refund",
+                      "cn/API/api-list/mock/simulate-tevau-kyc"
                     ]
                   }
                 ]
@@ -344,7 +345,8 @@
                       "en/API/api-list/mock/consumption-clear",
                       "en/API/api-list/mock/consumption-fail",
                       "en/API/api-list/mock/reversal",
-                      "en/API/api-list/mock/refund"
+                      "en/API/api-list/mock/refund",
+                      "en/API/api-list/mock/simulate-tevau-kyc"
                     ]
                   }
                 ]

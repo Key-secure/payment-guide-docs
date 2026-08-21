@@ -1,15 +1,15 @@
 ---
-title: 模拟 KYC 审核（ByCard）
+title: 模拟 KYC 审核
 api: POST /open-api/v1/simulate/external_api/simulate_tevau_kyc
 authMethod: none
-hidden: true
 ---
 
-转发 ByCard 沙箱 KYC 审核通知。上游：`POST https://api-sandbox.bycard.io/api/v1/simulate/notify/tevau`（Railone 签名由服务内部处理）。
+模拟一次 **KYC 审核**，用于测试 KYC 审核结果通知。
 
 <Note>
-- 路径后缀：`/external_api/simulate_tevau_kyc`
-- **不使用** `Api-Key` / `Access-Token` 鉴权
+- 仅支持 **POST**，请求体为 JSON 对象
+- **不使用** `Api-Key` / `Access-Token`
+- 目前仅支持 **香港卡 BIN**
 </Note>
 
 ## 请求头
@@ -21,11 +21,11 @@ hidden: true
 ## 请求体
 
 <ParamField body="doc_no" type="string" required>
-  证件/单据号
+  Sumsub 证件号
 </ParamField>
 
 <ParamField body="audit_flag" type="string" required>
-  审核结果（如 `PASS`）
+  审核结果：`0` 通过，`1` 拒绝
 </ParamField>
 
 ## 返回参数
@@ -45,8 +45,8 @@ curl --request POST \
   --url https://sandbox-openplatform.keysecure.io/open-api/v1/simulate/external_api/simulate_tevau_kyc \
   --header 'Content-Type: application/json' \
   --data '{
-    "doc_no": "DOC001",
-    "audit_flag": "PASS"
+    "doc_no": "YOUR_DOC_NO",
+    "audit_flag": "0"
   }'
 ```
 
