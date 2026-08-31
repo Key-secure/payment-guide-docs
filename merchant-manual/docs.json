@@ -65,7 +65,10 @@
               },
               {
                 "group": "常见问题",
-                "pages": ["cn/FAQ/question-list"]
+                "pages": [
+                  "cn/FAQ/question-list",
+                  "cn/FAQ/restricted-scenarios-and-regions"
+                ]
               }
             ]
           },
@@ -262,7 +265,10 @@
               },
               {
                 "group": "FAQ",
-                "pages": ["en/FAQ/question-list"]
+                "pages": [
+                  "en/FAQ/question-list",
+                  "en/FAQ/restricted-scenarios-and-regions"
+                ]
               }
             ]
           },
