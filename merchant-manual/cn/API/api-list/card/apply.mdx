@@ -6,6 +6,14 @@ authMethod: none
 
 开卡申请。授信模式传 `package_no`，授权模式传 `card_bin_no`（二选一）。
 
+<Warning>
+Channel02开卡时需要填写账单地址，卡片账单地址存在受限地区。提交申请前，请查看[受限场景/区域](/cn/FAQ/restricted-scenarios-and-regions)中的账单限制区域清单。
+</Warning>
+
+<Note>
+开卡审核需要一定时间：正式环境预计在 30 分钟内完成，沙盒环境预计在 10 分钟内完成。如长时间未完成审核，请联系技术支持。
+</Note>
+
 ## 请求头
 
 <ParamField header="Api-Key" type="string" required placeholder="your_api_key">
@@ -47,7 +55,7 @@ authMethod: none
 </ParamField>
 
 <ParamField body="address_info" type="object">
-  地址信息（实体卡、部分虚拟卡必填）
+  账单地址信息（实体卡、部分虚拟卡必填）
 
   <Expandable title="address_info">
     <ParamField body="first_name" type="string">

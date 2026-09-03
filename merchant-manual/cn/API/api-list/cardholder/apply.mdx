@@ -6,6 +6,14 @@ authMethod: none
 
 新建或更新持卡人 KYC 认证申请。
 
+<Warning>
+KYC 认证存在受限地区。提交申请前，请查看[受限场景/区域](/cn/FAQ/restricted-scenarios-and-regions)中的 KYC 限制区域清单。
+</Warning>
+
+<Note>
+KYC 审核需要一定时间：正式环境预计约 1 个工作日，沙盒环境预计约 10 分钟。如长时间未完成审核，请联系技术支持。
+</Note>
+
 ## 请求头
 
 <ParamField header="Api-Key" type="string" required placeholder="your_api_key">
@@ -42,6 +50,25 @@ authMethod: none
 - **新建**：不传 `cardholder_no`，须传 `cardholder_unique_no` + `sumsub_share_token`。
 - **更新认证**：须传 `cardholder_no`，且 `cardholder_unique_no` 须与平台记录一致。
 </Note>
+
+## 字段校验建议
+
+Sumsub 填写可以使用其他语言。Sumsub 会生成对应的英文字段，只要生成的 Sumsub 英文字段符合以下规则即可。
+
+- **街道 / 城市 / 省州**：空、纯数字、或去空格后只有 1 个字符 → 失败。默认还会去掉符号后再判一次。
+  - 纯数字：`^\d+$`
+  - 去符号：`[^\p{L}\p{N}]`
+- **邮编**：空值通过；非空须匹配宽松邮编（约 3–10 位，字母数字，中间可有空格/连字符）。
+  - `^[A-Za-z0-9][A-Za-z0-9\-\s]{1,8}[A-Za-z0-9]$`
+- **完整地址**：空或不匹配地址正则 → 失败。
+  - `^[0-9a-zA-Z\u4e00-\u9fa5,， ]+$`
+- **姓名**：不匹配中英文字母/空格正则 → 失败。
+  - `^[\u4e00-\u9fa5a-zA-Z ]+$`
+- **邮箱格式**：空或不匹配邮箱正则 → 失败。
+  - `^[A-Za-z0-9.\_%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`
+- **邮箱一致性**：有注册用户时，须与注册邮箱忽略大小写一致；持卡人新建无用户则跳过。
+- **手机号**：空或不是合法国际号码 → 失败。
+- **证件类型**：只允许 `ID_CARD` / `PASSPORT`。无正则（忽略大小写字符串比较）。
 
 ## 返回参数
 

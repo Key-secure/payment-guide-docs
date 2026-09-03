@@ -54,7 +54,7 @@ Retrieves the card privacy JSON encrypted information (PCI must be enabled).
 </ResponseField>
 
 <Note>
-**Permission Notes:** PCI must be enabled for the merchant before this endpoint can be called. If not enabled, error code **1013** is returned.
+**Permission Notes:** The merchant must hold a PCI certificate and have PCI access enabled before calling this endpoint. If access is not enabled, error code **1013** is returned. Merchants without a PCI certificate must retrieve card information through the [Iframe SDK](/en/API/sdk-download).
 
 **Decryption Method:** Use the merchant's current available API credential's `apiSecret`, Base64-decode `data`, and then decrypt it with the AES/ECB/PKCS5Padding algorithm to obtain the plaintext JSON. See "Code Utilities" for details.
 </Note>

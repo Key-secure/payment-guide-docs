@@ -6,6 +6,14 @@ authMethod: none
 
 Submits a card application. Pass `package_no` in credit extension mode, or `card_bin_no` in authorization mode (provide one of the two).
 
+<Warning>
+Card billing addresses are unavailable in certain restricted regions. Before submitting an application, review the billing restricted-region list in [Restricted Scenarios/Regions](/en/FAQ/restricted-scenarios-and-regions).
+</Warning>
+
+<Note>
+Card applications take time to review: within 30 minutes in the production environment and within 10 minutes in the sandbox environment. If a review remains pending significantly longer, contact technical support.
+</Note>
+
 ## Request Headers
 
 <ParamField header="Api-Key" type="string" required placeholder="your_api_key">

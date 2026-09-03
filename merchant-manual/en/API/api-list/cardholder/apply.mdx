@@ -6,6 +6,14 @@ authMethod: none
 
 Creates or updates a cardholder KYC authentication application.
 
+<Warning>
+KYC authentication is unavailable in certain restricted regions. Before submitting an application, review the KYC restricted-region list in [Restricted Scenarios/Regions](/en/FAQ/restricted-scenarios-and-regions).
+</Warning>
+
+<Note>
+KYC reviews take time to complete: approximately 1 business day in the production environment and approximately 10 minutes in the sandbox environment. If a review remains pending significantly longer, contact technical support.
+</Note>
+
 ## Request Headers
 
 <ParamField header="Api-Key" type="string" required placeholder="your_api_key">
@@ -42,6 +50,25 @@ Creates or updates a cardholder KYC authentication application.
 - **Create new**: Do not pass `cardholder_no`; provide `cardholder_unique_no` + `sumsub_share_token`.
 - **Update authentication**: Pass `cardholder_no`, and `cardholder_unique_no` must match the record on the platform.
 </Note>
+
+## Field Validation Guidelines
+
+Information can be entered in other languages in Sumsub. Sumsub generates the corresponding English fields, and the generated English fields must meet the following rules.
+
+- **Street / City / State or Province**: Validation fails if the value is empty, contains only digits, or contains only one character after spaces are removed. By default, symbols are also removed and the value is checked again.
+  - Digits only: `^\d+$`
+  - Remove symbols: `[^\p{L}\p{N}]`
+- **Postal code**: An empty value passes validation. A non-empty value must match the lenient postal-code pattern (approximately 3–10 alphanumeric characters, with spaces or hyphens allowed in the middle).
+  - `^[A-Za-z0-9][A-Za-z0-9\-\s]{1,8}[A-Za-z0-9]$`
+- **Full address**: Validation fails if the value is empty or does not match the address pattern.
+  - `^[0-9a-zA-Z\u4e00-\u9fa5,， ]+$`
+- **Name**: Validation fails if the value does not match the Chinese/English letters and spaces pattern.
+  - `^[\u4e00-\u9fa5a-zA-Z ]+$`
+- **Email format**: Validation fails if the value is empty or does not match the email pattern.
+  - `^[A-Za-z0-9.\_%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`
+- **Email consistency**: When a registered user exists, the email must match the registered email, ignoring case. This check is skipped when creating a cardholder without an associated user.
+- **Phone number**: Validation fails if the value is empty or is not a valid international phone number.
+- **Document type**: Only `ID_CARD` / `PASSPORT` are allowed. No regular expression is used; values are compared as case-insensitive strings.
 
 ## Response Parameters
 
