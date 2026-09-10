@@ -53,7 +53,9 @@ KYC reviews take time to complete: approximately 1 business day in the productio
 
 ## Field Validation Guidelines
 
-Information can be entered in other languages in Sumsub. Sumsub generates the corresponding English fields, and the generated English fields must meet the following rules.
+Information can be entered in other languages in Sumsub. The following fields must be available from the `shareToken`.
+
+Sumsub generates the corresponding English fields, and the generated English fields must meet the following rules.
 
 - **Street / City / State or Province**: Validation fails if the value is empty, contains only digits, or contains only one character after spaces are removed. By default, symbols are also removed and the value is checked again.
   - Digits only: `^\d+$`
@@ -69,6 +71,9 @@ Information can be entered in other languages in Sumsub. Sumsub generates the co
 - **Email consistency**: When a registered user exists, the email must match the registered email, ignoring case. This check is skipped when creating a cardholder without an associated user.
 - **Phone number**: Validation fails if the value is empty or is not a valid international phone number.
 - **Document type**: Only `ID_CARD` / `PASSPORT` are allowed. No regular expression is used; values are compared as case-insensitive strings.
+- **Gender**: Male or female.
+- **Identity document photo**: The photo must be clear and legible. ID cards and passports are currently supported. Submit the applicable document according to the KYC restricted-region requirements.
+- **Proof of address**: Required for certain countries.
 
 ## Response Parameters
 
