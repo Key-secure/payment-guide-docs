@@ -12,10 +12,14 @@ title: 业务流程说明
 
 **场景说明**：完成持卡人认证，持卡人需要认证后才能开卡。
 
+<Warning>
+目前 KYC 仅支持 Sumsub。商户需要在 Sumsub 中将 ChainUp（`clientId: 135887`）添加为接收方，并获取 `shareToken`；调用持卡人认证申请接口时，通过 `sumsub_share_token` 字段将该 `shareToken` 传入平台。
+</Warning>
+
 ### 流程步骤
 
 1. **前端集成 SumSub KYC 组件** —— 用户完成身份验证
-2. **发起持卡人认证** —— 调用接口创建持卡人并发起认证
+2. **发起持卡人认证** —— 将 ChainUp（`clientId: 135887`）添加为接收方，获取 Sumsub `shareToken`，并通过 `sumsub_share_token` 字段调用接口创建持卡人并发起认证
 3. **查询认证状态** —— 获取持卡人列表或详情，确认认证是否通过
 
 ### 相关接口
@@ -32,7 +36,9 @@ title: 业务流程说明
 ```
 前端KYC认证 
     ↓
-[POST /cardholder/apply] 发起持卡人申请
+在 Sumsub 中将 ChainUp（clientId: 135887）添加为接收方并获取 shareToken
+    ↓
+[POST /cardholder/apply] 传入 sumsub_share_token，发起持卡人申请
     ↓
 认证中... (平台与Sumsub验证)
     ↓

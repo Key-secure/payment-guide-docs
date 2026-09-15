@@ -12,10 +12,14 @@ Complete payment card service integration is divided into four stages, from user
 
 **Scenario**: Complete cardholder authentication. Cardholders must be authenticated before they can apply for cards.
 
+<Warning>
+KYC currently supports Sumsub only. The merchant must add ChainUp (`clientId: 135887`) as a recipient in Sumsub and obtain the `shareToken`. When calling the Cardholder Authentication Application API, pass this `shareToken` to the platform through the `sumsub_share_token` field.
+</Warning>
+
 ### Flow Steps
 
 1. **Frontend Integration of SumSub KYC Component** — User completes identity verification
-2. **Backend Initiates Cardholder Authentication** — Call interface to create cardholder and initiate authentication
+2. **Backend Initiates Cardholder Authentication** — Add ChainUp (`clientId: 135887`) as a recipient, obtain the Sumsub `shareToken`, and pass it through the `sumsub_share_token` field when calling the API to create the cardholder and initiate authentication
 3. **Query Authentication Status** — Get cardholder list or details to confirm authentication passes
 
 ### Related Interfaces
@@ -32,7 +36,9 @@ Complete payment card service integration is divided into four stages, from user
 ```
 Frontend KYC Authentication
     ↓
-[POST /cardholder/apply] Initiate cardholder application
+Add ChainUp (clientId: 135887) as a recipient in Sumsub and obtain the shareToken
+    ↓
+[POST /cardholder/apply] Pass sumsub_share_token and initiate cardholder application
     ↓
 Authentication in progress... (Platform verifies with Sumsub)
     ↓

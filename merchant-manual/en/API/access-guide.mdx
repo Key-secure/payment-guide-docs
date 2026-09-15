@@ -50,6 +50,7 @@ Complete the following preparations to ensure smooth API integration:
 | **IP Whitelist Configuration** | Provide server egress IP, configure to Api-Key corresponding whitelist in backend | Merchant Backend |
 | **Callback URL Configuration** | Configure URL to receive transaction notifications (for card changes, consumption orders, authorization notifications, etc.) | Merchant Backend |
 | **Integrate SumSub KYC** | Frontend integrates KYC authentication component, users complete KYC authentication through Sumsub | Merchant Frontend |
+| **Confirm How to Retrieve Card Information** | Select an integration method based on PCI certification: merchants without a PCI certificate must integrate the [Iframe SDK](/en/API/sdk-download); merchants with a PCI certificate and the required permission enabled may call the [Card Private Information API](/en/API/api-list/card/private-info) | Merchant |
 | **Key Management** | Securely store `apiSecret` for encrypting/decrypting sensitive information (CVV/PIN) and signature verification | Merchant Backend |
 | **Test Integration** | Complete full process testing in sandbox environment (user authentication → card application → consumption, etc.) | Merchant |
 
