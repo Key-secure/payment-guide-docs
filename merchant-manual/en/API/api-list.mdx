@@ -28,6 +28,7 @@ Interfaces supported by both credit extension and authorization modes.
 | Consumption | GET | /open-api/v1/card/consume/{consume_no}/info | Consumption details |
 | Consumption | POST | /open-api/v1/card/consume/list | Consumption list |
 | PCI | GET | /open-api/v1/merchant/client/{card_no}/token | Issue PCI Client Access Token (called when integrating iframe) |
+| Account | POST | /open-api/v1/reserve/fund/transaction/list | Balance details list |
 
 ### 2. Credit Extension Mode Interfaces (CREDIT_EXTENSION)
 
@@ -89,6 +90,9 @@ Path prefix:
 2. Execute transfer → `POST /account/transfer`
 3. Query transfer flow → `POST /account/transfer/list`
 
+**Balance Flow:**
+1. Query balance details → `POST /reserve/fund/transaction/list`
+
 **Transaction Simulation Flow:**
 1. Simulate authorization → `POST /simulate/auth`
 2. Simulate clearance success / failure → `POST /simulate/consumption_clear` or `POST /simulate/consumption_fail`
@@ -118,6 +122,7 @@ Path prefix:
 - `/consume/list` — Consumption list
 - `/account/transfer` — Transfer (credit)
 - `/account/transfer/list` — Transfer flow (credit)
+- `/reserve/fund/transaction/list` — Balance details
 - `/merchant/pci/card/detail` — PCI card sensitive info
 
 ## Permissions & Prerequisites

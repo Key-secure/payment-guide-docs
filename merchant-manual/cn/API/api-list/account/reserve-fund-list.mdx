@@ -1,0 +1,121 @@
+---
+title: 查询余额明细
+api: POST /open-api/v1/reserve/fund/transaction/list
+authMethod: none
+---
+
+查询商户账户余额明细。单次查询时间跨度最多 31 天。
+
+## 请求头
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey（商户凭证，与 IP 白名单绑定）
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  登录标识（除获取 Token 外必填）
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  固定为 `application/json`
+</ParamField>
+
+<ParamField header="Timezone" type="string" default="UTC+8">
+  时区，影响 `start_time` / `end_time` 的日界计算，默认 UTC+8
+</ParamField>
+
+## 请求体
+
+<ParamField body="start_time" type="string" required >
+  开始时间（`yyyy-MM-dd` 或 `yyyy-MM-dd HH:mm:ss`）
+</ParamField>
+
+<ParamField body="end_time" type="string" required >
+  结束时间（同上；间隔最多 31 天）
+</ParamField>
+
+<ParamField body="type" type="string">
+  明细类型，见 [常量表 - 余额明细类型](/cn/API/constants#reserve-fund-type)。不传则查询全部类型
+</ParamField>
+
+<ParamField body="page" type="number" default="0">
+  查询页码，从 `0` 开始
+</ParamField>
+
+<ParamField body="size" type="number" default="10">
+  每页数量，最大 `100`
+</ParamField>
+
+## 返回参数
+
+<ResponseField name="code" type="number">
+  响应状态码，`0` 表示成功
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  响应消息
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  返回数据
+
+  <Expandable title="data">
+    <ResponseField name="list" type="object[]">
+      余额明细列表
+      <Expandable title="list">
+        <ResponseField name="transaction_no" type="string">余额明细号</ResponseField>
+        <ResponseField name="type" type="string">明细类型，见 [常量表 - 余额明细类型](/cn/API/constants#reserve-fund-type)</ResponseField>
+        <ResponseField name="amount_type" type="string">账户变动方向：`add` 增加，`reduce` 减少</ResponseField>
+        <ResponseField name="amount" type="string">交易金额</ResponseField>
+        <ResponseField name="reserve_amount" type="string">交易后余额</ResponseField>
+        <ResponseField name="ctime" type="string">流水时间（`yyyy-MM-dd HH:mm:ss`）</ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/reserve/fund/transaction/list \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --header 'Timezone: UTC+8' \
+  --data '{
+    "start_time": "2026-09-01",
+    "end_time": "2026-09-30",
+    "type": "Deposit",
+    "page": 0,
+    "size": 10
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "list": [{
+      "transaction_no": "TR260901000000000000000000000001",
+      "type": "Deposit",
+      "amount_type": "add",
+      "amount": "100.000000000000000000",
+      "reserve_amount": "1000.000000000000000000",
+      "ctime": "2026-09-01 12:00:00"
+    }]
+  }
+}
+```
+
+</ResponseExample>

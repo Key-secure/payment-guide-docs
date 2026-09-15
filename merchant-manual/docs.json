@@ -106,7 +106,8 @@
                     "pages": [
                       "cn/API/api-list/account/transfer",
                       "cn/API/api-list/account/info",
-                      "cn/API/api-list/account/transfer-list"
+                      "cn/API/api-list/account/transfer-list",
+                      "cn/API/api-list/account/reserve-fund-list"
                     ]
                   },
                   {
@@ -304,7 +305,8 @@
                     "pages": [
                       "en/API/api-list/account/transfer",
                       "en/API/api-list/account/info",
-                      "en/API/api-list/account/transfer-list"
+                      "en/API/api-list/account/transfer-list",
+                      "en/API/api-list/account/reserve-fund-list"
                     ]
                   },
                   {

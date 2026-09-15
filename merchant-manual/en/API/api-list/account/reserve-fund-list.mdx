@@ -1,0 +1,121 @@
+---
+title: Query Balance Details
+api: POST /open-api/v1/reserve/fund/transaction/list
+authMethod: none
+---
+
+Queries the merchant account balance details. The query window is at most 31 days.
+
+## Request Headers
+
+<ParamField header="Api-Key" type="string" required placeholder="your_api_key">
+  apiKey (merchant credential, bound to IP whitelist)
+</ParamField>
+
+<ParamField header="Timestamp" type="string" required >
+  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+</ParamField>
+
+<ParamField header="Access-Token" type="string" required placeholder="your_access_token">
+  Login token (required for all interfaces except Get Token).
+</ParamField>
+
+<ParamField header="Content-Type" type="string" default="application/json">
+  Fixed to `application/json`
+</ParamField>
+
+<ParamField header="Timezone" type="string" default="UTC+8">
+  Timezone, affects the day boundary calculation for `start_time` / `end_time`. Defaults to UTC+8.
+</ParamField>
+
+## Request Body
+
+<ParamField body="start_time" type="string" required >
+  Start time (`yyyy-MM-dd` or `yyyy-MM-dd HH:mm:ss`).
+</ParamField>
+
+<ParamField body="end_time" type="string" required >
+  End time (same format as above; interval ≤ 31 days).
+</ParamField>
+
+<ParamField body="type" type="string">
+  Detail type. See [Constants - Balance Detail Type](/en/API/constants#reserve-fund-type). Omit to query all types.
+</ParamField>
+
+<ParamField body="page" type="number" default="0">
+  Query page number, starting from `0`.
+</ParamField>
+
+<ParamField body="size" type="number" default="10">
+  Number of records per page (max 100).
+</ParamField>
+
+## Response Parameters
+
+<ResponseField name="code" type="number">
+  Response status code. `0` indicates success.
+</ResponseField>
+
+<ResponseField name="msg" type="string">
+  Response message.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Response data.
+
+  <Expandable title="data">
+    <ResponseField name="list" type="object[]">
+      Balance details list.
+      <Expandable title="list">
+        <ResponseField name="transaction_no" type="string">Balance detail number</ResponseField>
+        <ResponseField name="type" type="string">Detail type. See [Constants - Balance Detail Type](/en/API/constants#reserve-fund-type)</ResponseField>
+        <ResponseField name="amount_type" type="string">Balance change direction: `add` increase, `reduce` decrease</ResponseField>
+        <ResponseField name="amount" type="string">Transaction amount</ResponseField>
+        <ResponseField name="reserve_amount" type="string">Balance after the transaction</ResponseField>
+        <ResponseField name="ctime" type="string">Transaction time (`yyyy-MM-dd HH:mm:ss`)</ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --request POST \
+  --url https://sandbox-openplatform.keysecure.io/open-api/v1/reserve/fund/transaction/list \
+  --header 'Content-Type: application/json' \
+  --header 'Api-Key: your_api_key' \
+  --header 'Timestamp: 1716307200000' \
+  --header 'Access-Token: your_access_token' \
+  --header 'Timezone: UTC+8' \
+  --data '{
+    "start_time": "2026-09-01",
+    "end_time": "2026-09-30",
+    "type": "Deposit",
+    "page": 0,
+    "size": 10
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "list": [{
+      "transaction_no": "TR260901000000000000000000000001",
+      "type": "Deposit",
+      "amount_type": "add",
+      "amount": "100.000000000000000000",
+      "reserve_amount": "1000.000000000000000000",
+      "ctime": "2026-09-01 12:00:00"
+    }]
+  }
+}
+```
+
+</ResponseExample>
