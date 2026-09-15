@@ -70,6 +70,7 @@ authMethod: none
         <ResponseField name="transaction_no" type="string">余额明细号</ResponseField>
         <ResponseField name="type" type="string">明细类型，见 [常量表 - 余额明细类型](/cn/API/constants#reserve-fund-type)</ResponseField>
         <ResponseField name="amount_type" type="string">账户变动方向：`add` 增加，`reduce` 减少</ResponseField>
+        <ResponseField name="symbol" type="string">币种</ResponseField>
         <ResponseField name="amount" type="string">交易金额</ResponseField>
         <ResponseField name="reserve_amount" type="string">交易后余额</ResponseField>
         <ResponseField name="ctime" type="string">流水时间（`yyyy-MM-dd HH:mm:ss`）</ResponseField>
@@ -107,12 +108,13 @@ curl --request POST \
   "msg": "Success",
   "data": {
     "list": [{
-      "transaction_no": "TR260901000000000000000000000001",
-      "type": "Deposit",
+      "transaction_no": "TR260605000000358089878975545344",
+      "type": "Consumption",
       "amount_type": "add",
-      "amount": "100.000000000000000000",
-      "reserve_amount": "1000.000000000000000000",
-      "ctime": "2026-09-01 12:00:00"
+      "symbol": "USD",
+      "amount": "3",
+      "reserve_amount": "519.3",
+      "ctime": "2026-06-05 15:11:17"
     }]
   }
 }

@@ -70,6 +70,7 @@ Queries the merchant account balance details. The query window is at most 31 day
         <ResponseField name="transaction_no" type="string">Balance detail number</ResponseField>
         <ResponseField name="type" type="string">Detail type. See [Constants - Balance Detail Type](/en/API/constants#reserve-fund-type)</ResponseField>
         <ResponseField name="amount_type" type="string">Balance change direction: `add` increase, `reduce` decrease</ResponseField>
+        <ResponseField name="symbol" type="string">Currency</ResponseField>
         <ResponseField name="amount" type="string">Transaction amount</ResponseField>
         <ResponseField name="reserve_amount" type="string">Balance after the transaction</ResponseField>
         <ResponseField name="ctime" type="string">Transaction time (`yyyy-MM-dd HH:mm:ss`)</ResponseField>
@@ -107,12 +108,13 @@ curl --request POST \
   "msg": "Success",
   "data": {
     "list": [{
-      "transaction_no": "TR260901000000000000000000000001",
-      "type": "Deposit",
+      "transaction_no": "TR260605000000358089878975545344",
+      "type": "Consumption",
       "amount_type": "add",
-      "amount": "100.000000000000000000",
-      "reserve_amount": "1000.000000000000000000",
-      "ctime": "2026-09-01 12:00:00"
+      "symbol": "USD",
+      "amount": "3",
+      "reserve_amount": "519.3",
+      "ctime": "2026-06-05 15:11:17"
     }]
   }
 }
