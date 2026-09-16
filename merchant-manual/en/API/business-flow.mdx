@@ -141,7 +141,7 @@ Physical card: Mailing → User receives card → [POST /card/active] Activate
 ### Flow Steps
 
 1. **Recharge Reserve** — Merchant manually recharges reserve in backend (no interface currently)
-2. **Query Balance Details** — Query deposits, withdrawals, consumption, card issuance, and shipping by time range
+2. **Query Reserve Fund Balance Details** — Query deposits, withdrawals, consumption, card issuance, and shipping by time range
 3. **Query Account Balance** — Get cardholder account info to confirm available assets
 4. **Execute Fund Transfer** — Perform fund transfer when cardholder funds change (top-up or withdrawal)
 5. **Query Transfer Flow** — Check transfer history for reconciliation
@@ -151,7 +151,7 @@ Physical card: Mailing → User receives card → [POST /card/active] Activate
 | Interface | Method | Path | Description |
 | --- | --- | --- | --- |
 | Reserve Recharge | — | — | Currently no interface available, must manually recharge in merchant backend |
-| Query Balance Details | POST | `/open-api/v1/reserve/fund/transaction/list` | Query account balance details by time range, up to 31 days |
+| Query Reserve Fund Balance Details | POST | `/open-api/v1/reserve/fund/transaction/list` | Query reserve fund account balance details by time range, up to 31 days |
 | **Cardholder Fund Transfer** | POST | `/open-api/v1/account/transfer` | Perform fund transfer when cardholder funds change (top-up or withdrawal); keep both sides in sync; fixed currency TUSDT |
 | Get Cardholder Account Info List | GET | `/open-api/v1/account/{cardholder_no}/info` | Available assets in cardholder's credit mode account |
 | Get Account Transfer Flow List | POST | `/open-api/v1/account/transfer/list` | Cardholder fund transfer history |

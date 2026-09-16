@@ -28,7 +28,7 @@ title: 接口清单
 | 消费 | GET | /open-api/v1/card/consume/{consume_no}/info | 消费详情 |
 | 消费 | POST | /open-api/v1/card/consume/list | 消费列表 |
 | PCI | GET | /open-api/v1/merchant/client/{card_no}/token | 颁发 PCI Client Access Token（ifram集成时调用） |
-| 账户 | POST | /open-api/v1/reserve/fund/transaction/list | 余额明细列表 |
+| 账户 | POST | /open-api/v1/reserve/fund/transaction/list | 备付金余额明细列表 |
 
 ### 2. 授信模式接口（CREDIT_EXTENSION）
 
@@ -91,7 +91,7 @@ title: 接口清单
 3. 查询划转流水 → `POST /account/transfer/list`
 
 **余额流程：**
-1. 查询余额明细 → `POST /reserve/fund/transaction/list`
+1. 查询备付金余额明细 → `POST /reserve/fund/transaction/list`
 
 **交易模拟流程：**
 1. 模拟授权 → `POST /simulate/auth`
