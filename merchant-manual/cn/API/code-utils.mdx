@@ -15,13 +15,13 @@ title: 代码工具类
  */
 public class SignUtils {
 
-    public static String sign(String appId, String timestamp, String body, String secretKey) throws Exception {
-        return sign(appId, timestamp, buildBodyMap(body), secretKey);
+    public static String sign(String apiKey, String timestamp, String body, String secretKey) throws Exception {
+        return sign(apiKey, timestamp, buildBodyMap(body), secretKey);
     }
 
-    public static String sign(String appId, String timestamp, Map<String, String> body, String secretKey) throws Exception {
+    public static String sign(String apiKey, String timestamp, Map<String, String> body, String secretKey) throws Exception {
         TreeMap<String, String> params = new TreeMap<>();
-        params.put("appId", appId);
+        params.put("appId", apiKey);
         params.put("timestamp", timestamp);
         if (body != null && !body.isEmpty()) {
             params.putAll(body);
