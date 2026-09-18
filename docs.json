@@ -1,0 +1,64 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Payment-guide",
+  "colors": {
+    "primary": "#2662FF",
+    "light": "#2662FF",
+    "dark": "#2662FF"
+  },
+  "favicon": "/logo/Frame 4.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "操作指南",
+        "groups": [
+          {
+            "group": "介绍",
+            "pages": [
+              "Introduce/budget-card/information"
+            ]
+          },
+          {
+            "group": "基础操作",
+            "pages": [
+              "Introduce/budget-card/quick-start",
+              "Introduce/budget-card/download-the-app",
+              "Introduce/budget-card/create-account",
+              "Introduce/budget-card/kyc-identity-verification",
+              "Introduce/budget-card/obtain-card-information"
+            ]
+          },
+          {
+            "group": "卡片绑定",
+            "pages": [
+              "Introduce/budget-card/add-to-apple-wallet",
+              "Introduce/budget-card/add-to-google-pay"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/KeySecure Logo - Original 1.svg",
+    "dark": "/logo/KeySecure Logo - Original 1.svg"
+  },
+  "appearance": {
+    "default": "light",
+    "strict": true
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "英文",
+        "href": "https://help-en.payfun.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "官网",
+      "href": "https://www.payfun.com/"
+    }
+  }
+}
