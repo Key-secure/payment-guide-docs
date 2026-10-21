@@ -41,7 +41,7 @@ Retrieves the card privacy JSON encrypted information (PCI must be enabled).
 </ResponseField>
 
 <ResponseField name="data" type="string">
-  A JSON string encrypted with **AES/ECB/PKCS5Padding + Base64**. After decrypting it with the `apiSecret` from the merchant's current available API credentials, you will get the following JSON structure:
+  A JSON string encrypted with **AES/ECB/PKCS5Padding + Base64**. After decrypting it with the `SecretKey` from the merchant's current available API credentials, you will get the following JSON structure:
 
   <Expandable title="Decrypted JSON structure of data">
     <ResponseField name="card_no" type="string">Card order number</ResponseField>
@@ -56,7 +56,7 @@ Retrieves the card privacy JSON encrypted information (PCI must be enabled).
 <Note>
 **Permission Notes:** The merchant must hold a PCI certificate and have PCI access enabled before calling this endpoint. If access is not enabled, error code **1013** is returned. Merchants without a PCI certificate must retrieve card information through the [Iframe SDK](/en/API/sdk-download).
 
-**Decryption Method:** Use the merchant's current available API credential's `apiSecret`, Base64-decode `data`, and then decrypt it with the AES/ECB/PKCS5Padding algorithm to obtain the plaintext JSON. See "Code Utilities" for details.
+**Decryption Method:** Use the merchant's current available API credential's `SecretKey`, Base64-decode `data`, and then decrypt it with the AES/ECB/PKCS5Padding algorithm to obtain the plaintext JSON. See "Code Utilities" for details.
 </Note>
 
 <RequestExample>

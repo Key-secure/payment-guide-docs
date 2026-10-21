@@ -80,7 +80,7 @@ public class SignUtils {
 | --- | --- |
 | Algorithm | AES-256 |
 | Mode/Padding | **CBC / PKCS5Padding** (16-byte random IV per encryption) |
-| Key Derivation | `SHA-256(apiSecret UTF-8)` → 32-byte AES key (apiSecret is variable-length, **cannot** be used directly as AES Key) |
+| Key Derivation | `SHA-256(SecretKey UTF-8)` → 32-byte AES key (SecretKey is variable-length, **cannot** be used directly as AES Key) |
 | Ciphertext Format | `Base64( IV[16 bytes] ‖ AES-CBC ciphertext )` |
 | Charset | UTF-8 (plaintext) |
 
@@ -169,9 +169,9 @@ public class MerchantEncryptUtil {
 **1) Physical Card Activation — Merchant Encrypts CVV Before Submission**
 
 ```java
-String apiSecret = "your_api_secret_plaintext";
+String SecretKey = "your_api_secret_plaintext";
 String plainCvv = "123";
-String encryptedCvv = MerchantEncryptUtil.encrypt(plainCvv, apiSecret);
+String encryptedCvv = MerchantEncryptUtil.encrypt(plainCvv, SecretKey);
 
 // Request body
 // {
@@ -185,9 +185,9 @@ String encryptedCvv = MerchantEncryptUtil.encrypt(plainCvv, apiSecret);
 **2) Set Physical Card PIN — Merchant Encrypts Before Submission**
 
 ```java
-String apiSecret = "your_api_secret_plaintext";
+String SecretKey = "your_api_secret_plaintext";
 String plainPin = "123456";
-String encryptedPin = MerchantEncryptUtil.encrypt(plainPin, apiSecret);
+String encryptedPin = MerchantEncryptUtil.encrypt(plainPin, SecretKey);
 
 // Request body
 // { "card_no": "...", "cardholder_no": "...", "pin": "<encryptedPin>" }
@@ -196,9 +196,9 @@ String encryptedPin = MerchantEncryptUtil.encrypt(plainPin, apiSecret);
 **3) Get Card Privacy JSON — Merchant Decrypts Response Data**
 
 ```java
-String apiSecret = "your_api_secret_plaintext";
+String SecretKey = "your_api_secret_plaintext";
 String encryptedData = response.getData(); // data field from HTTP response
-String json = MerchantEncryptUtil.decrypt(encryptedData, apiSecret);
+String json = MerchantEncryptUtil.decrypt(encryptedData, SecretKey);
 // json is card privacy information JSON string
 ```
 

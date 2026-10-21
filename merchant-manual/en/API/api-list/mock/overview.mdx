@@ -2,7 +2,7 @@
 title: Transaction Simulation Overview
 ---
 
-In the sandbox, you can call transaction simulation APIs to simulate card authorization, clearance, failure, reversal, refund, and KYC review, and push Webhooks to the callback URL you configured. Use these APIs for integration testing.
+In the sandbox, you can call transaction simulation APIs to simulate card authorization, clearance, failure, reversal, refund, and KYC review, and push Webhooks to the **Notification URL** you configured. Use these APIs for integration testing.
 
 <Note>
 - Only **POST** is supported. `Content-Type` must be `application/json`
@@ -34,7 +34,7 @@ HTTP status: **200**
 }
 ```
 
-The simulation has been executed. If a callback URL is configured, you will receive the corresponding Webhook.
+The simulation has been executed. If a **Notification URL** is configured, you will receive the corresponding Webhook.
 
 ### Failure
 
