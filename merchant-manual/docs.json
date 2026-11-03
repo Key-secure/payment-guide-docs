@@ -68,7 +68,8 @@
                 "pages": [
                   "cn/FAQ/question-list",
                   "cn/FAQ/restricted-scenarios-and-regions",
-                  "cn/FAQ/restricted-mcc"
+                  "cn/FAQ/restricted-mcc",
+                  "cn/FAQ/card-limits"
                 ]
               }
             ]
@@ -270,7 +271,8 @@
                 "pages": [
                   "en/FAQ/question-list",
                   "en/FAQ/restricted-scenarios-and-regions",
-                  "en/FAQ/restricted-mcc"
+                  "en/FAQ/restricted-mcc",
+                  "en/FAQ/card-limits"
                 ]
               }
             ]
