@@ -40,11 +40,11 @@ Merchants can view detailed information for each card BIN on this page, includin
 
 * **Cancellation Fee Waiver**: The number of free cancellations allowed per card.
 
-* **Small Transaction Threshold (USD)**: The amount below which a transaction is treated as a small transaction in the system.
+* **Small Transaction Threshold (USD)**: The amount threshold used to determine the Small Txn & Auth Fee. A transaction below this threshold is treated as a small transaction and is subject to an authorization fee.
 
-* **Small Transaction Fee Waiver Count**: How many small transactions per period are exempt from the small transaction fee before the fee applies.
+* **Small Txn & Auth Fee Waiver Count**: The number of small transactions per period that are exempt from the Small Txn & Auth Fee. Once the waiver count is exceeded, the fee applies according to the Small Txn & Auth Fee rules. Some card BINs do not support this waiver.
 
-* **Small Transaction Fee**: The fixed fee per small transaction after the waiver limit is exceeded.
+* **Small Txn & Auth Fee**: The fixed fee charged for each small transaction after the waiver count is exceeded.
 
 **3. Physical Card Fees**
 
