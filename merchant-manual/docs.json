@@ -140,6 +140,7 @@
                   {
                     "group": "交易回调通知",
                     "pages": [
+                      "cn/API/api-list/webhook/notification-guide",
                       "cn/API/api-list/webhook/card-update",
                       "cn/API/api-list/webhook/consumption",
                       "cn/API/api-list/webhook/auth"
@@ -344,6 +345,7 @@
                   {
                     "group": "Transaction Webhooks",
                     "pages": [
+                      "en/API/api-list/webhook/notification-guide",
                       "en/API/api-list/webhook/card-update",
                       "en/API/api-list/webhook/consumption",
                       "en/API/api-list/webhook/auth"

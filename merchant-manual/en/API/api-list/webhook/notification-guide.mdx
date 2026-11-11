@@ -1,0 +1,30 @@
+---
+title: Notification Guide
+description: Learn about automatic retries and manual resending after a notification fails
+---
+
+The platform sends business notifications to the Notification URL configured by the merchant. After receiving a notification, the merchant must return a successful response in the format specified in the corresponding notification documentation.
+
+## Automatic Retries
+
+For asynchronous notifications that support retries, the platform automatically retries according to its notification retry policy if the request times out, the connection fails, or the platform does not receive a successful response (`code = 0`).
+
+<Note>
+Automatic retries may cause the same notification to be sent more than once. Merchants must implement idempotent processing based on the notification ID or business order number to prevent duplicate processing.
+</Note>
+
+In authorization mode, Auth order notifications are used for real-time authorization confirmation and must be answered within the specified time. If the request times out or the response fails, the platform processes it according to the authorization orchestration policy. The standard asynchronous notification retry mechanism does not apply.
+
+## Manual Resending
+
+If a notification remains unsuccessful after automatic retries, the merchant can locate the corresponding business record in the merchant portal and manually resend the notification.
+
+In the merchant portal, locate the failed notification and click the retry button in the action column on the right.
+
+![Manual notification resend reference](/en/images/api-notification-manual-retry.png)
+
+A manually resent notification may duplicate a previously delivered notification, so idempotent processing is still required. After processing, use the merchant portal records and your system logs to confirm the notification result.
+
+<Warning>
+Ensure that the Notification URL is publicly accessible and returns a response promptly. Avoid performing long-running synchronous operations in the notification request, as response timeouts may trigger duplicate notifications.
+</Warning>

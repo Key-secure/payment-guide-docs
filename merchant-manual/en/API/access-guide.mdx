@@ -8,7 +8,9 @@ title: Access Guide
 
 Cardholder's actual assets, including deposits and withdrawals, are managed in a closed loop on the merchant's side. All cardholder funds are managed by the merchant themselves.
 
-Merchants complete credit extension through fund transfers and need to recharge reserve funds. When cardholders consume, funds are deducted from the reserve.
+Merchants complete credit extension through fund transfers and need to recharge reserve funds. When cardholders make purchases, funds are deducted from the reserve and the credit limit is reduced accordingly.
+
+The card fee model relies on the card package functionality provided by KeySecure and is suitable for merchants that do not require a highly customizable fee model.
 
 **Applicable Scenarios:**
 - Merchant manages cardholder funds independently
@@ -21,10 +23,12 @@ Cardholder's actual assets, including deposits and withdrawals, are managed in a
 
 When cardholders make purchases, KeySecure sends authorization confirmation to the merchant, which must be completed **within 800 milliseconds**, otherwise the transaction fails.
 
+Merchants are responsible for implementing the corresponding card fee collection process, providing greater flexibility in the fee model.
+
 **Applicable Scenarios:**
 - Requires real-time authorization confirmation for transactions
 - High performance requirements
-- Supports multiple card BIN combinations
+- Customizable fee model
 
 **Important Note:** High interface response requirements - ensure your system can complete authorization response within 800 milliseconds.
 
