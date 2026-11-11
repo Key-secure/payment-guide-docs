@@ -4,7 +4,8 @@ api: POST /open-api/v1/account/transfer
 authMethod: none
 ---
 
-Performs a cardholder fund transfer (**credit extension mode**). The current transfer currency is fixed to **TUSDT**.
+Performs a cardholder fund transfer (**credit extension mode only**). The transfer currency is fixed to **TUSDT**. Map the amount to the cardholder's actual assets available for card spending.
+Cardholder spending and account queries are also displayed in TUSDT (the USD exchange rate is fixed at 1:1).
 
 ## Request Headers
 
