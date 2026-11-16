@@ -62,13 +62,18 @@ Authentication successful ✓ (Status: Approved)
 
 **Scenario**: After cardholder authentication passes, user selects card type (virtual/physical) and applies for card, along with card management.
 
+<Warning>
+The card number (PAN), CVV, and expiration date are sensitive card information. Merchants that hold a PCI certificate and have PCI access enabled may call the [Get Card Privacy Information API](/en/API/api-list/card/private-info). Merchants without a PCI certificate must integrate the [Iframe SDK](/en/API/sdk-download) and display this information through a secure iframe.
+</Warning>
+
 ### Flow Steps
 
 1. **Get Card Package or BIN List** — Get available card products based on integration mode
 2. **Apply for Card** — User selects card type (virtual/physical) and submits application
 3. **Query Card Status** — Get card list or card details to confirm card application success
-4. **Activate Card (Physical Cards)** — After user receives physical card, must activate to use
-5. **Manage Card Status** — Freeze, unfreeze, or delete cards
+4. **Retrieve Card Information** — Select the Card Privacy Information API or Iframe SDK depending on whether the merchant holds a PCI certificate
+5. **Activate Card (Physical Cards)** — After user receives physical card, must activate to use
+6. **Manage Card Status** — Freeze, unfreeze, or delete cards
 
 ### Related Interfaces
 
@@ -80,6 +85,7 @@ Authentication successful ✓ (Status: Approved)
 | Get Card List | POST | `/open-api/v1/card/list` | Common | Get current card list |
 | Get Card Details | GET | `/open-api/v1/card/{card_no}/detail` | Common | Get card details (including rates, fees, etc.) |
 | Get Card Privacy Info | GET | `/open-api/v1/card/{card_no}/private/info` | Common | Get card's CVV, expiry, card number (requires contacting business to enable PCI permission) |
+| Iframe SDK | — | `/en/API/sdk-download` | Common | Display sensitive card information such as the card number, CVV, and expiration date through a secure iframe when the merchant does not hold a PCI certificate |
 | **Activate Physical Card** | POST | `/open-api/v1/card/active` | Common | Physical card needs activation after receipt (requires encrypted CVV) |
 | Update Card Status | POST | `/open-api/v1/card/status/update` | Common | Update card usage status (Frozen / Activated / Delete) |
 | Set PIN | POST | `/open-api/v1/card/pin/set` | Common | Set physical card PIN (requires encrypted PIN) |

@@ -4,7 +4,11 @@ api: GET /open-api/v1/card/{card_no}/private/info
 authMethod: none
 ---
 
-Retrieves the card privacy JSON encrypted information (PCI must be enabled).
+This endpoint retrieves encrypted JSON containing private card information. It is available only to merchants that hold a PCI certificate and have PCI access enabled through the business team.
+
+<Warning>
+Merchants without a PCI certificate cannot use this endpoint to retrieve sensitive card information such as the card number (PAN), CVV, and expiration date. To display this information, integrate the [Iframe SDK](/en/API/sdk-download) and render it through a secure iframe.
+</Warning>
 
 ## Request Headers
 

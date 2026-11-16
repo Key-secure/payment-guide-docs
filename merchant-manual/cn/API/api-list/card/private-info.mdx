@@ -4,7 +4,11 @@ api: GET /open-api/v1/card/{card_no}/private/info
 authMethod: none
 ---
 
-获取卡隐私 JSON 加密信息（需开通 PCI）。
+本接口用于获取加密后的卡片隐私信息，仅限已持有 PCI 证书并联系商务开通 PCI 权限的商户调用。
+
+<Warning>
+商户未持有 PCI 证书时，不可通过本接口获取卡号（PAN）、CVV 和有效期等敏感卡片信息。如需查看这些信息，请接入 [Iframe SDK](/cn/API/sdk-download)，通过安全 Iframe 进行展示。
+</Warning>
 
 ## 请求头
 

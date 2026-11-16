@@ -62,13 +62,18 @@ title: 业务流程说明
 
 **场景说明**：持卡人认证通过后，用户选择卡类型（虚拟卡/实体卡）、开卡并进行卡片管理。
 
+<Warning>
+卡号（PAN）、CVV 和有效期属于敏感卡片信息。商户持有 PCI 证书并已开通 PCI 权限时，可调用[获取卡隐私信息接口](/cn/API/api-list/card/private-info)；未持有 PCI 证书时，必须接入 [Iframe SDK](/cn/API/sdk-download)，通过安全 Iframe 展示这些信息。
+</Warning>
+
 ### 流程步骤
 
 1. **获取卡套餐或 BIN 列表** —— 根据对接模式获取可用的卡产品
 2. **申请开卡** —— 用户选择卡类型（虚拟/实体）并提交开卡申请
 3. **查询卡状态** —— 获取卡列表或卡详情，确认开卡是否成功
-4. **激活卡（实体卡）** —— 用户收到实体卡后，需激活才能使用
-5. **管理卡状态** —— 冻结、解冻、注销卡片
+4. **获取卡片信息** —— 根据商户是否持有 PCI 证书，选择卡隐私信息接口或 Iframe SDK
+5. **激活卡（实体卡）** —— 用户收到实体卡后，需激活才能使用
+6. **管理卡状态** —— 冻结、解冻、注销卡片
 
 ### 相关接口
 
@@ -76,11 +81,12 @@ title: 业务流程说明
 | --- | --- | --- | --- | --- |
 | 获取卡套餐列表 | POST | `/open-api/v1/card/package/list` | 授信 | 需要登录商户后台，完成卡套餐创建；开卡时，根据对应套餐进行收费 |
 | 支持的卡 BIN 列表 | POST | `/open-api/v1/card/support/bins` | 授权 | 获取授权模式支持的卡 BIN，卡的收费需要商户自己维护 |
-| **开卡申请** | POST | `/open-api/v1/card/apply` | 通用 | 开通一张卡片（授信传 `package_no`，授权传 `card_bin_no`） |
+| 开卡申请 | POST | `/open-api/v1/card/apply` | 通用 | 开通一张卡片（授信传 `package_no`，授权传 `card_bin_no`） |
 | 获取卡列表 | POST | `/open-api/v1/card/list` | 通用 | 获取当前卡片列表 |
 | 获取卡详情 | GET | `/open-api/v1/card/{card_no}/detail` | 通用 | 获取卡片详细信息（包括费率、手续费等） |
 | 获取卡隐私信息 | GET | `/open-api/v1/card/{card_no}/private/info` | 通用 | 获取卡片的 CVV、有效期、卡号等关键交易信息（需联系商务开通 PCI 权限） |
-| **实体卡激活** | POST | `/open-api/v1/card/active` | 通用 | 实体卡需要拿到卡片后，激活使用（需上传加密的 CVV） |
+| Iframe SDK | — | `/cn/API/sdk-download` | 通用 | 未持有 PCI 证书时，通过安全 Iframe 展示卡号、CVV 和有效期等敏感卡片信息 |
+| 实体卡激活 | POST | `/open-api/v1/card/active` | 通用 | 实体卡需要拿到卡片后，激活使用（需上传加密的 CVV） |
 | 修改卡状态 | POST | `/open-api/v1/card/status/update` | 通用 | 修改卡片的使用状态（Frozen-冻结 / Activated-启用 / Delete-注销） |
 | 设置 PIN | POST | `/open-api/v1/card/pin/set` | 通用 | 设置实体卡 PIN（需上传加密的 PIN） |
 | 卡变动通知 | — | Webhook | 通用 | 持卡人申请开卡后，卡片状态变动会发送通知；由于风控等行为导致卡片变动时，也会收到通知 |
