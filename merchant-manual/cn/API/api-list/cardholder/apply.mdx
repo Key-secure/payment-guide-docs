@@ -12,6 +12,8 @@ KYC 认证存在受限地区。提交申请前，请查看[受限场景/区域](
 
 <Note>
 KYC 审核需要一定时间：正式环境预计约 1 个工作日，沙盒环境预计约 10 分钟。如长时间未完成审核，请联系技术支持。
+
+提交成功只表示申请已受理。`data.status` 是本次认证记录的状态快照，当前为 `In_progress`。后续是否通过请查询持卡人接口，不要按审核时长判断为已通过。见 [常量表 - 持卡人状态](/cn/API/constants#cardholder-status)。
 </Note>
 
 ## 请求头
@@ -21,7 +23,7 @@ KYC 审核需要一定时间：正式环境预计约 1 个工作日，沙盒环�
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required>
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix 时间戳（毫秒）
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -39,7 +41,7 @@ KYC 审核需要一定时间：正式环境预计约 1 个工作日，沙盒环�
 </ParamField>
 
 <ParamField body="cardholder_unique_no" type="string" required >
-  商户侧持卡人唯一单号
+  商户侧持卡人唯一单号。仅支持字母、数字、冒号、下划线和短横线
 </ParamField>
 
 <ParamField body="sumsub_share_token" type="string" required placeholder="your_sumsub_share_token">
@@ -91,6 +93,7 @@ Sumsub 会生成对应的英文字段，只要生成的 Sumsub 英文字段符�
   <Expandable title="data">
     <ResponseField name="cardholder_no" type="string">持卡人单号</ResponseField>
     <ResponseField name="cardholder_unique_no" type="string">商户侧持卡人唯一单号</ResponseField>
+    <ResponseField name="status" type="string">本次认证记录状态。新建或编辑提交成功时当前为 `In_progress`。见 [常量表 - 持卡人状态](/cn/API/constants#cardholder-status)</ResponseField>
   </Expandable>
 </ResponseField>
 
@@ -120,7 +123,8 @@ curl --request POST \
   "msg": "Success",
   "data": {
     "cardholder_no": "",
-    "cardholder_unique_no": ""
+    "cardholder_unique_no": "",
+    "status": "In_progress"
   }
 }
 ```

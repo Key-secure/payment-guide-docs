@@ -13,7 +13,7 @@ Retrieves cardholder details, including accounts and the list of successfully is
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required>
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -47,7 +47,7 @@ Retrieves cardholder details, including accounts and the list of successfully is
     <ResponseField name="cardholder_no" type="string">Cardholder order number</ResponseField>
     <ResponseField name="cardholder_unique_no" type="string">Merchant-side unique cardholder number</ResponseField>
     <ResponseField name="email" type="string">Email</ResponseField>
-    <ResponseField name="status" type="string">Cardholder status, see [Appendix - Constants] Cardholder Status</ResponseField>
+    <ResponseField name="status" type="string">Cardholder status, see [Constants - Cardholder Status](/en/API/constants#cardholder-status)</ResponseField>
     <ResponseField name="total_balance" type="string">Total account balance (USD)</ResponseField>
     <ResponseField name="time" type="number">Cardholder creation time (Unix milliseconds)</ResponseField>
     <ResponseField name="card_list" type="object[]">
@@ -55,7 +55,7 @@ Retrieves cardholder details, including accounts and the list of successfully is
       <Expandable title="card_list">
         <ResponseField name="card_no" type="string">Card order number</ResponseField>
         <ResponseField name="card_last_no" type="string">Last four digits of card number</ResponseField>
-        <ResponseField name="card_type" type="string">Card type, see [Appendix - Constants] Card Types</ResponseField>
+        <ResponseField name="card_type" type="string">Card type, see [Constants - Card Type](/en/API/constants#card-type)</ResponseField>
         <ResponseField name="time" type="number">Card creation time (Unix milliseconds)</ResponseField>
       </Expandable>
     </ResponseField>

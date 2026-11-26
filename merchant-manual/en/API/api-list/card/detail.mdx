@@ -13,7 +13,7 @@ Retrieves detailed information for a single card.
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -50,7 +50,7 @@ Retrieves detailed information for a single card.
     <ResponseField name="card_name" type="string">Card alias</ResponseField>
     <ResponseField name="package_name_en" type="string">Card package English name</ResponseField>
     <ResponseField name="package_name_cn" type="string">Card package Chinese name</ResponseField>
-    <ResponseField name="card_type" type="string">Card type, see [Appendix - Constants] Card Types</ResponseField>
+    <ResponseField name="card_type" type="string">Card type, see [Constants - Card Type](/en/API/constants#card-type)</ResponseField>
     <ResponseField name="organization" type="string">Card organization</ResponseField>
     <ResponseField name="card_last_no" type="string">Last four digits of card number</ResponseField>
     <ResponseField name="fee_detail" type="object">
@@ -63,25 +63,25 @@ Retrieves detailed information for a single card.
         <ResponseField name="small_consume_threshold" type="string">Small Txn & Auth Fee threshold</ResponseField>
         <ResponseField name="small_consume_deduct" type="string">Small Txn & Auth Fee extra deduction</ResponseField>
         <ResponseField name="free_small_consume_count" type="number">Small Txn & Auth Fee waiver count</ResponseField>
-        <ResponseField name="free_small_excuse_type" type="string">Small Txn & Auth Fee exemption cycle type, see [Appendix - Constants] Exemption Types</ResponseField>
+        <ResponseField name="free_small_excuse_type" type="string">Small Txn & Auth Fee exemption cycle type, see [Constants - Exemption Type](/en/API/constants#excuse-type)</ResponseField>
         <ResponseField name="free_small_excuse_days" type="number">Small Txn & Auth Fee exemption cycle duration</ResponseField>
         <ResponseField name="refund_rate" type="string">Refund fee rate</ResponseField>
         <ResponseField name="consume_cancle_fee" type="string">Transaction cancellation fee</ResponseField>
         <ResponseField name="consume_cancel_threshold" type="string">Transaction cancellation fee threshold</ResponseField>
         <ResponseField name="decline_fee" type="string">Decline fee</ResponseField>
         <ResponseField name="decline_fee_free_count" type="number">Number of decline fee waivers</ResponseField>
-        <ResponseField name="decline_fee_free_type" type="string">Decline fee waiver cycle type, see [Appendix - Constants] Exemption Types</ResponseField>
+        <ResponseField name="decline_fee_free_type" type="string">Decline fee waiver cycle type, see [Constants - Exemption Type](/en/API/constants#excuse-type)</ResponseField>
         <ResponseField name="decline_fee_free_days" type="number">Decline fee waiver cycle duration</ResponseField>
         <ResponseField name="atm_rate" type="string">ATM withdrawal fee rate (value present for physical cards)</ResponseField>
         <ResponseField name="atm_min_fee" type="string">ATM withdrawal minimum fee (value present for physical cards)</ResponseField>
         <ResponseField name="apple_pay_fee" type="string">Apple Pay fee rate (value present for some card BINs)</ResponseField>
-        <ResponseField name="manage_fee_type" type="string">Management fee type, see [Appendix - Constants] Management Fee Types (value present for some card BINs)</ResponseField>
+        <ResponseField name="manage_fee_type" type="string">Management fee type, see [Constants - Management Fee Type](/en/API/constants#manage-fee-type) (value present for some card BINs)</ResponseField>
         <ResponseField name="manage_fee" type="string">Management fee (value present for some card BINs)</ResponseField>
-        <ResponseField name="management_fee_free_type" type="string">Management fee waiver method, see [Appendix - Constants] Management Fee Waiver Methods (value present for some card BINs)</ResponseField>
+        <ResponseField name="management_fee_free_type" type="string">Management fee waiver method, see [Constants - Management Fee Exemption Type](/en/API/constants#manage-fee-free-type) (value present for some card BINs)</ResponseField>
         <ResponseField name="free_management_fee_threshold" type="string">Management fee waiver threshold (Amount → amount threshold; Count → count threshold; value present for some card BINs)</ResponseField>
       </Expandable>
     </ResponseField>
-    <ResponseField name="status" type="string">Status, see [Appendix - Constants] Common Status</ResponseField>
+    <ResponseField name="status" type="string">Status, see [Constants - Card Status](/en/API/constants#card-status)</ResponseField>
     <ResponseField name="time" type="number">Card creation time (Unix milliseconds)</ResponseField>
   </Expandable>
 </ResponseField>

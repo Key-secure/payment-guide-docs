@@ -13,7 +13,7 @@ authMethod: none
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix 时间戳（毫秒）
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -38,12 +38,12 @@ authMethod: none
   商户侧持卡人唯一单号
 </ParamField>
 
-<ParamField body="start_time" type="string" required >
-  开始时间（格式：`yyyy-MM-dd` 或 `yyyy-MM-dd HH:mm:ss`）
+<ParamField body="start_time" type="string">
+  开始时间，可选（格式：`yyyy-MM-dd` 或 `yyyy-MM-dd HH:mm:ss`）。不传则不按该边界过滤
 </ParamField>
 
-<ParamField body="end_time" type="string" required >
-  结束时间（同上；间隔 ≤90 天）
+<ParamField body="end_time" type="string">
+  结束时间，可选（同上）。与开始时间同时传入时间隔 ≤90 天
 </ParamField>
 
 <ParamField body="page" type="number" default="0">
@@ -89,7 +89,7 @@ authMethod: none
         </ResponseField>
 
         <ResponseField name="status" type="string">
-          状态，见 【附录-常量表】持卡人状态
+          状态，见 [常量表 - 持卡人状态](/cn/API/constants#cardholder-status)
         </ResponseField>
 
         <ResponseField name="time" type="number">

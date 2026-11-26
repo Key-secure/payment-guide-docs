@@ -10,7 +10,7 @@ authMethod: none
 - 明文 CVV 须为 **3 位纯数字**
 - `card_last_no` 须与平台记录的卡号后四位一致
 - `cardholder_no` 须与该卡的归属持卡人一致
-- 加密算法详见「代码工具类」章节
+- 加密算法详见 [代码工具类](/cn/API/code-utils)
 </Note>
 
 ## 请求头
@@ -20,7 +20,7 @@ authMethod: none
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix 时间戳（毫秒）
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">

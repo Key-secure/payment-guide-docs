@@ -1,0 +1,14 @@
+---
+title: Changelog
+description: Merchant documentation and API changes
+---
+
+<Update label="2026-11-26" description="API change">
+  - [Transaction Simulation Overview](/en/API/api-list/mock/overview): removed Simulate KYC Review
+  - [Cardholder Authentication Application](/en/API/api-list/cardholder/apply): success response adds `status`; merchant unique number character set restricted
+  - [Apply for Card](/en/API/api-list/card/apply): success response adds `status`; merchant unique number character set restricted
+  - [Cardholder Fund Transfer](/en/API/api-list/account/transfer): success response adds `status`; merchant unique number character set restricted
+  - [Error Codes](/en/API/error-codes): HTTP status added for common errors; insufficient balance now uses 3002 and 3007
+  - [Response Parameters](/en/API/api-list/common/response-params): HTTP status for common errors updated
+  - [Get Cardholder List](/en/API/api-list/cardholder/list), [Get Card List](/en/API/api-list/card/list), [Get Card Consumption List](/en/API/api-list/consume/list), [Get Account Transfer Flow List](/en/API/api-list/account/transfer-list), [Query Reserve Fund Balance Details](/en/API/api-list/account/reserve-fund-list): start time and end time are optional
+</Update>

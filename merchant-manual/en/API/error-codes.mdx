@@ -3,10 +3,21 @@ title: Error Codes
 ---
 
 <Note>
-- HTTP status code is generally **200**. Judge business success/failure through response body `code`; `code = 0` means success, non-zero means failure.
-- **Multi-language**: Request header `Language` controls Chinese/English (e.g., `zh_CN` / `en_US`).
-- Parameter error codes **1004, 2007–2010, 4010**, etc. include **snake_case field name** before/after description.
+- HTTP **200**: the request succeeded, or the business operation failed. Use the response body `code` to judge the result. `code = 0` means success.
+- HTTP **400 / 401 / 403 / 429 / 500**: common errors. The body still returns `code` and `msg`. Read non-2xx response bodies. See the table below for each status.
+- **Multi-language**: request header `Language` controls Chinese and English (for example `zh_CN` / `en_US`).
+- For parameter errors, `msg` includes the **snake_case** field name before or after the description.
 </Note>
+
+## HTTP status for common errors
+
+| HTTP | Description |
+| --- | --- |
+| 400 | Invalid parameter, expired timestamp, or invalid query time range |
+| 401 | Missing, invalid, or expired credentials |
+| 403 | IP, permission, PCI, or merchant-status restriction |
+| 429 | Requests are too frequent |
+| 500 | System error |
 
 ## Error Code Ranges
 
@@ -66,13 +77,13 @@ title: Error Codes
 | code | Description |
 | ---- | -------- |
 | 3001 | Currency not supported by merchant |
-| 3002 | Insufficient cardholder account balance |
+| 3002 | Insufficient cardholder account balance. Returned when the cardholder balance is insufficient |
 | 3003 | Currency chain mismatch |
 | 3004 | Transfer reference number already exists |
 | 3005 | Invalid transfer amount format or precision |
 | 3006 | Invalid transfer type |
-| 3007 | Insufficient merchant account balance |
-| 3008 | Insufficient account balance |
+| 3007 | Insufficient merchant account balance. Returned when the reserve fund (merchant account) balance is insufficient |
+| 3008 | Insufficient account balance. Kept for existing integrations. New insufficient-balance failures no longer return this code |
 
 ## 9.4 Card / Consumption / PIN / Privacy (4xxx)
 

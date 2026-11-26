@@ -13,7 +13,7 @@ Updates the card status (Frozen / Activated / Delete).
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -31,7 +31,7 @@ Updates the card status (Frozen / Activated / Delete).
 </ParamField>
 
 <ParamField body="status" type="string" required >
-  Target status: Frozen — freeze / Activated — activate / Delete — deactivate (see Constants).
+  Target status: Frozen — freeze / Activated — activate / Delete — deactivate (see [Constants - Card Status](/en/API/constants#card-status)).
 </ParamField>
 
 ## Response Parameters

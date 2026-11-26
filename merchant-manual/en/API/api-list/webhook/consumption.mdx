@@ -17,7 +17,7 @@ The platform sends a POST request to the configured merchant **Notification URL*
 </ParamField>
 
 <ParamField body="action" type="string" required>
-  Push action, see [Appendix - Constants] Push Actions.
+  Push action, see [Constants - Notification Action](/en/API/constants#webhook-action).
 </ParamField>
 
 <ParamField body="data" type="object" required>
@@ -30,7 +30,7 @@ The platform sends a POST request to the configured merchant **Notification URL*
 <ResponseField name="consume_relate_no" type="string">Consumption related order number</ResponseField>
 <ResponseField name="card_no" type="string">Card order number</ResponseField>
 <ResponseField name="cardholder_no" type="string">Cardholder order number</ResponseField>
-<ResponseField name="type" type="string">Consumption type, see [Appendix - Constants] Consumption Type</ResponseField>
+<ResponseField name="type" type="string">Consumption type, see [Constants - Consumption Type](/en/API/constants#consume-type)</ResponseField>
 <ResponseField name="amount" type="number">Consumption amount (BigDecimal)</ResponseField>
 <ResponseField name="local_amount" type="number">Original amount</ResponseField>
 <ResponseField name="local_currency" type="string">Original currency</ResponseField>
@@ -39,12 +39,12 @@ The platform sends a POST request to the configured merchant **Notification URL*
 <ResponseField name="detail" type="string">Description (from consumption extension info)</ResponseField>
 <ResponseField name="fee_detail" type="array">Fee detail list (field name is `fee_detail`, not `fee_list`)</ResponseField>
 <ResponseField name="merchant_info" type="object">Merchant information</ResponseField>
-<ResponseField name="status" type="string">Status, see [Appendix - Constants] Common Status</ResponseField>
+<ResponseField name="status" type="string">Status, see [Constants - Common Status](/en/API/constants#common-status)</ResponseField>
 <ResponseField name="time" type="number">Consumption update time (Unix milliseconds, uses record `mtime`)</ResponseField>
 
 ### fee_detail Fields
 
-<ResponseField name="fee_type" type="string">Fee type, see [Appendix - Constants] Fee Types</ResponseField>
+<ResponseField name="fee_type" type="string">Fee type, see [Constants - Fee Type](/en/API/constants#fee-type) Fee Types</ResponseField>
 <ResponseField name="amount" type="number">Fee amount</ResponseField>
 
 <Note>

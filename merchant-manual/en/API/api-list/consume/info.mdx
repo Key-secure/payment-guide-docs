@@ -13,7 +13,7 @@ Retrieves details of a single consumption record.
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -48,7 +48,7 @@ Retrieves details of a single consumption record.
     <ResponseField name="consume_relate_no" type="string">Consumption related order number</ResponseField>
     <ResponseField name="card_no" type="string">Card order number</ResponseField>
     <ResponseField name="cardholder_no" type="string">Cardholder order number</ResponseField>
-    <ResponseField name="type" type="string">Consumption type, see [Appendix - Constants]</ResponseField>
+    <ResponseField name="type" type="string">Consumption type, see [Constants - Consumption Type](/en/API/constants#consume-type)</ResponseField>
     <ResponseField name="amount" type="string">Amount</ResponseField>
     <ResponseField name="local_amount" type="string">Original amount</ResponseField>
     <ResponseField name="local_currency" type="string">Original currency</ResponseField>
@@ -57,7 +57,7 @@ Retrieves details of a single consumption record.
       Fee detail list.
 
       <Expandable title="fee_list">
-        <ResponseField name="fee_type" type="string">Fee type, see [Appendix - Constants]</ResponseField>
+        <ResponseField name="fee_type" type="string">Fee type, see [Constants - Fee Type](/en/API/constants#fee-type)</ResponseField>
         <ResponseField name="amount" type="string">Fee amount</ResponseField>
       </Expandable>
     </ResponseField>
@@ -71,7 +71,7 @@ Retrieves details of a single consumption record.
         <ResponseField name="country" type="string">Merchant country</ResponseField>
       </Expandable>
     </ResponseField>
-    <ResponseField name="status" type="string">Status, see [Appendix - Constants] Common Status</ResponseField>
+    <ResponseField name="status" type="string">Status, see [Constants - Common Status](/en/API/constants#common-status)</ResponseField>
     <ResponseField name="time" type="number">Consumption time (Unix milliseconds)</ResponseField>
   </Expandable>
 </ResponseField>

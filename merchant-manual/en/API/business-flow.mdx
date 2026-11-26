@@ -49,6 +49,8 @@ Authentication successful ✓ (Status: Approved)
 
 ### Authentication Status
 
+See [Constants - Cardholder Status](/en/API/constants#cardholder-status).
+
 | Status | Description |
 | --- | --- |
 | Pending | Awaiting authentication |
@@ -128,6 +130,8 @@ Physical card: Mailing → User receives card → [POST /card/active] Activate
 ```
 
 ### Card Status
+
+See [Constants - Card Status](/en/API/constants#card-status).
 
 | Status | Description | Available Operations |
 | --- | --- | --- |
@@ -288,4 +292,4 @@ A: Based on the `integration_mode` confirmed with business before integration:
 A: Authorization mode settles funds in real-time. Merchants must confirm within 800 milliseconds whether to allow the transaction. Timeout defaults to transaction rejection.
 
 **Q5: How are consumption fees calculated?**  
-A: Fee details are in the card package configuration at application time, including consumption rate, fees, exchange rate, etc. See the "Constants" section for details.
+A: Fee details are in the card package configuration at application time, including consumption rate, fees, exchange rate, etc. See [Constants](/en/API/constants) for details.

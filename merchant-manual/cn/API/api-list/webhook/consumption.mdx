@@ -17,7 +17,7 @@ playground: none
 </ParamField>
 
 <ParamField body="action" type="string" required>
-  推送动作，见【附录-常量表】 推送动作。
+  推送动作，见 [常量表 - 推送动作](/cn/API/constants#webhook-action)。
 </ParamField>
 
 <ParamField body="data" type="object" required>
@@ -30,7 +30,7 @@ playground: none
 <ResponseField name="consume_relate_no" type="string">消费关联单号</ResponseField>
 <ResponseField name="card_no" type="string">卡单号</ResponseField>
 <ResponseField name="cardholder_no" type="string">持卡人单号</ResponseField>
-<ResponseField name="type" type="string">消费类型，见 【附录-常量表】 消费类型</ResponseField>
+<ResponseField name="type" type="string">消费类型，见 [常量表 - 消费类型](/cn/API/constants#consume-type)</ResponseField>
 <ResponseField name="amount" type="number">消费金额（BigDecimal）</ResponseField>
 <ResponseField name="local_amount" type="number">原始金额</ResponseField>
 <ResponseField name="local_currency" type="string">原始币种</ResponseField>
@@ -39,12 +39,12 @@ playground: none
 <ResponseField name="detail" type="string">描述（来自消费扩展信息）</ResponseField>
 <ResponseField name="fee_detail" type="array">费用详情列表（字段名为 `fee_detail`，非 `fee_list`）</ResponseField>
 <ResponseField name="merchant_info" type="object">商户信息</ResponseField>
-<ResponseField name="status" type="string">状态，见【附录-常量表】 通用状态</ResponseField>
+<ResponseField name="status" type="string">状态，见 [常量表 - 通用状态](/cn/API/constants#common-status)</ResponseField>
 <ResponseField name="time" type="number">消费更新时间（Unix 毫秒，取记录 `mtime`）</ResponseField>
 
 ### fee_detail 字段
 
-<ResponseField name="fee_type" type="string">费用类型，见 【附录-常量表】 手续费类型</ResponseField>
+<ResponseField name="fee_type" type="string">费用类型，见 [常量表 - 手续费类型](/cn/API/constants#fee-type)</ResponseField>
 <ResponseField name="amount" type="number">费用金额</ResponseField>
 
 <Note>

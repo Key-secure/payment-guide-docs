@@ -13,6 +13,8 @@ Card billing addresses are unavailable in certain restricted regions. Before sub
 <Note>
 Card applications take time to review: within 30 minutes in the production environment and within 10 minutes in the sandbox environment. If a review remains pending significantly longer, contact technical support.
 
+On success, `data.status` is the actual status of this card record. It is usually `Pending` while the card is being issued. Query the card list or card detail for later changes. See [Constants - Card Status](/en/API/constants#card-status).
+
 Cardholding limits:
 
 - **Channel01**: Up to 5 virtual and physical cards combined.
@@ -28,7 +30,7 @@ Canceled cards do not count toward these limits.
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -50,7 +52,7 @@ Canceled cards do not count toward these limits.
 </ParamField>
 
 <ParamField body="card_unique_no" type="string" required >
-  Merchant-side unique card number (max 64 characters).
+  Merchant-side unique card number (max 64 characters). Only letters, digits, colon, underscore, and hyphen are allowed.
 </ParamField>
 
 <ParamField body="package_no" type="string" >
@@ -58,7 +60,7 @@ Canceled cards do not count toward these limits.
 </ParamField>
 
 <ParamField body="card_type" type="string" required >
-  Card type, see Appendix Constants - Card Types.
+  Card type. See [Constants - Card Type](/en/API/constants#card-type).
 </ParamField>
 
 <ParamField body="address_info" type="object">
@@ -123,6 +125,7 @@ Canceled cards do not count toward these limits.
   <Expandable title="data">
     <ResponseField name="card_no" type="string">Card order number</ResponseField>
     <ResponseField name="card_unique_no" type="string">Merchant-side unique card number</ResponseField>
+    <ResponseField name="status" type="string">Status of this card record. Usually `Pending` while issuance is in progress. It may also be `ToActivate`, `Activated`, `Fail`, or another actual status. See [Constants - Card Status](/en/API/constants#card-status)</ResponseField>
   </Expandable>
 </ResponseField>
 
@@ -166,7 +169,8 @@ curl --request POST \
   "msg": "Success",
   "data": {
     "card_no": "",
-    "card_unique_no": ""
+    "card_unique_no": "",
+    "status": "Pending"
   }
 }
 ```

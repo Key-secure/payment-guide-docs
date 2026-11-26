@@ -17,7 +17,7 @@ Merchants without a PCI certificate cannot use this endpoint to retrieve sensiti
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -60,7 +60,7 @@ Merchants without a PCI certificate cannot use this endpoint to retrieve sensiti
 <Note>
 **Permission Notes:** The merchant must hold a PCI certificate and have PCI access enabled before calling this endpoint. If access is not enabled, error code **1013** is returned. Merchants without a PCI certificate must retrieve card information through the [Iframe SDK](/en/API/sdk-download).
 
-**Decryption Method:** Use the merchant's current available API credential's `SecretKey`, Base64-decode `data`, and then decrypt it with the AES/ECB/PKCS5Padding algorithm to obtain the plaintext JSON. See "Code Utilities" for details.
+**Decryption Method:** Use the merchant's current available API credential's `SecretKey`, Base64-decode `data`, and then decrypt it with the AES/ECB/PKCS5Padding algorithm to obtain the plaintext JSON. See [Code Utilities](/en/API/code-utils) for details.
 </Note>
 
 <RequestExample>

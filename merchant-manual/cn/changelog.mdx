@@ -1,0 +1,14 @@
+---
+title: 更新日志
+description: 商户文档与接口变更记录
+---
+
+<Update label="2026-11-26" description="接口调整">
+  - [交易模拟说明](/cn/API/api-list/mock/overview)：下线模拟 KYC 审核
+  - [持卡人认证申请](/cn/API/api-list/cardholder/apply)：成功响应增加 `status`；商户唯一单号限制可用字符
+  - [开卡申请](/cn/API/api-list/card/apply)：成功响应增加 `status`；商户唯一单号限制可用字符
+  - [持卡人账户余额更新](/cn/API/api-list/account/transfer)：成功响应增加 `status`；商户唯一单号限制可用字符
+  - [错误码](/cn/API/error-codes)：公共错误补充 HTTP 状态；余额不足改为 3002、3007
+  - [返回参数](/cn/API/api-list/common/response-params)：同步公共错误的 HTTP 状态
+  - [获取持卡人列表](/cn/API/api-list/cardholder/list)、[获取卡列表](/cn/API/api-list/card/list)、[获取卡消费记录列表](/cn/API/api-list/consume/list)、[获取账户划转流水列表](/cn/API/api-list/account/transfer-list)、[查询备付金余额明细](/cn/API/api-list/account/reserve-fund-list)：开始时间和结束时间改为可选
+</Update>

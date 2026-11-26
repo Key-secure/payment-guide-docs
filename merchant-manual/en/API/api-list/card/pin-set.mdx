@@ -10,7 +10,7 @@ Sets the physical card PIN. Only **physical cards** (`Physical`) are supported, 
 - Only physical cards are supported; calling this endpoint for a virtual card returns **4017**.
 - The plaintext PIN must be **exactly 6 digits**, and must not contain three or more identical or sequential digits (for example, `111111` or `123456`); otherwise **4016** is returned.
 - The card status must be `Activated`; otherwise **4005** is returned.
-- See the "Code Utilities" section for encryption algorithm details.
+- See [Code Utilities](/en/API/code-utils) for encryption algorithm details.
 </Note>
 
 ## Request Headers
@@ -20,7 +20,7 @@ Sets the physical card PIN. Only **physical cards** (`Physical`) are supported, 
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">

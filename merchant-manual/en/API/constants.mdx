@@ -2,7 +2,7 @@
 title: Constants
 ---
 
-## 8.1 Common Status
+## 8.1 Common Status {#common-status}
 
 Used for transfer flow, consumption records, and other common business statuses.
 
@@ -12,9 +12,9 @@ Used for transfer flow, consumption records, and other common business statuses.
 | Success | Successful |
 | Fail | Failed |
 
-## 8.2 Card Status
+## 8.2 Card Status {#card-status}
 
-Used in card list, card details, and update card status interfaces' `status` field.
+Used in card application, card list, card details, and update card status interfaces' `status` field.
 
 | code | Description | Notes |
 | ---- | ---- | ---- |
@@ -29,14 +29,14 @@ Used in card list, card details, and update card status interfaces' `status` fie
 Update card status interface only allows passing: `Activated`, `Frozen`, `Delete`.
 </Note>
 
-## 8.3 Card Type
+## 8.3 Card Type {#card-type}
 
 | code | Description |
 | ---- | ---- |
 | Virtual | Virtual Card |
 | Physical | Physical Card |
 
-## 8.4 Consumption Type
+## 8.4 Consumption Type {#consume-type}
 
 | code | Description |
 | ---- | ---- |
@@ -47,7 +47,7 @@ Update card status interface only allows passing: `Activated`, `Frozen`, `Delete
 | Reversal | Chargeback/Reversal |
 | Refund | Refund |
 
-## 8.5 Fee Type
+## 8.5 Fee Type {#fee-type}
 
 | code | Description |
 | ---- | ---- |
@@ -64,7 +64,7 @@ Update card status interface only allows passing: `Activated`, `Frozen`, `Delete
     Description of each card BIN fee item
 </Card>
 
-## 8.6 Notification Action
+## 8.6 Notification Action {#webhook-action}
 
 Values for `action` field in callback notifications.
 
@@ -74,7 +74,7 @@ Values for `action` field in callback notifications.
 | Consumption | Consumption Notification |
 | Card_update | Card Status Change |
 
-## 8.7 Exemption Type
+## 8.7 Exemption Type {#excuse-type}
 
 Period type for small amount exemption, decline fee exemption, and similar in package/fee configuration.
 
@@ -84,9 +84,9 @@ Period type for small amount exemption, decline fee exemption, and similar in pa
 | None | No Exemption |
 | Day | Daily Exemption |
 
-## 8.8 Cardholder Status
+## 8.8 Cardholder Status {#cardholder-status}
 
-Used in cardholder list, cardholder details, and similar interfaces' `status` field.
+Used in cardholder application, cardholder list, cardholder details, and similar interfaces' `status` field.
 
 | code | Description |
 | ---- | ---- |
@@ -95,7 +95,7 @@ Used in cardholder list, cardholder details, and similar interfaces' `status` fi
 | Approved | Authentication Successful |
 | Rejected | Authentication Failed |
 
-## 8.9 Transfer Type
+## 8.9 Transfer Type {#transfer-type}
 
 Values for `type` field in account transfer interface (case-insensitive).
 
@@ -104,7 +104,7 @@ Values for `type` field in account transfer interface (case-insensitive).
 | In | Transfer In (Company → Cardholder) |
 | Out | Transfer Out (Cardholder → Company) |
 
-## 8.10 Management Fee Type
+## 8.10 Management Fee Type {#manage-fee-type}
 
 Used in package/card details `fee_detail.manage_fee_type` and similar fields.
 
@@ -115,7 +115,7 @@ Used in package/card details `fee_detail.manage_fee_type` and similar fields.
 | Season | Quarterly |
 | Year | Yearly |
 
-## 8.11 Management Fee Exemption Type
+## 8.11 Management Fee Exemption Type {#manage-fee-free-type}
 
 Values for `fee_detail.management_fee_free_type` field in package/card details.
 

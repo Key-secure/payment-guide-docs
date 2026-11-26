@@ -16,6 +16,8 @@ Channel02开卡时需要填写账单地址，卡片账单地址存在受限地�
 正式环境预计在 30 分钟内完成，沙盒环境预计在 10 分钟内完成。
 如长时间未完成审核，请联系技术支持。
 
+提交成功时 `data.status` 为本次卡记录的实际状态，处理中通常为 `Pending`。后续状态请查询卡列表或卡详情，见 [常量表 - 卡状态](/cn/API/constants#card-status)。
+
 持卡数量上限：
 
 - **Channel01**：虚拟卡和实体卡合计最多持有 5 张。
@@ -31,7 +33,7 @@ Channel02开卡时需要填写账单地址，卡片账单地址存在受限地�
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix 时间戳（毫秒）
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -53,7 +55,7 @@ Channel02开卡时需要填写账单地址，卡片账单地址存在受限地�
 </ParamField>
 
 <ParamField body="card_unique_no" type="string" required >
-  商户侧卡唯一单号（最长 64 字符）
+  商户侧卡唯一单号（最长 64 字符）。仅支持字母、数字、冒号、下划线和短横线
 </ParamField>
 
 <ParamField body="package_no" type="string" >
@@ -61,7 +63,7 @@ Channel02开卡时需要填写账单地址，卡片账单地址存在受限地�
 </ParamField>
 
 <ParamField body="card_type" type="string" required >
-  卡类型，见 【附录常量表】卡类型
+  卡类型，见 [常量表 - 卡类型](/cn/API/constants#card-type)
 </ParamField>
 
 <ParamField body="address_info" type="object">
@@ -126,6 +128,7 @@ Channel02开卡时需要填写账单地址，卡片账单地址存在受限地�
   <Expandable title="data">
     <ResponseField name="card_no" type="string">卡单号</ResponseField>
     <ResponseField name="card_unique_no" type="string">商户侧卡唯一单号</ResponseField>
+    <ResponseField name="status" type="string">本次卡记录状态。处理中通常为 `Pending`，也可能是 `ToActivate`、`Activated`、`Fail` 等实际状态。见 [常量表 - 卡状态](/cn/API/constants#card-status)</ResponseField>
   </Expandable>
 </ResponseField>
 
@@ -169,7 +172,8 @@ curl --request POST \
   "msg": "Success",
   "data": {
     "card_no": "",
-    "card_unique_no": ""
+    "card_unique_no": "",
+    "status": "Pending"
   }
 }
 ```

@@ -14,7 +14,7 @@ authMethod: none
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix 时间戳（毫秒）
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -32,11 +32,11 @@ authMethod: none
 </ParamField>
 
 <ParamField body="transfer_unique_no" type="string" required >
-  商户侧划转唯一单号（最长 64 字符）
+  商户侧划转唯一单号（最长 64 字符）。仅支持字母、数字、冒号、下划线和短横线
 </ParamField>
 
 <ParamField body="type" type="string" required>
-  划转类型，见 8.9（In-转入 / Out-转出）
+  划转类型，见 [常量表 - 划转类型](/cn/API/constants#transfer-type)（In-转入 / Out-转出）
 </ParamField>
 
 <ParamField body="balance" type="string" required>
@@ -61,6 +61,7 @@ authMethod: none
     <ResponseField name="transfer_unique_no" type="string">商户侧划转流水唯一单号</ResponseField>
     <ResponseField name="before_balance" type="string">划转前余额</ResponseField>
     <ResponseField name="after_balance" type="string">划转后余额</ResponseField>
+    <ResponseField name="status" type="string">本次划转流水状态。当前同步记账成功时为 `Success`。见 [常量表 - 通用状态](/cn/API/constants#common-status)</ResponseField>
   </Expandable>
 </ResponseField>
 
@@ -93,7 +94,8 @@ curl --request POST \
     "transfer_no": "",
     "transfer_unique_no": "",
     "before_balance": "",
-    "after_balance": ""
+    "after_balance": "",
+    "status": "Success"
   }
 }
 ```

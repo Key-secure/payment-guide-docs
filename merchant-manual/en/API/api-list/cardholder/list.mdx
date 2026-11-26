@@ -13,7 +13,7 @@ Queries the cardholder list within a specified time range, supporting filtering 
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -38,12 +38,12 @@ Queries the cardholder list within a specified time range, supporting filtering 
   Merchant-side unique cardholder number.
 </ParamField>
 
-<ParamField body="start_time" type="string" required >
-  Start time (format: `yyyy-MM-dd` or `yyyy-MM-dd HH:mm:ss`).
+<ParamField body="start_time" type="string">
+  Start time, optional (format: `yyyy-MM-dd` or `yyyy-MM-dd HH:mm:ss`). Omit it to skip this bound.
 </ParamField>
 
-<ParamField body="end_time" type="string" required >
-  End time (same format as above; interval ≤ 90 days).
+<ParamField body="end_time" type="string">
+  End time, optional (same format). When both times are sent, the interval must be ≤ 90 days.
 </ParamField>
 
 <ParamField body="page" type="number" default="0">
@@ -89,7 +89,7 @@ Queries the cardholder list within a specified time range, supporting filtering 
         </ResponseField>
 
         <ResponseField name="status" type="string">
-          Status, see [Appendix - Constants] Cardholder Status.
+          Status, see [Constants - Cardholder Status](/en/API/constants#cardholder-status).
         </ResponseField>
 
         <ResponseField name="time" type="number">

@@ -14,7 +14,7 @@ Cardholder spending and account queries are also displayed in TUSDT (the USD exc
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -32,11 +32,11 @@ Cardholder spending and account queries are also displayed in TUSDT (the USD exc
 </ParamField>
 
 <ParamField body="transfer_unique_no" type="string" required >
-  Merchant-side unique transfer order number (max 64 characters).
+  Merchant-side unique transfer order number (max 64 characters). Only letters, digits, colon, underscore, and hyphen are allowed.
 </ParamField>
 
 <ParamField body="type" type="string" required>
-  Transfer type, see Constants (In — credit / Out — debit).
+  Transfer type. See [Constants - Transfer Type](/en/API/constants#transfer-type) (In — credit / Out — debit).
 </ParamField>
 
 <ParamField body="balance" type="string" required>
@@ -61,6 +61,7 @@ Cardholder spending and account queries are also displayed in TUSDT (the USD exc
     <ResponseField name="transfer_unique_no" type="string">Merchant-side unique transfer order number</ResponseField>
     <ResponseField name="before_balance" type="string">Balance before transfer</ResponseField>
     <ResponseField name="after_balance" type="string">Balance after transfer</ResponseField>
+    <ResponseField name="status" type="string">Status of this transfer record. A successful synchronous posting currently returns `Success`. See [Constants - Common Status](/en/API/constants#common-status)</ResponseField>
   </Expandable>
 </ResponseField>
 
@@ -93,7 +94,8 @@ curl --request POST \
     "transfer_no": "",
     "transfer_unique_no": "",
     "before_balance": "",
-    "after_balance": ""
+    "after_balance": "",
+    "status": "Success"
   }
 }
 ```

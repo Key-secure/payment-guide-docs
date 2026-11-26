@@ -10,7 +10,7 @@ Activates a physical card. The card status must be `ToActivate`; after successfu
 - Plaintext CVV must be **3 digits only**.
 - `card_last_no` must match the last four digits of the card number recorded on the platform.
 - `cardholder_no` must belong to the cardholder associated with this card.
-- For encryption algorithm details, see the "Code Utilities" section.
+- For encryption algorithm details, see [Code Utilities](/en/API/code-utils).
 </Note>
 
 ## Request Headers
@@ -20,7 +20,7 @@ Activates a physical card. The card status must be `ToActivate`; after successfu
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">

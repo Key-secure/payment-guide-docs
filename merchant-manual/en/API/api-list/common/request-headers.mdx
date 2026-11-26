@@ -7,8 +7,8 @@ All API requests must include the following parameters in the HTTP request heade
 | **Field Name** | **Description** | **Required** | **Notes** |
 | --- | --- | --- | --- |
 | Api-Key | apiKey (merchant credential, bound to IP whitelist) | Yes* | Required for all except Get Token; Get Token only needs this field |
-| Timestamp | Unix timestamp in milliseconds | Yes* | Deviation from server time must be within **60 seconds**, and **future timestamps are not accepted** |
-| Access-Token | Login token | Yes* | Required for all except Get Token; returns **1005** when future timestamp is rejected |
+| Timestamp | Unix timestamp in milliseconds | Yes* | Invalid values return **1005** with HTTP **400** |
+| Access-Token | Login token | Yes* | Required for all except Get Token. Missing returns **1006**, expired returns **1007**, both with HTTP **401** |
 | Signature | Signature value | No | Used for **platform → merchant callbacks** |
 | Sign-Version | Signature algorithm version | No | Defaults to V1 (used in callbacks) |
 | Timezone | Timezone | No | Defaults to UTC+8, affects list query time boundaries |
@@ -25,8 +25,7 @@ All API requests must include the following parameters in the HTTP request heade
 #### Timestamp Validation
 
 - `Timestamp` must be a **Unix millisecond timestamp** (13 digits).
-- Deviation from server time must be within **60 seconds**, otherwise **1005** (timestamp invalid or expired) is returned.
-- **Future timestamps are not accepted**; excessive deviation returns **1005**.
+- A timestamp that cannot be parsed returns **1005** with HTTP **400**.
 
 #### IP Whitelist
 

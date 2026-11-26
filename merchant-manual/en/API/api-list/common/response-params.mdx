@@ -2,7 +2,7 @@
 title: Response Parameters
 ---
 
-All API responses use a unified JSON structure. The HTTP status code is generally **200**; use the response body's `code` to determine success or failure.
+All API responses use a unified JSON structure. HTTP **200** means the request succeeded or the business operation failed; use the response body `code` to judge the result. HTTP **400 / 401 / 403 / 429 / 500** are common errors, and the body still returns `code` and `msg`.
 
 ### Response Structure
 
@@ -115,12 +115,14 @@ Examples:
 
 | **HTTP Status Code** | **Description** |
 | --- | --- |
-| 200 | Request succeeded (check `code` field to determine business outcome) |
-| 400 | Request format error or invalid parameters |
-| 401 | Authentication failed (Api-Key / Access-Token invalid) |
-| 403 | Access forbidden (IP not in whitelist, etc.) |
-| 404 | Resource not found |
-| 500 | Server error |
+| 200 | The request succeeded, or the business operation failed. Use the response body `code` to judge the result |
+| 400 | Invalid parameter, expired timestamp, or invalid query time range. The body still returns `code` and `msg` |
+| 401 | Missing, invalid, or expired credentials. The body still returns `code` and `msg` |
+| 403 | IP, permission, PCI, or merchant-status restriction. The body still returns `code` and `msg` |
+| 429 | Requests are too frequent. The body still returns `code` and `msg` |
+| 500 | System error. The body still returns `code` and `msg` |
+
+See [Error Codes](/en/API/error-codes) for the code meanings.
 
 ### Error Code Ranges
 
@@ -131,7 +133,7 @@ Examples:
 | 3xxx | Account and transfer-related exceptions |
 | 4xxx | Card, card transaction, and card privacy-related exceptions |
 
-See "Appendix" → "Error Codes".
+See [Error Codes](/en/API/error-codes).
 
 ### Field Name Conventions
 

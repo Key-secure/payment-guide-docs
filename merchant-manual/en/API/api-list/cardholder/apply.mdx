@@ -12,6 +12,8 @@ KYC authentication is unavailable in certain restricted regions. Before submitti
 
 <Note>
 KYC reviews take time to complete: approximately 1 business day in the production environment and approximately 10 minutes in the sandbox environment. If a review remains pending significantly longer, contact technical support.
+
+A successful response only means the application was accepted. `data.status` is a snapshot of this authentication record and is currently `In_progress`. Query the cardholder APIs for later results. Do not treat the review duration as approval. See [Constants - Cardholder Status](/en/API/constants#cardholder-status).
 </Note>
 
 ## Request Headers
@@ -21,7 +23,7 @@ KYC reviews take time to complete: approximately 1 business day in the productio
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required>
-  Unix timestamp in milliseconds. The deviation from the server time must be within 60 seconds, and future timestamps are not accepted.
+  Unix timestamp in milliseconds.
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -39,7 +41,7 @@ KYC reviews take time to complete: approximately 1 business day in the productio
 </ParamField>
 
 <ParamField body="cardholder_unique_no" type="string" required >
-  Merchant-side unique cardholder number.
+  Merchant-side unique cardholder number. Only letters, digits, colon, underscore, and hyphen are allowed.
 </ParamField>
 
 <ParamField body="sumsub_share_token" type="string" required placeholder="your_sumsub_share_token">
@@ -91,6 +93,7 @@ Sumsub generates the corresponding English fields, and the generated English fie
   <Expandable title="data">
     <ResponseField name="cardholder_no" type="string">Cardholder order number</ResponseField>
     <ResponseField name="cardholder_unique_no" type="string">Merchant-side unique cardholder number</ResponseField>
+    <ResponseField name="status" type="string">Status of this authentication record. A successful create or update currently returns `In_progress`. See [Constants - Cardholder Status](/en/API/constants#cardholder-status)</ResponseField>
   </Expandable>
 </ResponseField>
 
@@ -120,7 +123,8 @@ curl --request POST \
   "msg": "Success",
   "data": {
     "cardholder_no": "",
-    "cardholder_unique_no": ""
+    "cardholder_unique_no": "",
+    "status": "In_progress"
   }
 }
 ```

@@ -13,7 +13,7 @@ authMethod: none
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix 时间戳（毫秒）
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -31,7 +31,7 @@ authMethod: none
 </ParamField>
 
 <ParamField body="status" type="string" required >
-  目标状态：Frozen-冻结 / Activated-启用 / Delete-注销（见常量表）
+  目标状态：Frozen-冻结 / Activated-启用 / Delete-注销（见 [常量表 - 卡状态](/cn/API/constants#card-status)）
 </ParamField>
 
 ## 返回参数

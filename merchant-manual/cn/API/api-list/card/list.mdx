@@ -13,7 +13,7 @@ authMethod: none
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix 时间戳（毫秒）
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -42,12 +42,12 @@ authMethod: none
   卡单号
 </ParamField>
 
-<ParamField body="start_time" type="string" required >
-  开始时间（`yyyy-MM-dd` 或 `yyyy-MM-dd HH:mm:ss`）
+<ParamField body="start_time" type="string">
+  开始时间，可选（`yyyy-MM-dd` 或 `yyyy-MM-dd HH:mm:ss`）。不传则不按该边界过滤
 </ParamField>
 
-<ParamField body="end_time" type="string" required >
-  结束时间（同上；间隔 ≤90 天）
+<ParamField body="end_time" type="string">
+  结束时间，可选（同上）。与开始时间同时传入时间隔 ≤90 天
 </ParamField>
 
 <ParamField body="page" type="number" default="0">
@@ -78,10 +78,10 @@ authMethod: none
         <ResponseField name="card_no" type="string">卡单号</ResponseField>
         <ResponseField name="card_unique_no" type="string">商户侧卡唯一单号</ResponseField>
         <ResponseField name="cardholder_no" type="string">持卡人单号</ResponseField>
-        <ResponseField name="card_type" type="string">卡类型，见 【附录-常量表】卡类型</ResponseField>
+        <ResponseField name="card_type" type="string">卡类型，见 [常量表 - 卡类型](/cn/API/constants#card-type)</ResponseField>
         <ResponseField name="organization" type="string">卡组织</ResponseField>
         <ResponseField name="card_last_no" type="string">卡号后四位</ResponseField>
-        <ResponseField name="status" type="string">状态，见 【附录-常量表】卡状态</ResponseField>
+        <ResponseField name="status" type="string">状态，见 [常量表 - 卡状态](/cn/API/constants#card-status)</ResponseField>
         <ResponseField name="time" type="number">开卡时间（Unix 毫秒）</ResponseField>
       </Expandable>
     </ResponseField>

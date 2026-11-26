@@ -63,7 +63,6 @@ Path prefix:
 | Simulation | POST | /consumption_fail | Simulate consumption failure |
 | Simulation | POST | /reversal | Simulate reversal/cancellation |
 | Simulation | POST | /refund | Simulate refund |
-| Simulation | POST | /external_api/simulate_tevau_kyc | Simulate KYC review (Hong Kong card BINs only) |
 
 ## Quick Navigation
 
@@ -165,14 +164,14 @@ All error responses follow a unified format:
 }
 ```
 
-Common error codes (see "Appendix" → "Error Codes"):
+Common error codes (see [Error Codes](/en/API/error-codes)):
 
 | Code | Meaning | Common Cause |
 | ---- | ---- | ---- |
 | 1003 | IP address incorrect | Request IP not in whitelist |
-| 1005 | Timestamp expired | Timestamp deviation from server exceeds 60 seconds |
+| 1005 | Timestamp expired | Timestamp is invalid |
 | 1007 | Access-Token expired | Token has expired or is invalid |
 | 2002 | Cardholder does not exist | Cardholder not found |
 | 4005 | Current card status does not allow this operation | Card status unsupported for this operation |
 
-For more error codes, see "Appendix" → "Error Codes".
+For more error codes, see [Error Codes](/en/API/error-codes).

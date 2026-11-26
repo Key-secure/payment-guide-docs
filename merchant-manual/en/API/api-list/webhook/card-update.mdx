@@ -16,7 +16,7 @@ The platform sends a POST request to the configured merchant **Notification URL*
 </ParamField>
 
 <ParamField body="action" type="string" required>
-  Push action, see [Appendix - Constants] Push Actions.
+  Push action, see [Constants - Notification Action](/en/API/constants#webhook-action).
 </ParamField>
 
 <ParamField body="data" type="object" required>
@@ -26,8 +26,8 @@ The platform sends a POST request to the configured merchant **Notification URL*
 ### data Fields
 
 <ResponseField name="card_no" type="string">Card order number</ResponseField>
-<ResponseField name="before_status" type="string">Status before change, see [Appendix - Constants] Card Status</ResponseField>
-<ResponseField name="after_status" type="string">Status after change, see [Appendix - Constants] Card Status</ResponseField>
+<ResponseField name="before_status" type="string">Status before change, see [Constants - Card Status](/en/API/constants#card-status)</ResponseField>
+<ResponseField name="after_status" type="string">Status after change, see [Constants - Card Status](/en/API/constants#card-status)</ResponseField>
 <ResponseField name="reason" type="string">Reason for change</ResponseField>
 <ResponseField name="time" type="number">Change time (Unix milliseconds)</ResponseField>
 

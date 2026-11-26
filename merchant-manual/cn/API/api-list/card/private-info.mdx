@@ -17,7 +17,7 @@ authMethod: none
 </ParamField>
 
 <ParamField header="Timestamp" type="string" required >
-  Unix 时间戳（毫秒），与服务端偏差须在 60 秒内，且不接受未来时间戳
+  Unix 时间戳（毫秒）
 </ParamField>
 
 <ParamField header="Access-Token" type="string" required placeholder="your_access_token">
@@ -60,7 +60,7 @@ authMethod: none
 <Note>
 **权限说明：** 需商户持有 PCI 证书并开通 PCI 权限方可调用，未开通返回错误码 **1013**。如果商户没有 PCI 证书，请通过 [Iframe SDK](/cn/API/sdk-download) 获取卡片信息。
 
-**解密方式：** 使用商户当前可用 API 凭证的 `SecretKey`，通过 AES/ECB/PKCS5Padding 算法对 `data` 进行 Base64 解码后解密，得到明文 JSON。详见「代码工具类」。
+**解密方式：** 使用商户当前可用 API 凭证的 `SecretKey`，通过 AES/ECB/PKCS5Padding 算法对 `data` 进行 Base64 解码后解密，得到明文 JSON。详见 [代码工具类](/cn/API/code-utils)。
 </Note>
 
 <RequestExample>

@@ -154,8 +154,7 @@
                       "cn/API/api-list/mock/consumption-clear",
                       "cn/API/api-list/mock/consumption-fail",
                       "cn/API/api-list/mock/reversal",
-                      "cn/API/api-list/mock/refund",
-                      "cn/API/api-list/mock/simulate-tevau-kyc"
+                      "cn/API/api-list/mock/refund"
                     ]
                   }
                 ]
@@ -166,7 +165,8 @@
                   "cn/API/constants",
                   "cn/API/error-codes",
                   "cn/API/code-utils",
-                  "cn/API/sdk-download"
+                  "cn/API/sdk-download",
+                  "cn/changelog"
                 ]
               }
             ]
@@ -359,8 +359,7 @@
                       "en/API/api-list/mock/consumption-clear",
                       "en/API/api-list/mock/consumption-fail",
                       "en/API/api-list/mock/reversal",
-                      "en/API/api-list/mock/refund",
-                      "en/API/api-list/mock/simulate-tevau-kyc"
+                      "en/API/api-list/mock/refund"
                     ]
                   }
                 ]
@@ -371,7 +370,8 @@
                   "en/API/constants",
                   "en/API/error-codes",
                   "en/API/code-utils",
-                  "en/API/sdk-download"
+                  "en/API/sdk-download",
+                  "en/changelog"
                 ]
               }
             ]

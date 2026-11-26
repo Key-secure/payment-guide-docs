@@ -22,7 +22,7 @@ In authorization mode, the platform sends a POST request to the configured merch
 </ParamField>
 
 <ParamField body="action" type="string" required>
-  Push action, see [Appendix - Constants] Push Actions.
+  Push action, see [Constants - Notification Action](/en/API/constants#webhook-action).
 </ParamField>
 
 <ParamField body="data" type="object" required>
@@ -34,7 +34,7 @@ In authorization mode, the platform sends a POST request to the configured merch
 <ResponseField name="consume_no" type="string">Consumption order number</ResponseField>
 <ResponseField name="card_no" type="string">Card order number</ResponseField>
 <ResponseField name="cardholder_no" type="string">Cardholder order number</ResponseField>
-<ResponseField name="type" type="string">Consumption type, see [Appendix - Constants] Consumption Type</ResponseField>
+<ResponseField name="type" type="string">Consumption type, see [Constants - Consumption Type](/en/API/constants#consume-type)</ResponseField>
 <ResponseField name="amount" type="number">Authorization amount (BigDecimal)</ResponseField>
 <ResponseField name="local_amount" type="number">Original amount</ResponseField>
 <ResponseField name="local_currency" type="string">Original currency</ResponseField>
